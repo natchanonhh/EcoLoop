@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        body { font-family: 'Prompt', sans-serif; background-color: #f8fafc; }
+        body { font-family: 'Prompt', sans-serif; background-color: #f8fafc; transition: padding-bottom 0.3s; }
         .hidden-view { display: none !important; }
         .modal { display: none; }
         .modal.active { display: flex; }
@@ -20,19 +20,23 @@
         .hover-bg-eco-green-light:hover { background-color: #dcf5e7; }
         .text-eco-dark { color: #1e293b; }
         
-        /* Custom Scrollbar for Modals */
         .custom-scrollbar::-webkit-scrollbar { width: 6px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: #f1f5f9; border-radius: 8px; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 8px; }
         .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
         
-        /* Timeline Stepper CSS */
         .step-active .step-icon { background-color: #2d7a5b; color: white; border-color: #2d7a5b; }
         .step-active .step-line { background-color: #2d7a5b; }
         .step-active .step-text { color: #2d7a5b; font-weight: 600; }
         .step-pending .step-icon { background-color: white; color: #94a3b8; border-color: #cbd5e1; }
         .step-pending .step-line { background-color: #e2e8f0; }
         .step-pending .step-text { color: #94a3b8; }
+
+        @keyframes slideUp { 
+            from { transform: translateY(100%); opacity: 0; } 
+            to { transform: translateY(0); opacity: 1; } 
+        }
+        .animate-slideUp { animation: slideUp 0.4s ease-out forwards; }
     </style>
 </head>
 <body class="text-slate-800 h-screen flex flex-col">
@@ -57,29 +61,19 @@
                 <div class="flex-grow border-t border-slate-200"></div>
             </div>
 
-            <!-- ฟอร์มเข้าสู่ระบบ (Login) -->
             <div id="loginFormArea">
                 <input type="email" id="loginEmail" placeholder="อีเมล" class="w-full border rounded-xl px-4 py-3 mb-3 outline-none focus:ring-2 focus:ring-eco-green">
                 <input type="password" id="loginPassword" placeholder="รหัสผ่าน" class="w-full border rounded-xl px-4 py-3 mb-4 outline-none focus:ring-2 focus:ring-eco-green">
-                <button onclick="loginWithEmail()" class="w-full bg-eco-green text-white py-3 rounded-xl font-medium hover:bg-emerald-800 transition shadow-sm mb-4">
-                    เข้าสู่ระบบ
-                </button>
-                <p class="text-sm text-slate-500">
-                    ยังไม่มีบัญชี? <button onclick="toggleAuthForm('register')" class="text-eco-green font-bold hover:underline">สมัครสมาชิก</button>
-                </p>
+                <button onclick="loginWithEmail()" class="w-full bg-eco-green text-white py-3 rounded-xl font-medium hover:bg-emerald-800 transition shadow-sm mb-4">เข้าสู่ระบบ</button>
+                <p class="text-sm text-slate-500">ยังไม่มีบัญชี? <button onclick="toggleAuthForm('register')" class="text-eco-green font-bold hover:underline">สมัครสมาชิก</button></p>
             </div>
 
-            <!-- ฟอร์มสมัครสมาชิก (Register) -->
             <div id="registerFormArea" class="hidden-view">
                 <input type="text" id="regName" placeholder="ชื่อ - นามสกุล" class="w-full border rounded-xl px-4 py-3 mb-3 outline-none focus:ring-2 focus:ring-eco-green">
                 <input type="email" id="regEmail" placeholder="อีเมล" class="w-full border rounded-xl px-4 py-3 mb-3 outline-none focus:ring-2 focus:ring-eco-green">
                 <input type="password" id="regPassword" placeholder="รหัสผ่าน (6 ตัวอักษรขึ้นไป)" class="w-full border rounded-xl px-4 py-3 mb-4 outline-none focus:ring-2 focus:ring-eco-green">
-                <button onclick="registerWithEmail()" class="w-full bg-slate-800 text-white py-3 rounded-xl font-medium hover:bg-slate-700 transition shadow-sm mb-4">
-                    ยืนยันสมัครสมาชิก
-                </button>
-                <p class="text-sm text-slate-500">
-                    มีบัญชีอยู่แล้ว? <button onclick="toggleAuthForm('login')" class="text-eco-green font-bold hover:underline">เข้าสู่ระบบ</button>
-                </p>
+                <button onclick="registerWithEmail()" class="w-full bg-slate-800 text-white py-3 rounded-xl font-medium hover:bg-slate-700 transition shadow-sm mb-4">ยืนยันสมัครสมาชิก</button>
+                <p class="text-sm text-slate-500">มีบัญชีอยู่แล้ว? <button onclick="toggleAuthForm('login')" class="text-eco-green font-bold hover:underline">เข้าสู่ระบบ</button></p>
             </div>
         </div>
     </main>
@@ -164,31 +158,55 @@
         </div>
     </main>
 
+    <!-- ================= FLOATING NOTIFICATION BAR (ลูกค้า) ================= -->
+    <div id="buyer-status-bar" class="hidden-view fixed bottom-0 left-0 w-full bg-indigo-600 text-white z-40 shadow-[0_-4px_15px_rgba(0,0,0,0.2)] animate-slideUp cursor-pointer hover:bg-indigo-700 transition-colors" onclick="openBuyerOrders()">
+        <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-4">
+                <div class="relative">
+                    <div class="w-12 h-12 bg-indigo-500 rounded-full flex items-center justify-center animate-pulse border-2 border-indigo-400"><i class="fa-solid fa-bag-shopping text-2xl"></i></div>
+                    <span id="active-order-count" class="absolute -top-1 -right-1 bg-rose-500 text-white text-xs font-bold px-2 py-0.5 rounded-full border-2 border-indigo-600 shadow-sm">1</span>
+                </div>
+                <div>
+                    <p class="font-bold text-sm md:text-base text-indigo-50">สถานะคำสั่งซื้อปัจจุบันของคุณ</p>
+                    <p id="active-order-status-text" class="text-sm md:text-base font-bold text-white tracking-wide">กำลังดำเนินการ...</p>
+                </div>
+            </div>
+            <button class="bg-white text-indigo-700 px-5 py-2.5 rounded-xl text-sm font-bold shadow-md hover:bg-indigo-50 transition flex items-center gap-2">ดูรายละเอียด <i class="fa-solid fa-chevron-right text-xs"></i></button>
+        </div>
+    </div>
+
     <!-- ================= MODALS ================= -->
     
-    <!-- Modal: ประวัติคำสั่งซื้อของลูกค้า (Buyer Orders & Timeline) -->
+    <!-- Modal: จัดการโพสต์ (Merchant/Farmer) -->
+    <div id="modal-manage-posts" class="modal fixed inset-0 bg-slate-900 bg-opacity-60 justify-center items-center z-50 backdrop-blur-sm p-4">
+        <div class="bg-white rounded-3xl shadow-2xl w-full max-w-4xl overflow-hidden flex flex-col max-h-[90vh]">
+            <div class="px-6 py-5 border-b border-slate-200 flex justify-between items-center bg-slate-50">
+                <h3 class="text-xl font-bold text-slate-800" id="managePostsTitle"><i class="fa-solid fa-list mr-2"></i>จัดการโพสต์ของฉัน</h3>
+                <button onclick="toggleModal('modal-manage-posts')" class="text-slate-400 hover:text-rose-500 transition text-xl"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="p-6 overflow-y-auto custom-scrollbar bg-slate-50/50" id="managePostsContainer"></div>
+        </div>
+    </div>
+
+    <!-- Modal: ประวัติคำสั่งซื้อของลูกค้า -->
     <div id="modal-buyer-orders" class="modal fixed inset-0 bg-slate-900 bg-opacity-60 justify-center items-center z-50 backdrop-blur-sm p-4">
         <div class="bg-white rounded-3xl shadow-2xl w-full max-w-3xl overflow-hidden flex flex-col max-h-[90vh]">
             <div class="px-6 py-5 border-b border-slate-200 flex justify-between items-center bg-slate-50">
                 <h3 class="text-xl font-bold text-slate-800"><i class="fa-solid fa-bag-shopping mr-2 text-indigo-600"></i>ประวัติการสั่งซื้อของฉัน</h3>
                 <button onclick="toggleModal('modal-buyer-orders')" class="text-slate-400 hover:text-rose-500 transition text-xl"><i class="fa-solid fa-xmark"></i></button>
             </div>
-            <div class="p-6 overflow-y-auto custom-scrollbar bg-slate-50/50" id="buyerOrdersContainer">
-                <!-- คำสั่งซื้อของผู้ซื้อจะถูกโหลดมาแสดงที่นี่ -->
-            </div>
+            <div class="p-6 overflow-y-auto custom-scrollbar bg-slate-50/50" id="buyerOrdersContainer"></div>
         </div>
     </div>
 
-    <!-- Modal: จัดการออเดอร์ของร้านค้า/เกษตรกร (Merchant Orders) -->
+    <!-- Modal: จัดการออเดอร์ของร้านค้า/เกษตรกร -->
     <div id="modal-merchant-orders" class="modal fixed inset-0 bg-slate-900 bg-opacity-60 justify-center items-center z-50 backdrop-blur-sm p-4">
         <div class="bg-white rounded-3xl shadow-2xl w-full max-w-4xl overflow-hidden flex flex-col max-h-[90vh]">
             <div class="px-6 py-5 border-b border-slate-200 flex justify-between items-center bg-slate-50">
-                <h3 class="text-xl font-bold text-slate-800"><i class="fa-solid fa-clipboard-list mr-2 text-amber-600"></i>จัดการคำสั่งซื้อ (สำหรับผู้ขาย)</h3>
+                <h3 class="text-xl font-bold text-slate-800" id="merchantOrdersTitle"><i class="fa-solid fa-clipboard-list mr-2 text-amber-600"></i>จัดการคำสั่งซื้อ</h3>
                 <button onclick="toggleModal('modal-merchant-orders')" class="text-slate-400 hover:text-rose-500 transition text-xl"><i class="fa-solid fa-xmark"></i></button>
             </div>
-            <div class="p-6 overflow-y-auto custom-scrollbar bg-slate-50/50" id="merchantOrdersContainer">
-                <!-- คำสั่งซื้อของร้านค้าจะถูกโหลดมาแสดงที่นี่ -->
-            </div>
+            <div class="p-6 overflow-y-auto custom-scrollbar bg-slate-50/50" id="merchantOrdersContainer"></div>
         </div>
     </div>
 
@@ -199,11 +217,9 @@
             <h3 class="text-2xl font-bold text-slate-800 mb-6">แก้ไขข้อมูลส่วนตัว</h3>
             <form id="formEditProfile">
                 <label class="block text-sm font-medium text-slate-700 mb-2">รูปโปรไฟล์ใหม่ (เลือกไฟล์รูปภาพ)</label>
-                <input type="file" id="editProfilePic" accept="image/*" class="w-full border border-slate-300 rounded-xl px-4 py-2.5 mb-5 outline-none focus:ring-2 focus:ring-eco-green focus:border-eco-green bg-slate-50">
-                
+                <input type="file" id="editProfilePic" accept="image/*" class="w-full border border-slate-300 rounded-xl px-4 py-2.5 mb-5 outline-none focus:ring-2 focus:ring-eco-green bg-slate-50">
                 <label class="block text-sm font-medium text-slate-700 mb-2">ชื่อผู้ใช้งาน</label>
-                <input type="text" id="editProfileName" required class="w-full border border-slate-300 rounded-xl px-4 py-3 mb-6 outline-none focus:ring-2 focus:ring-eco-green focus:border-eco-green">
-                
+                <input type="text" id="editProfileName" required class="w-full border border-slate-300 rounded-xl px-4 py-3 mb-6 outline-none focus:ring-2 focus:ring-eco-green">
                 <button type="submit" class="w-full bg-eco-green hover:bg-emerald-800 text-white py-3 rounded-xl font-bold shadow-md transition" id="btnSubmitProfile">บันทึกข้อมูล</button>
             </form>
         </div>
@@ -240,23 +256,20 @@
         </div>
     </div>
 
-    <!-- Modal: โพสต์อาหารลดราคา -->
+    <!-- Modal: โพสต์/แก้ไข อาหารลดราคา -->
     <div id="modal-post-food" class="modal fixed inset-0 bg-slate-900 bg-opacity-50 justify-center items-center z-50 backdrop-blur-sm p-4">
         <div class="bg-white rounded-3xl shadow-2xl w-full max-w-md p-8 relative max-h-[90vh] overflow-y-auto custom-scrollbar">
             <button onclick="toggleModal('modal-post-food')" class="absolute top-6 right-6 text-slate-400 hover:text-rose-500 text-xl transition"><i class="fa-solid fa-xmark"></i></button>
-            <h3 class="text-2xl font-bold text-eco-green mb-6">โพสต์อาหารลดราคา</h3>
+            <h3 class="text-2xl font-bold text-eco-green mb-6" id="titlePostFood">โพสต์อาหารลดราคา</h3>
             <form id="formPostFood">
-                <label class="block text-sm font-medium text-slate-700 mb-2">รูปภาพอาหาร</label>
+                <label class="block text-sm font-medium text-slate-700 mb-2">รูปภาพอาหาร (หากไม่เปลี่ยนไม่ต้องเลือก)</label>
                 <input type="file" id="postFoodImage" accept="image/*" class="w-full border border-slate-300 rounded-xl px-4 py-2.5 mb-4 outline-none focus:ring-2 focus:ring-eco-green bg-slate-50">
-                
                 <input type="text" id="postFoodName" required placeholder="ชื่อเมนูอาหาร" class="w-full border border-slate-300 rounded-xl px-4 py-3 mb-4 outline-none focus:ring-2 focus:ring-eco-green">
                 <textarea id="postFoodDesc" rows="2" placeholder="รายละเอียดเพิ่มเติม (ถ้ามี)" class="w-full border border-slate-300 rounded-xl px-4 py-3 mb-4 outline-none focus:ring-2 focus:ring-eco-green custom-scrollbar"></textarea>
-                
                 <div class="flex gap-4 mb-4">
                     <input type="number" id="postOriginalPrice" required placeholder="ราคาปกติ (฿)" class="w-1/2 border border-slate-300 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-eco-green">
                     <input type="number" id="postDiscountPrice" required placeholder="ราคาลด (฿)" class="w-1/2 border border-slate-300 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-eco-green">
                 </div>
-                
                 <div class="flex gap-4 mb-6">
                     <input type="number" id="postQuantity" required placeholder="จำนวนที่เหลือ" class="w-1/2 border border-slate-300 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-eco-green">
                     <div class="w-1/2 relative">
@@ -269,23 +282,20 @@
         </div>
     </div>
 
-    <!-- Modal: โพสต์สินค้าเกษตร -->
+    <!-- Modal: โพสต์/แก้ไข สินค้าเกษตร -->
     <div id="modal-post-farm" class="modal fixed inset-0 bg-slate-900 bg-opacity-50 justify-center items-center z-50 backdrop-blur-sm p-4">
         <div class="bg-white rounded-3xl shadow-2xl w-full max-w-md p-8 relative max-h-[90vh] overflow-y-auto custom-scrollbar">
             <button onclick="toggleModal('modal-post-farm')" class="absolute top-6 right-6 text-slate-400 hover:text-rose-500 text-xl transition"><i class="fa-solid fa-xmark"></i></button>
-            <h3 class="text-2xl font-bold text-eco-green mb-6">โพสต์สินค้าเกษตร</h3>
+            <h3 class="text-2xl font-bold text-eco-green mb-6" id="titlePostFarm">โพสต์สินค้าเกษตร</h3>
             <form id="formPostFarm">
-                <label class="block text-sm font-medium text-slate-700 mb-2">รูปภาพผลผลิต</label>
+                <label class="block text-sm font-medium text-slate-700 mb-2">รูปภาพผลผลิต (หากไม่เปลี่ยนไม่ต้องเลือก)</label>
                 <input type="file" id="postFarmImage" accept="image/*" class="w-full border border-slate-300 rounded-xl px-4 py-2.5 mb-4 outline-none focus:ring-2 focus:ring-eco-green bg-slate-50">
-                
                 <input type="text" id="postFarmName" required placeholder="ชื่อสินค้า (เช่น มะพร้าวน้ำหอม)" class="w-full border border-slate-300 rounded-xl px-4 py-3 mb-4 outline-none focus:ring-2 focus:ring-eco-green">
                 <textarea id="postFarmDesc" rows="2" placeholder="รายละเอียดของสินค้า / แหล่งปลูก" class="w-full border border-slate-300 rounded-xl px-4 py-3 mb-4 outline-none focus:ring-2 focus:ring-eco-green custom-scrollbar"></textarea>
-                
                 <div class="flex gap-4 mb-4">
                     <input type="number" id="postFarmPrice" required placeholder="ราคา (฿)" class="w-1/2 border border-slate-300 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-eco-green">
                     <input type="text" id="postFarmUnit" required placeholder="หน่วย (เช่น กก., หวี)" class="w-1/2 border border-slate-300 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-eco-green">
                 </div>
-                
                 <input type="number" id="postFarmQuantity" required placeholder="จำนวนที่มีพร้อมขาย" class="w-full border border-slate-300 rounded-xl px-4 py-3 mb-6 outline-none focus:ring-2 focus:ring-eco-green">
                 <button type="submit" id="btnSubmitFarm" class="w-full bg-eco-green hover:bg-emerald-800 text-white py-3.5 rounded-xl font-bold shadow-md transition text-lg">โพสต์จำหน่าย</button>
             </form>
@@ -303,9 +313,14 @@
                 <div class="bg-eco-green-light rounded-2xl p-5 mb-6 border border-emerald-100 shadow-sm">
                     <h4 id="buyFoodName" class="text-lg font-bold text-eco-green">ชื่อเมนู</h4>
                     <p id="buyShopName" class="text-sm text-emerald-600 mb-2 font-medium"><i class="fa-solid fa-store"></i> ร้านค้า</p>
-                    <div class="text-3xl font-bold text-slate-800">฿<span id="buyPrice">0</span> <span id="buyUnit" class="text-base font-normal text-slate-500"></span></div>
+                    <div class="text-3xl font-bold text-slate-800">฿<span id="buyPriceTotal">0</span> <span id="buyUnit" class="text-base font-normal text-slate-500"></span></div>
                 </div>
                 
+                <div class="mb-5">
+                    <label class="block text-sm font-medium text-slate-700 mb-2">จำนวนที่ต้องการสั่งซื้อ (เหลือ <span id="buyMaxQuantity"></span>)</label>
+                    <input type="number" id="buyQuantity" min="1" value="1" oninput="calculateTotalPrice()" class="w-full border border-slate-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-eco-green outline-none font-bold text-lg">
+                </div>
+
                 <h5 class="font-bold text-slate-800 mb-3 text-sm" id="buyPriceOptionsTitle">1. รูปแบบราคา</h5>
                 <div class="grid grid-cols-2 gap-3 mb-5" id="buyPriceOptionsArea">
                     <label class="border-2 border-eco-green bg-eco-green-light rounded-xl p-3 cursor-pointer flex items-center gap-2 transition hover:shadow-sm">
@@ -318,7 +333,7 @@
                     </label>
                 </div>
                 <div id="biddingArea" class="mb-5 hidden-view">
-                    <input type="number" id="bidAmount" placeholder="ระบุราคาที่เสนอ (บาท)" class="w-full border border-slate-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-eco-green outline-none bg-slate-50">
+                    <input type="number" id="bidAmount" placeholder="ระบุราคารวมที่เสนอ (บาท)" class="w-full border border-slate-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-eco-green outline-none bg-slate-50">
                 </div>
                 
                 <h5 class="font-bold text-slate-800 mb-3 text-sm">2. ข้อมูลผู้ซื้อและการรับสินค้า</h5>
@@ -354,7 +369,7 @@
     <!-- ================= FIREBASE LOGIC ================= -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js";
-        import { getFirestore, collection, addDoc, getDocs, query, orderBy, doc, setDoc, getDoc, updateDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, getDocs, query, orderBy, doc, setDoc, getDoc, updateDoc, deleteDoc, serverTimestamp, onSnapshot, where } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore.js";
         import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-storage.js";
         import { getAuth, setPersistence, browserLocalPersistence, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-auth.js";
 
@@ -380,10 +395,18 @@
         let selectedFoodId = null;
         let selectedItemName = '';
         let selectedShopName = '';
-        let selectedMerchantId = null;
+        let selectedSellerId = null;
         let selectedItemType = 'surplus';
-        let activeCountdownIntervals = []; 
+        let currentItemPrice = 0;
+        let currentMaxQty = 0;
         
+        let activeCountdownIntervals = []; 
+        let unsubscribeOrders = null; 
+        
+        // สำหรับแก้ไขโพสต์
+        let editingPostId = null;
+        let editingPostOldImage = null;
+
         const THIRTY_DAYS_MS = 30 * 24 * 60 * 60 * 1000; 
 
         // ================= 1. ระบบ AUTHENTICATION =================
@@ -393,14 +416,15 @@
                 const currentTime = Date.now();
                 if (loginTimeStr && (currentTime - parseInt(loginTimeStr) > THIRTY_DAYS_MS)) {
                     alert("เซสชันหมดอายุ กรุณาเข้าสู่ระบบใหม่");
-                    logoutUser();
-                    return; 
-                } else if (!loginTimeStr) {
-                    localStorage.setItem('ecoLoopLoginTime', currentTime.toString());
-                }
+                    logoutUser(); return; 
+                } else if (!loginTimeStr) { localStorage.setItem('ecoLoopLoginTime', currentTime.toString()); }
                 doLoginSuccess(user.uid, user.displayName, user.email, user.photoURL);
             } else {
                 currentUser = null;
+                if(unsubscribeOrders) unsubscribeOrders(); 
+                document.getElementById('buyer-status-bar').classList.add('hidden-view');
+                document.body.style.paddingBottom = '0px';
+
                 document.getElementById('auth-view').classList.remove('hidden-view');
                 document.getElementById('main-nav').classList.add('hidden-view');
                 document.getElementById('home-view').classList.add('hidden-view');
@@ -414,17 +438,13 @@
             document.getElementById('main-nav').classList.remove('hidden-view');
             document.getElementById('home-view').classList.remove('hidden-view');
             
-            const fallbackPic = name 
-                ? `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=2d7a5b&color=fff` 
-                : 'https://ui-avatars.com/api/?name=User&background=2d7a5b&color=fff';
-
+            const fallbackPic = name ? `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=2d7a5b&color=fff` : 'https://ui-avatars.com/api/?name=User&background=2d7a5b&color=fff';
             document.getElementById('profile-name').innerText = name || 'ผู้ใช้งานระบบ';
             document.getElementById('profile-email').innerText = email || '';
             document.getElementById('profile-pic').src = pic || fallbackPic;
             document.getElementById('nav-user-pic').src = pic || fallbackPic;
 
-            fetchFoods();
-            fetchFarmProducts();
+            fetchFoods(); fetchFarmProducts(); listenToBuyerOrders(); 
         }
 
         window.toggleAuthForm = (type) => {
@@ -433,9 +453,7 @@
         };
 
         window.registerWithEmail = () => {
-            const name = document.getElementById('regName').value;
-            const email = document.getElementById('regEmail').value;
-            const password = document.getElementById('regPassword').value;
+            const name = document.getElementById('regName').value; const email = document.getElementById('regEmail').value; const password = document.getElementById('regPassword').value;
             if (!name || !email || !password) return alert('กรุณากรอกข้อมูลให้ครบถ้วน');
             if (password.length < 6) return alert('รหัสผ่านต้องมี 6 ตัวอักษรขึ้นไป');
             createUserWithEmailAndPassword(auth, email, password)
@@ -445,20 +463,13 @@
         };
 
         window.loginWithEmail = () => {
-            const email = document.getElementById('loginEmail').value;
-            const password = document.getElementById('loginPassword').value;
+            const email = document.getElementById('loginEmail').value; const password = document.getElementById('loginPassword').value;
             if (!email || !password) return alert('กรุณากรอกอีเมลและรหัสผ่าน');
-            signInWithEmailAndPassword(auth, email, password)
-                .catch(() => alert('อีเมลหรือรหัสผ่านไม่ถูกต้อง'));
+            signInWithEmailAndPassword(auth, email, password).catch(() => alert('อีเมลหรือรหัสผ่านไม่ถูกต้อง'));
         };
 
-        window.loginWithGoogle = () => {
-            signInWithPopup(auth, new GoogleAuthProvider()).catch(e => alert("เกิดข้อผิดพลาด: " + e.message));
-        };
-
-        window.logoutUser = () => {
-            signOut(auth).then(() => localStorage.removeItem('ecoLoopLoginTime'));
-        };
+        window.loginWithGoogle = () => { signInWithPopup(auth, new GoogleAuthProvider()).catch(e => alert("เกิดข้อผิดพลาด: " + e.message)); };
+        window.logoutUser = () => { signOut(auth).then(() => localStorage.removeItem('ecoLoopLoginTime')); };
 
         // ================= UI NAVIGATION =================
         window.switchView = (viewId) => {
@@ -467,14 +478,11 @@
             document.getElementById(viewId).classList.remove('hidden-view');
             
             if(viewId === 'home-view') {
-                document.getElementById('nav-home').classList.add('text-eco-green', 'font-bold');
-                document.getElementById('nav-home').classList.remove('text-slate-600');
+                document.getElementById('nav-home').classList.add('text-eco-green', 'font-bold'); document.getElementById('nav-home').classList.remove('text-slate-600');
                 document.getElementById('nav-profile').classList.remove('font-bold', 'border', 'border-eco-green');
-                fetchFoods(); 
-                fetchFarmProducts();
+                fetchFoods(); fetchFarmProducts();
             } else {
-                document.getElementById('nav-home').classList.remove('text-eco-green', 'font-bold');
-                document.getElementById('nav-home').classList.add('text-slate-600');
+                document.getElementById('nav-home').classList.remove('text-eco-green', 'font-bold'); document.getElementById('nav-home').classList.add('text-slate-600');
                 document.getElementById('nav-profile').classList.add('font-bold', 'border', 'border-eco-green');
                 checkUserRoles(); 
             }
@@ -483,8 +491,7 @@
         window.switchTab = (btn, sectionId) => {
             document.querySelectorAll('button[onclick^="switchTab"]').forEach(b => { b.classList.remove('tab-active'); b.classList.add('text-slate-500'); });
             btn.classList.add('tab-active'); btn.classList.remove('text-slate-500');
-            document.getElementById('section-surplus').classList.add('hidden-view');
-            document.getElementById('section-farm').classList.add('hidden-view');
+            document.getElementById('section-surplus').classList.add('hidden-view'); document.getElementById('section-farm').classList.add('hidden-view');
             document.getElementById('section-' + sectionId).classList.remove('hidden-view');
         };
 
@@ -496,9 +503,7 @@
         
         window.toggleBiddingUI = (isBid) => {
             document.getElementById('biddingArea').classList.toggle('hidden-view', !isBid);
-            document.getElementById('labelBid').classList.toggle('border-eco-green', isBid);
-            document.getElementById('labelBid').classList.toggle('bg-eco-green-light', isBid);
-            document.getElementById('labelBid').classList.toggle('border-2', isBid);
+            document.getElementById('labelBid').classList.toggle('border-eco-green', isBid); document.getElementById('labelBid').classList.toggle('bg-eco-green-light', isBid); document.getElementById('labelBid').classList.toggle('border-2', isBid);
         };
         
         window.toggleDeliveryUI = (type) => {
@@ -518,9 +523,12 @@
                         <div class="bg-amber-50 p-4 rounded-xl border border-amber-200 mb-4 mt-4">
                             <p class="font-bold text-amber-800 text-lg"><i class="fa-solid fa-store mr-2"></i>${currentMerchantInfo.shop_name}</p>
                         </div>
-                        <div class="flex gap-3">
-                            <button onclick="toggleModal('modal-post-food')" class="w-1/2 bg-amber-500 text-white py-3 rounded-xl font-bold hover:bg-amber-600 transition shadow-sm">โพสต์อาหาร</button>
-                            <button onclick="openMerchantOrders()" class="w-1/2 bg-slate-800 text-white py-3 rounded-xl font-bold hover:bg-slate-700 transition shadow-sm">จัดการออเดอร์</button>
+                        <div class="flex flex-col gap-3">
+                            <button onclick="preparePostFood()" class="w-full bg-amber-500 text-white py-3 rounded-xl font-bold hover:bg-amber-600 transition shadow-sm">โพสต์อาหาร</button>
+                            <div class="flex gap-3">
+                                <button onclick="openManagePosts('surplus')" class="w-1/2 bg-slate-100 text-slate-700 py-2.5 rounded-xl font-bold border border-slate-300 hover:bg-slate-200 transition shadow-sm">จัดการโพสต์</button>
+                                <button onclick="openMerchantOrders('surplus')" class="w-1/2 bg-slate-800 text-white py-2.5 rounded-xl font-bold hover:bg-slate-700 transition shadow-sm">ออเดอร์ร้านค้า</button>
+                            </div>
                         </div>
                     `;
                 }
@@ -532,9 +540,12 @@
                         <div class="bg-eco-green-light p-4 rounded-xl border border-emerald-200 mb-4 mt-4">
                             <p class="font-bold text-eco-green text-lg"><i class="fa-solid fa-leaf mr-2"></i>${farmerInfo.farm_name}</p>
                         </div>
-                        <div class="flex gap-3">
-                            <button onclick="toggleModal('modal-post-farm')" class="w-1/2 bg-emerald-600 text-white py-3 rounded-xl font-bold hover:bg-emerald-700 transition shadow-sm">โพสต์สินค้า</button>
-                            <button onclick="openMerchantOrders()" class="w-1/2 bg-slate-800 text-white py-3 rounded-xl font-bold hover:bg-slate-700 transition shadow-sm">จัดการออเดอร์</button>
+                        <div class="flex flex-col gap-3">
+                            <button onclick="preparePostFarm()" class="w-full bg-emerald-600 text-white py-3 rounded-xl font-bold hover:bg-emerald-700 transition shadow-sm">โพสต์สินค้าเกษตร</button>
+                            <div class="flex gap-3">
+                                <button onclick="openManagePosts('farm')" class="w-1/2 bg-slate-100 text-slate-700 py-2.5 rounded-xl font-bold border border-slate-300 hover:bg-slate-200 transition shadow-sm">จัดการโพสต์</button>
+                                <button onclick="openMerchantOrders('farm')" class="w-1/2 bg-slate-800 text-white py-2.5 rounded-xl font-bold hover:bg-slate-700 transition shadow-sm">ออเดอร์เกษตรกร</button>
+                            </div>
                         </div>
                     `;
                 }
@@ -543,112 +554,164 @@
 
         window.openEditProfile = () => {
             const user = auth.currentUser;
-            if(user) {
-                document.getElementById('editProfileName').value = user.displayName || '';
-                toggleModal('modal-edit-profile');
-            }
+            if(user) { document.getElementById('editProfileName').value = user.displayName || ''; toggleModal('modal-edit-profile'); }
         };
-
         document.getElementById('formEditProfile').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const btn = document.getElementById('btnSubmitProfile');
-            btn.innerText = 'กำลังบันทึก...'; btn.disabled = true;
+            e.preventDefault(); const btn = document.getElementById('btnSubmitProfile'); btn.innerText = 'กำลังบันทึก...'; btn.disabled = true;
             try {
-                const user = auth.currentUser;
-                let newPicUrl = user.photoURL;
-                const fileInput = document.getElementById('editProfilePic');
-                if (fileInput.files.length > 0) {
-                    const fileRef = storageRef(storage, `profiles/${user.uid}_${Date.now()}`);
-                    await uploadBytes(fileRef, fileInput.files[0]);
-                    newPicUrl = await getDownloadURL(fileRef);
-                }
+                const user = auth.currentUser; let newPicUrl = user.photoURL; const fileInput = document.getElementById('editProfilePic');
+                if (fileInput.files.length > 0) { const fileRef = storageRef(storage, `profiles/${user.uid}_${Date.now()}`); await uploadBytes(fileRef, fileInput.files[0]); newPicUrl = await getDownloadURL(fileRef); }
                 await updateProfile(user, { displayName: document.getElementById('editProfileName').value, photoURL: newPicUrl });
-                alert('อัปเดตข้อมูลสำเร็จ');
-                toggleModal('modal-edit-profile');
-                doLoginSuccess(user.uid, user.displayName, user.email, user.photoURL); 
-            } catch (error) { alert('เกิดข้อผิดพลาด: ' + error.message); } 
-            finally { btn.innerText = 'บันทึกข้อมูล'; btn.disabled = false; }
+                alert('อัปเดตข้อมูลสำเร็จ'); toggleModal('modal-edit-profile'); doLoginSuccess(user.uid, user.displayName, user.email, user.photoURL); 
+            } catch (error) { alert('เกิดข้อผิดพลาด: ' + error.message); } finally { btn.innerText = 'บันทึกข้อมูล'; btn.disabled = false; }
         });
 
-        // ================= REGISTRATION & POSTING =================
+        // ================= REGISTRATION & POSTING (WITH EDIT) =================
         const handleReg = async (e, role, coll) => {
             e.preventDefault();
-            const data = role === 'merchant' 
-                ? { shop_name: document.getElementById('regShopName').value, shop_type: document.getElementById('regShopType').value }
-                : { farm_name: document.getElementById('regFarmName').value, farm_type: document.getElementById('regFarmType').value };
-            data.created_at = serverTimestamp();
-            await setDoc(doc(db, coll, currentUser.uid), data);
-            alert(`ลงทะเบียน${role === 'merchant' ? 'ร้านค้า' : 'เกษตรกร'}สำเร็จ!`);
-            toggleModal(`modal-${role}-reg`);
-            checkUserRoles();
+            const data = role === 'merchant' ? { shop_name: document.getElementById('regShopName').value, shop_type: document.getElementById('regShopType').value } : { farm_name: document.getElementById('regFarmName').value, farm_type: document.getElementById('regFarmType').value };
+            data.created_at = serverTimestamp(); await setDoc(doc(db, coll, currentUser.uid), data); alert(`ลงทะเบียน${role === 'merchant' ? 'ร้านค้า' : 'เกษตรกร'}สำเร็จ!`);
+            toggleModal(`modal-${role}-reg`); checkUserRoles();
         };
         document.getElementById('formMerchantReg').addEventListener('submit', (e) => handleReg(e, 'merchant', 'merchants'));
         document.getElementById('formFarmerReg').addEventListener('submit', (e) => handleReg(e, 'farmer', 'farmers'));
 
+        // Prepare Post Modals for New Entry
+        window.preparePostFood = () => {
+            editingPostId = null; editingPostOldImage = null; document.getElementById('formPostFood').reset();
+            document.getElementById('titlePostFood').innerText = "โพสต์อาหารลดราคา"; document.getElementById('btnSubmitFood').innerText = "โพสต์จำหน่าย"; toggleModal('modal-post-food');
+        };
+        window.preparePostFarm = () => {
+            editingPostId = null; editingPostOldImage = null; document.getElementById('formPostFarm').reset();
+            document.getElementById('titlePostFarm').innerText = "โพสต์สินค้าเกษตร"; document.getElementById('btnSubmitFarm').innerText = "โพสต์จำหน่าย"; toggleModal('modal-post-farm');
+        };
+
+        // Handle Food Submission (Create / Update)
         document.getElementById('formPostFood').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const btn = document.getElementById('btnSubmitFood');
-            btn.innerText = 'กำลังโพสต์...'; btn.disabled = true;
+            e.preventDefault(); const btn = document.getElementById('btnSubmitFood'); btn.innerText = 'กำลังบันทึก...'; btn.disabled = true;
             try {
-                const fileInput = document.getElementById('postFoodImage');
-                let imageUrl = null;
-                if (fileInput.files.length > 0) {
-                    const fileRef = storageRef(storage, `foods/${currentUser.uid}_${Date.now()}`);
-                    await uploadBytes(fileRef, fileInput.files[0]);
-                    imageUrl = await getDownloadURL(fileRef);
-                }
-                await addDoc(collection(db, "surplus_foods"), {
+                const fileInput = document.getElementById('postFoodImage'); let imageUrl = editingPostOldImage;
+                if (fileInput.files.length > 0) { const fileRef = storageRef(storage, `foods/${currentUser.uid}_${Date.now()}`); await uploadBytes(fileRef, fileInput.files[0]); imageUrl = await getDownloadURL(fileRef); }
+                
+                const data = {
                     merchant_id: currentUser.uid, shop_name: currentMerchantInfo.shop_name, 
                     food_name: document.getElementById('postFoodName').value, description: document.getElementById('postFoodDesc').value,
                     original_price: parseFloat(document.getElementById('postOriginalPrice').value), discounted_price: parseFloat(document.getElementById('postDiscountPrice').value),
                     quantity: parseInt(document.getElementById('postQuantity').value), expiry_time: document.getElementById('postFoodExpiry').value,
-                    image_url: imageUrl, created_at: serverTimestamp()
-                });
-                alert('โพสต์จำหน่ายเรียบร้อย!'); e.target.reset(); toggleModal('modal-post-food'); fetchFoods();
-            } catch (error) { alert("เกิดข้อผิดพลาด: " + error.message); } finally { btn.innerText = 'โพสต์จำหน่าย'; btn.disabled = false; }
+                    image_url: imageUrl, 
+                };
+                
+                if (editingPostId) {
+                    await updateDoc(doc(db, "surplus_foods", editingPostId), data); alert('อัปเดตโพสต์เรียบร้อย!'); openManagePosts('surplus');
+                } else {
+                    data.created_at = serverTimestamp(); await addDoc(collection(db, "surplus_foods"), data); alert('โพสต์จำหน่ายเรียบร้อย!');
+                }
+                e.target.reset(); toggleModal('modal-post-food'); fetchFoods();
+            } catch (error) { alert("เกิดข้อผิดพลาด: " + error.message); } finally { btn.innerText = editingPostId ? 'บันทึกการแก้ไข' : 'โพสต์จำหน่าย'; btn.disabled = false; }
         });
 
+        // Handle Farm Submission (Create / Update)
         document.getElementById('formPostFarm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const btn = document.getElementById('btnSubmitFarm');
-            btn.innerText = 'กำลังโพสต์...'; btn.disabled = true;
+            e.preventDefault(); const btn = document.getElementById('btnSubmitFarm'); btn.innerText = 'กำลังบันทึก...'; btn.disabled = true;
             try {
-                let imageUrl = null;
-                const fileInput = document.getElementById('postFarmImage');
-                if (fileInput.files.length > 0) {
-                    const fileRef = storageRef(storage, `farms/${currentUser.uid}_${Date.now()}`);
-                    await uploadBytes(fileRef, fileInput.files[0]);
-                    imageUrl = await getDownloadURL(fileRef);
-                }
-                const farmerSnap = await getDoc(doc(db, "farmers", currentUser.uid));
-                const farm_name = farmerSnap.exists() ? farmerSnap.data().farm_name : 'ไม่ทราบชื่อฟาร์ม';
-                await addDoc(collection(db, "farm_products"), {
+                let imageUrl = editingPostOldImage; const fileInput = document.getElementById('postFarmImage');
+                if (fileInput.files.length > 0) { const fileRef = storageRef(storage, `farms/${currentUser.uid}_${Date.now()}`); await uploadBytes(fileRef, fileInput.files[0]); imageUrl = await getDownloadURL(fileRef); }
+                const farmerSnap = await getDoc(doc(db, "farmers", currentUser.uid)); const farm_name = farmerSnap.exists() ? farmerSnap.data().farm_name : 'ไม่ทราบชื่อฟาร์ม';
+                
+                const data = {
                     farmer_id: currentUser.uid, farm_name: farm_name, name: document.getElementById('postFarmName').value,
                     description: document.getElementById('postFarmDesc').value, price: parseFloat(document.getElementById('postFarmPrice').value),
                     unit: document.getElementById('postFarmUnit').value, quantity: parseInt(document.getElementById('postFarmQuantity').value),
-                    image_url: imageUrl, created_at: serverTimestamp()
-                });
-                alert('โพสต์สินค้าเกษตรเรียบร้อย!'); e.target.reset(); toggleModal('modal-post-farm'); fetchFarmProducts();
-                document.querySelectorAll('button[onclick^="switchTab"]').forEach(b => { if(b.innerText.includes('สินค้าเกษตร')) b.click(); });
-            } catch (error) { alert("เกิดข้อผิดพลาด: " + error.message); } finally { btn.innerText = 'โพสต์จำหน่าย'; btn.disabled = false; }
+                    image_url: imageUrl
+                };
+
+                if (editingPostId) {
+                    await updateDoc(doc(db, "farm_products", editingPostId), data); alert('อัปเดตโพสต์เรียบร้อย!'); openManagePosts('farm');
+                } else {
+                    data.created_at = serverTimestamp(); await addDoc(collection(db, "farm_products"), data); alert('โพสต์สินค้าเกษตรเรียบร้อย!'); document.querySelectorAll('button[onclick^="switchTab"]').forEach(b => { if(b.innerText.includes('สินค้าเกษตร')) b.click(); });
+                }
+                e.target.reset(); toggleModal('modal-post-farm'); fetchFarmProducts();
+            } catch (error) { alert("เกิดข้อผิดพลาด: " + error.message); } finally { btn.innerText = editingPostId ? 'บันทึกการแก้ไข' : 'โพสต์จำหน่าย'; btn.disabled = false; }
         });
+
+        // ================= MANAGE POSTS =================
+        window.openManagePosts = async (type) => {
+            toggleModal('modal-manage-posts');
+            document.getElementById('managePostsTitle').innerHTML = type === 'surplus' ? '<i class="fa-solid fa-list mr-2"></i>จัดการโพสต์ร้านค้า' : '<i class="fa-solid fa-list mr-2"></i>จัดการโพสต์เกษตรกร';
+            const container = document.getElementById('managePostsContainer'); container.innerHTML = '<div class="text-center text-slate-400 py-10"><i class="fa-solid fa-circle-notch fa-spin text-3xl mb-3"></i><br>กำลังโหลดข้อมูล...</div>';
+            
+            try {
+                const colName = type === 'surplus' ? "surplus_foods" : "farm_products";
+                const q = query(collection(db, colName), orderBy("created_at", "desc"));
+                const querySnapshot = await getDocs(q);
+                let html = '';
+                
+                querySnapshot.forEach((docSnap) => {
+                    const item = docSnap.data();
+                    const isOwner = type === 'surplus' ? item.merchant_id === currentUser.uid : item.farmer_id === currentUser.uid;
+                    
+                    if (isOwner) {
+                        const name = type === 'surplus' ? item.food_name : item.name;
+                        const price = type === 'surplus' ? item.discounted_price : item.price;
+                        const unitTxt = type === 'farm' ? `/${item.unit}` : '';
+                        
+                        html += `
+                            <div class="bg-white border border-slate-200 rounded-2xl p-5 mb-4 shadow-sm flex items-center justify-between gap-4">
+                                <div class="flex items-center gap-4 flex-1">
+                                    ${item.image_url ? `<img src="${item.image_url}" class="w-16 h-16 object-cover rounded-xl border border-slate-200">` : `<div class="w-16 h-16 bg-slate-100 rounded-xl flex items-center justify-center text-slate-400"><i class="fa-solid fa-image"></i></div>`}
+                                    <div>
+                                        <h4 class="font-bold text-slate-800">${name}</h4>
+                                        <p class="text-sm text-slate-500">คงเหลือ: ${item.quantity} | ราคา: ฿${price}${unitTxt}</p>
+                                    </div>
+                                </div>
+                                <div class="flex flex-col gap-2 w-24 shrink-0">
+                                    <button onclick="editPost('${docSnap.id}', '${type}')" class="bg-indigo-50 hover:bg-indigo-100 text-indigo-600 px-3 py-1.5 rounded-lg text-sm font-bold border border-indigo-200 transition"><i class="fa-solid fa-pen mr-1"></i> แก้ไข</button>
+                                    <button onclick="deletePost('${docSnap.id}', '${type}')" class="bg-rose-50 hover:bg-rose-100 text-rose-600 px-3 py-1.5 rounded-lg text-sm font-bold border border-rose-200 transition"><i class="fa-solid fa-trash mr-1"></i> ลบ</button>
+                                </div>
+                            </div>
+                        `;
+                    }
+                });
+                container.innerHTML = html === '' ? '<div class="text-center text-slate-400 py-10 font-medium">ยังไม่มีโพสต์</div>' : html;
+            } catch (error) { console.error(error); container.innerHTML = '<div class="text-center text-rose-500 py-10">เกิดข้อผิดพลาด</div>'; }
+        };
+
+        window.editPost = async (id, type) => {
+            const colName = type === 'surplus' ? "surplus_foods" : "farm_products";
+            const docSnap = await getDoc(doc(db, colName, id));
+            if(docSnap.exists()){
+                const data = docSnap.data(); editingPostId = id; editingPostOldImage = data.image_url;
+                if(type === 'surplus'){
+                    document.getElementById('postFoodName').value = data.food_name; document.getElementById('postFoodDesc').value = data.description || '';
+                    document.getElementById('postOriginalPrice').value = data.original_price; document.getElementById('postDiscountPrice').value = data.discounted_price;
+                    document.getElementById('postQuantity').value = data.quantity; document.getElementById('postFoodExpiry').value = data.expiry_time || '';
+                    document.getElementById('titlePostFood').innerText = "แก้ไขข้อมูลอาหาร"; document.getElementById('btnSubmitFood').innerText = "บันทึกการแก้ไข"; toggleModal('modal-manage-posts'); toggleModal('modal-post-food');
+                } else {
+                    document.getElementById('postFarmName').value = data.name; document.getElementById('postFarmDesc').value = data.description || '';
+                    document.getElementById('postFarmPrice').value = data.price; document.getElementById('postFarmUnit').value = data.unit;
+                    document.getElementById('postFarmQuantity').value = data.quantity;
+                    document.getElementById('titlePostFarm').innerText = "แก้ไขข้อมูลสินค้าเกษตร"; document.getElementById('btnSubmitFarm').innerText = "บันทึกการแก้ไข"; toggleModal('modal-manage-posts'); toggleModal('modal-post-farm');
+                }
+            }
+        };
+
+        window.deletePost = async (id, type) => {
+            if(confirm("คุณต้องการลบโพสต์นี้ใช่หรือไม่? การกระทำนี้ไม่สามารถกู้คืนได้")){
+                const colName = type === 'surplus' ? "surplus_foods" : "farm_products";
+                await deleteDoc(doc(db, colName, id)); alert("ลบโพสต์เรียบร้อย");
+                openManagePosts(type); type === 'surplus' ? fetchFoods() : fetchFarmProducts();
+            }
+        };
 
         // ================= FETCHING FEED =================
         async function fetchFoods() {
-            const container = document.getElementById('foodContainer');
-            const loadingText = document.getElementById('loadingText');
+            const container = document.getElementById('foodContainer'); const loadingText = document.getElementById('loadingText');
             loadingText.classList.remove('hidden-view'); container.classList.add('hidden-view'); container.innerHTML = '';
-            
-            const q = query(collection(db, "surplus_foods"), orderBy("created_at", "desc"));
-            const querySnapshot = await getDocs(q);
+            const q = query(collection(db, "surplus_foods"), orderBy("created_at", "desc")); const querySnapshot = await getDocs(q);
             let html = '', hasActive = false;
             querySnapshot.forEach((docSnap) => {
-                const item = docSnap.data();
-                if (item.quantity <= 0) return; 
-                if (item.expiry_time && new Date(item.expiry_time) < new Date()) return; 
-                
-                hasActive = true;
-                const discount = Math.round(((item.original_price - item.discounted_price) / item.original_price) * 100);
+                const item = docSnap.data(); if (item.quantity <= 0) return; if (item.expiry_time && new Date(item.expiry_time) < new Date()) return; 
+                hasActive = true; const discount = Math.round(((item.original_price - item.discounted_price) / item.original_price) * 100);
                 const imgHTML = item.image_url ? `<img src="${item.image_url}" class="w-full h-44 object-cover rounded-xl mb-4 border border-slate-100">` : `<div class="w-full h-44 bg-slate-50 rounded-xl mb-4 border border-slate-200 flex items-center justify-center text-slate-300"><i class="fa-solid fa-utensils text-4xl"></i></div>`;
                 html += `
                     <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 flex flex-col group hover:shadow-lg hover:-translate-y-1 transition duration-300">
@@ -660,30 +723,23 @@
                         <h3 class="text-xl font-bold text-slate-800 line-clamp-1">${item.food_name}</h3>
                         <p class="text-sm text-emerald-600 mb-2 font-medium"><i class="fa-solid fa-store mr-1"></i> ${item.shop_name}</p>
                         ${item.description ? `<p class="text-sm text-slate-500 mb-4 line-clamp-2 leading-relaxed">${item.description}</p>` : ''}
-                        
                         <div class="flex items-baseline gap-2 mb-5 mt-auto pt-2">
-                            <span class="text-3xl font-bold text-eco-green">฿${item.discounted_price}</span>
-                            <span class="text-sm text-slate-400 line-through">฿${item.original_price}</span>
+                            <span class="text-3xl font-bold text-eco-green">฿${item.discounted_price}</span> <span class="text-sm text-slate-400 line-through">฿${item.original_price}</span>
                         </div>
-                        <button onclick="openBuyModal('${docSnap.id}', '${item.food_name}', ${item.discounted_price}, '${item.shop_name}', '${item.merchant_id}', 'surplus')" class="w-full bg-slate-800 text-white py-3 rounded-xl font-bold hover:bg-eco-green transition shadow-md">สั่งซื้อ / เสนอราคา</button>
-                    </div>
-                `;
+                        <button onclick="openBuyModal('${docSnap.id}', '${item.food_name}', ${item.discounted_price}, '${item.shop_name}', '${item.merchant_id}', 'surplus', '', ${item.quantity})" class="w-full bg-slate-800 text-white py-3 rounded-xl font-bold hover:bg-eco-green transition shadow-md">สั่งซื้อ / เสนอราคา</button>
+                    </div>`;
             });
             if (!hasActive) { loadingText.innerHTML = '<div class="py-10 text-slate-400 font-medium"><i class="fa-solid fa-inbox text-3xl mb-3 block text-slate-300"></i>ขณะนี้ไม่มีอาหารลดราคาในระบบ</div>'; } 
             else { loadingText.classList.add('hidden-view'); container.classList.remove('hidden-view'); container.innerHTML = html; }
         }
 
         async function fetchFarmProducts() {
-            const container = document.getElementById('farmContainer');
-            if (!container) return;
+            const container = document.getElementById('farmContainer'); if (!container) return;
             container.innerHTML = '<div class="text-center text-slate-500 py-10 w-full col-span-full">กำลังโหลดข้อมูล...</div>';
             const querySnapshot = await getDocs(query(collection(db, "farm_products"), orderBy("created_at", "desc")));
-            
             let html = '', hasActive = false;
             querySnapshot.forEach((docSnap) => {
-                const item = docSnap.data();
-                if (item.quantity <= 0) return; 
-                hasActive = true;
+                const item = docSnap.data(); if (item.quantity <= 0) return; hasActive = true;
                 const imgHTML = item.image_url ? `<img src="${item.image_url}" class="w-full h-44 object-cover rounded-xl mb-4 border border-slate-100">` : `<div class="w-full h-44 bg-slate-50 rounded-xl mb-4 border border-slate-200 flex items-center justify-center text-slate-300"><i class="fa-solid fa-leaf text-4xl"></i></div>`;
                 html += `
                     <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 flex flex-col group hover:shadow-lg hover:-translate-y-1 transition duration-300">
@@ -694,36 +750,47 @@
                         <h3 class="text-xl font-bold text-slate-800 line-clamp-1">${item.name}</h3>
                         <p class="text-sm text-emerald-600 mb-2 font-medium"><i class="fa-solid fa-seedling mr-1"></i> ${item.farm_name}</p>
                         ${item.description ? `<p class="text-sm text-slate-500 mb-4 line-clamp-2 leading-relaxed">${item.description}</p>` : ''}
-                        
                         <div class="flex items-baseline gap-2 mb-5 mt-auto pt-2">
-                            <span class="text-3xl font-bold text-eco-green">฿${item.price}</span>
-                            <span class="text-sm text-slate-500 font-medium">/ ${item.unit}</span>
+                            <span class="text-3xl font-bold text-eco-green">฿${item.price}</span> <span class="text-sm text-slate-500 font-medium">/ ${item.unit}</span>
                         </div>
-                        <button onclick="openBuyModal('${docSnap.id}', '${item.name}', ${item.price}, '${item.farm_name}', '${item.farmer_id}', 'farm', '${item.unit}')" class="w-full bg-emerald-600 text-white py-3 rounded-xl font-bold hover:bg-emerald-800 transition shadow-md">สั่งซื้อสินค้า</button>
-                    </div>
-                `;
+                        <button onclick="openBuyModal('${docSnap.id}', '${item.name}', ${item.price}, '${item.farm_name}', '${item.farmer_id}', 'farm', '${item.unit}', ${item.quantity})" class="w-full bg-emerald-600 text-white py-3 rounded-xl font-bold hover:bg-emerald-800 transition shadow-md">สั่งซื้อสินค้า</button>
+                    </div>`;
             });
             container.innerHTML = !hasActive ? '<div class="text-center text-slate-400 font-medium py-10 w-full col-span-full"><i class="fa-solid fa-basket-shopping text-3xl mb-3 block text-slate-300"></i>ขณะนี้ไม่มีสินค้าเกษตรในระบบ</div>' : html;
         }
 
-        // ================= BUY ORDER PROCESS =================
-        window.openBuyModal = (id, name, price, shopName, merchantId, type = 'surplus', unit = '') => {
-            selectedFoodId = id; selectedItemName = name; selectedShopName = shopName; selectedMerchantId = merchantId; selectedItemType = type;
-            document.getElementById('buyFoodName').innerText = name; document.getElementById('buyPrice').innerText = price;
+        // ================= BUY ORDER PROCESS (WITH QUANTITY) =================
+        window.openBuyModal = (id, name, price, shopName, sellerId, type = 'surplus', unit = '', maxQty = 1) => {
+            selectedFoodId = id; selectedItemName = name; selectedShopName = shopName; selectedSellerId = sellerId; selectedItemType = type;
+            currentItemPrice = price; currentMaxQty = maxQty;
+            
+            document.getElementById('buyFoodName').innerText = name; 
             document.getElementById('buyShopName').innerHTML = type === 'surplus' ? `<i class="fa-solid fa-store"></i> ${shopName}` : `<i class="fa-solid fa-seedling"></i> ${shopName}`;
             document.getElementById('buyUnit').innerText = type === 'farm' ? `/ ${unit}` : '';
+            
+            document.getElementById('buyQuantity').value = 1;
+            document.getElementById('buyQuantity').max = maxQty;
+            document.getElementById('buyMaxQuantity').innerText = `${maxQty} ${unit || 'ที่'}`;
+            calculateTotalPrice();
             
             document.getElementById('buyPriceOptionsTitle').classList.toggle('hidden-view', type === 'farm');
             document.getElementById('buyPriceOptionsArea').classList.toggle('hidden-view', type === 'farm');
             
             document.querySelector('input[value="full"]').checked = true; document.querySelector('input[value="pickup"]').checked = true;
             toggleBiddingUI(false); toggleDeliveryUI('pickup');
-            
             document.getElementById('bidAmount').value = ''; document.getElementById('orderTime').value = ''; document.getElementById('orderAddress').value = ''; document.getElementById('buyerPhone').value = '';
             toggleModal('modal-buy');
         };
 
+        window.calculateTotalPrice = () => {
+            let qty = parseInt(document.getElementById('buyQuantity').value) || 1;
+            if(qty > currentMaxQty) { qty = currentMaxQty; document.getElementById('buyQuantity').value = qty; }
+            if(qty < 1) { qty = 1; document.getElementById('buyQuantity').value = 1; }
+            document.getElementById('buyPriceTotal').innerText = (currentItemPrice * qty).toLocaleString();
+        };
+
         window.confirmOrder = async () => {
+            const qty = parseInt(document.getElementById('buyQuantity').value) || 1;
             const isBidding = document.querySelector('input[value="bid"]').checked && selectedItemType === 'surplus';
             const bidPrice = document.getElementById('bidAmount').value;
             const deliveryMethod = document.querySelector('input[name="deliveryOption"]:checked').value;
@@ -731,14 +798,16 @@
             const phone = document.getElementById('buyerPhone').value;
 
             if (!phone) return alert("กรุณาระบุเบอร์โทรศัพท์ติดต่อ");
-            if (isBidding && !bidPrice) return alert("กรุณาระบุราคาที่เสนอ");
+            if (isBidding && !bidPrice) return alert("กรุณาระบุราคารวมที่เสนอ");
             if (!time) return alert("กรุณาระบุเวลา");
+
+            const finalPrice = isBidding ? parseFloat(bidPrice) : (currentItemPrice * qty);
 
             await addDoc(collection(db, "orders"), {
                 item_id: selectedFoodId, item_name: selectedItemName, item_type: selectedItemType,
-                shop_name: selectedShopName, merchant_id: selectedMerchantId,
+                shop_name: selectedShopName, seller_id: selectedSellerId, 
                 buyer_id: currentUser.uid, buyer_name: currentUser.name || "ลูกค้า", buyer_phone: phone,
-                type: isBidding ? "bidding" : "normal", offer_price: isBidding ? parseFloat(bidPrice) : null,
+                quantity: qty, type: isBidding ? "bidding" : "normal", offer_price: isBidding ? finalPrice : null, total_price: finalPrice,
                 delivery_method: deliveryMethod, time: time, address: document.getElementById('orderAddress').value,
                 status: "pending", reject_reason: "", created_at: serverTimestamp()
             });
@@ -746,195 +815,139 @@
             if(!isBidding) {
                 const itemRef = doc(db, selectedItemType === 'farm' ? "farm_products" : "surplus_foods", selectedFoodId);
                 const itemSnap = await getDoc(itemRef);
-                if(itemSnap.exists()) await updateDoc(itemRef, { quantity: itemSnap.data().quantity - 1 });
+                if(itemSnap.exists()) await updateDoc(itemRef, { quantity: itemSnap.data().quantity - qty });
             }
-            
-            alert(isBidding ? `ส่งเสนอราคา ${bidPrice} บาทแล้ว กรุณารอร้านค้ายืนยัน` : "สั่งซื้อสำเร็จ! รอร้านค้ายืนยันออเดอร์");
-            toggleModal('modal-buy');
-            selectedItemType === 'farm' ? fetchFarmProducts() : fetchFoods(); 
+            alert(isBidding ? `ส่งเสนอราคา ${bidPrice} บาท สำหรับ ${qty} รายการแล้ว กรุณารอร้านค้ายืนยัน` : "สั่งซื้อสำเร็จ! รอร้านค้ายืนยันออเดอร์");
+            toggleModal('modal-buy'); selectedItemType === 'farm' ? fetchFarmProducts() : fetchFoods(); 
         };
 
-        // ================= ORDER MANAGEMENT (MERCHANT & BUYER) =================
-        
-        // ฟังก์ชันช่วยเหลือสถานะ
+        // ================= ORDER MANAGEMENT & REAL-TIME LISTENER =================
         const getStatusLabel = (status, deliveryMethod) => {
-            if (status === 'pending') return "รอร้านค้ายอมรับ";
-            if (status === 'rejected') return "ถูกปฏิเสธ";
-            if (status === 'approved') return "สินค้าได้รับการอนุมัติ";
+            if (status === 'pending') return "รอร้านค้ายอมรับ"; if (status === 'rejected') return "ถูกปฏิเสธ"; if (status === 'approved') return "สินค้าได้รับการอนุมัติ";
             if (status === 'completed') return deliveryMethod === 'delivery' ? "จัดส่งสินค้าสำเร็จ" : "สินค้ารับสำเร็จ";
-            if (deliveryMethod === 'delivery') {
-                if (status === 'preparing') return "สินค้าอยู่ระหว่างเตรียมจัดส่ง";
-                if (status === 'delivering') return "สินค้ากำลังจัดส่ง";
-            } else {
-                if (status === 'ready') return "พร้อมรับสินค้าในเวลา";
-            }
-            return status;
+            if (deliveryMethod === 'delivery') { if (status === 'preparing') return "สินค้าอยู่ระหว่างเตรียมจัดส่ง"; if (status === 'delivering') return "สินค้ากำลังจัดส่ง"; } 
+            else { if (status === 'ready') return "พร้อมรับสินค้าในเวลา"; } return status;
         };
+
+        function listenToBuyerOrders() {
+            if (!currentUser) return;
+            if (unsubscribeOrders) unsubscribeOrders();
+            const q = query(collection(db, "orders"), where("buyer_id", "==", currentUser.uid));
+            unsubscribeOrders = onSnapshot(q, (snapshot) => {
+                let activeCount = 0; let latestStatus = ''; let latestTime = 0;
+                snapshot.forEach((docSnap) => {
+                    const order = docSnap.data();
+                    if (order.status !== 'completed' && order.status !== 'rejected') {
+                        activeCount++; let orderTime = order.created_at ? order.created_at.toMillis() : 0;
+                        if (orderTime > latestTime) { latestTime = orderTime; latestStatus = getStatusLabel(order.status, order.delivery_method); }
+                    }
+                });
+                const statusBar = document.getElementById('buyer-status-bar');
+                if (activeCount > 0) {
+                    if(!latestStatus) latestStatus = 'รอร้านค้ายอมรับ';
+                    document.getElementById('active-order-count').innerText = activeCount; document.getElementById('active-order-status-text').innerText = latestStatus + (activeCount > 1 ? ` (และอีก ${activeCount - 1} รายการ)` : '');
+                    statusBar.classList.remove('hidden-view'); document.body.style.paddingBottom = '76px'; 
+                } else { statusBar.classList.add('hidden-view'); document.body.style.paddingBottom = '0px'; }
+            });
+        }
 
         const renderTimeline = (status, deliveryMethod, orderTime) => {
-            const stepsPickUp = [
-                { id: 'pending', label: 'รอร้านค้ายอมรับ' },
-                { id: 'approved', label: 'สินค้าได้รับการอนุมัติ' },
-                { id: 'ready', label: `พร้อมรับสินค้าในเวลา (${orderTime})` },
-                { id: 'completed', label: 'สินค้ารับสำเร็จ' }
-            ];
-            const stepsDeliv = [
-                { id: 'pending', label: 'รอร้านค้ายอมรับ' },
-                { id: 'approved', label: 'สินค้าได้รับการอนุมัติ' },
-                { id: 'preparing', label: 'สินค้าอยู่ระหว่างเตรียมจัดส่ง' },
-                { id: 'delivering', label: 'สินค้ากำลังจัดส่ง' },
-                { id: 'completed', label: 'จัดส่งสินค้าสำเร็จ' }
-            ];
-            
-            if (status === 'rejected') return `<div class="text-rose-600 font-bold text-center p-4 bg-rose-50 rounded-xl border border-rose-100"><i class="fa-solid fa-circle-xmark text-2xl mb-2"></i><br>คำสั่งซื้อถูกปฏิเสธโดยร้านค้า</div>`;
-
+            const stepsPickUp = [ { id: 'pending', label: 'รอร้านค้ายอมรับ' }, { id: 'approved', label: 'สินค้าได้รับการอนุมัติ' }, { id: 'ready', label: `พร้อมรับสินค้าในเวลา (${orderTime})` }, { id: 'completed', label: 'สินค้ารับสำเร็จ' } ];
+            const stepsDeliv = [ { id: 'pending', label: 'รอร้านค้ายอมรับ' }, { id: 'approved', label: 'สินค้าได้รับการอนุมัติ' }, { id: 'preparing', label: 'สินค้าอยู่ระหว่างเตรียมจัดส่ง' }, { id: 'delivering', label: 'สินค้ากำลังจัดส่ง' }, { id: 'completed', label: 'จัดส่งสินค้าสำเร็จ' } ];
+            if (status === 'rejected') return `<div class="text-rose-600 font-bold text-center p-4 bg-rose-50 rounded-xl border border-rose-100"><i class="fa-solid fa-circle-xmark text-2xl mb-2"></i><br>คำสั่งซื้อถูกปฏิเสธโดยผู้ขาย</div>`;
             const steps = deliveryMethod === 'delivery' ? stepsDeliv : stepsPickUp;
-            let currentIdx = steps.findIndex(s => s.id === status);
-            if (currentIdx === -1) currentIdx = 0; // fallback
-
+            let currentIdx = steps.findIndex(s => s.id === status); if (currentIdx === -1) currentIdx = 0; 
             let html = `<div class="flex flex-col space-y-4 mt-6 px-2">`;
             steps.forEach((step, idx) => {
-                const isPastOrCurrent = idx <= currentIdx;
-                const stateClass = isPastOrCurrent ? "step-active" : "step-pending";
+                const isPastOrCurrent = idx <= currentIdx; const stateClass = isPastOrCurrent ? "step-active" : "step-pending";
                 html += `
                     <div class="flex items-start ${stateClass} relative group">
                         ${idx !== steps.length - 1 ? `<div class="absolute left-4 top-8 bottom-[-16px] w-0.5 step-line transition-all duration-300"></div>` : ''}
-                        <div class="w-8 h-8 rounded-full border-2 flex items-center justify-center step-icon z-10 shadow-sm transition-colors duration-300">
-                            ${isPastOrCurrent ? '<i class="fa-solid fa-check text-sm"></i>' : '<i class="fa-solid fa-circle text-[8px]"></i>'}
-                        </div>
-                        <div class="ml-4 mt-1 step-text transition-colors duration-300">
-                            <p class="text-[15px]">${step.label}</p>
-                        </div>
-                    </div>
-                `;
-            });
-            html += `</div>`;
-            return html;
+                        <div class="w-8 h-8 rounded-full border-2 flex items-center justify-center step-icon z-10 shadow-sm transition-colors duration-300">${isPastOrCurrent ? '<i class="fa-solid fa-check text-sm"></i>' : '<i class="fa-solid fa-circle text-[8px]"></i>'}</div>
+                        <div class="ml-4 mt-1 step-text transition-colors duration-300"><p class="text-[15px]">${step.label}</p></div>
+                    </div>`;
+            }); html += `</div>`; return html;
         };
 
-        // สำหรับหน้าผู้ซื้อ
         window.openBuyerOrders = async () => {
-            toggleModal('modal-buyer-orders');
-            clearAllCountdowns();
-            const container = document.getElementById('buyerOrdersContainer');
-            container.innerHTML = '<div class="text-center text-slate-400 py-10"><i class="fa-solid fa-circle-notch fa-spin text-3xl mb-3"></i><br>กำลังโหลดข้อมูล...</div>';
+            toggleModal('modal-buyer-orders'); clearAllCountdowns();
+            const container = document.getElementById('buyerOrdersContainer'); container.innerHTML = '<div class="text-center text-slate-400 py-10"><i class="fa-solid fa-circle-notch fa-spin text-3xl mb-3"></i><br>กำลังโหลดข้อมูล...</div>';
             try {
-                const q = query(collection(db, "orders"), orderBy("created_at", "desc"));
-                const querySnapshot = await getDocs(q);
-                let html = '';
+                const q = query(collection(db, "orders"), orderBy("created_at", "desc")); const querySnapshot = await getDocs(q); let html = '';
                 querySnapshot.forEach((docSnap) => {
                     const order = docSnap.data();
                     if (order.buyer_id === currentUser.uid) {
                         const dateStr = order.created_at ? order.created_at.toDate().toLocaleString('th-TH') : '';
-                        const priceText = order.type === 'bidding' ? `เสนอราคา (฿${order.offer_price})` : `ราคาปกติ`;
+                        const priceText = order.type === 'bidding' ? `เสนอราคา (฿${order.total_price})` : `฿${order.total_price}`;
                         
                         html += `
                             <div class="bg-white border border-slate-200 rounded-2xl p-6 mb-5 shadow-sm hover:shadow-md transition">
                                 <div class="flex justify-between items-start mb-4 border-b border-slate-100 pb-3">
                                     <div>
-                                        <h4 class="font-bold text-lg text-slate-800">${order.item_name}</h4>
-                                        <p class="text-sm text-slate-500"><i class="fa-solid fa-store mr-1"></i> ${order.shop_name}</p>
+                                        <h4 class="font-bold text-lg text-slate-800">${order.item_name} <span class="text-eco-green bg-emerald-50 px-2 py-1 rounded text-sm ml-2">x ${order.quantity}</span></h4>
+                                        <p class="text-sm text-slate-500"><i class="fa-solid ${order.item_type === 'surplus' ? 'fa-store' : 'fa-seedling'} mr-1"></i> ${order.shop_name}</p>
                                     </div>
                                     <div class="text-right">
                                         <span class="text-xs text-slate-400"><i class="fa-regular fa-clock"></i> ${dateStr}</span>
                                         <div class="text-xs bg-slate-100 text-slate-600 px-2 py-1 rounded mt-1 font-medium border border-slate-200 inline-block">ออเดอร์: ${docSnap.id.substring(0, 8)}</div>
                                     </div>
                                 </div>
-                                
                                 <div class="grid grid-cols-2 gap-4 text-sm text-slate-700 bg-slate-50 p-4 rounded-xl mb-4 border border-slate-100">
-                                    <div><strong>รูปแบบการซื้อ:</strong> ${priceText}</div>
+                                    <div><strong>ยอดรวม:</strong> <span class="text-indigo-600 font-bold">${priceText}</span></div>
                                     <div><strong>การรับสินค้า:</strong> ${order.delivery_method === 'delivery' ? 'จัดส่งถึงที่' : 'รับที่ร้าน'}</div>
                                     ${order.address ? `<div class="col-span-2"><strong>สถานที่จัดส่ง:</strong> ${order.address}</div>` : ''}
-                                    <div class="col-span-2 font-bold text-indigo-700" id="countdown-${docSnap.id}">
-                                        นัดหมายเวลา: <span class="text-xl">${order.time}</span> น.
-                                    </div>
+                                    <div class="col-span-2 font-bold text-indigo-700" id="countdown-${docSnap.id}">นัดหมายเวลา: <span class="text-xl">${order.time}</span> น.</div>
                                 </div>
-
                                 <div class="bg-white border border-slate-100 p-4 rounded-xl shadow-inner">
                                     <h5 class="font-bold text-slate-700 text-sm border-b border-slate-100 pb-2">สถานะคำสั่งซื้อ</h5>
                                     ${renderTimeline(order.status, order.delivery_method, order.time)}
                                     ${order.status === 'rejected' && order.reject_reason ? `<p class="mt-3 text-sm text-rose-600 bg-rose-50 p-3 rounded-lg border border-rose-100"><strong>เหตุผล:</strong> ${order.reject_reason}</p>` : ''}
                                 </div>
-                            </div>
-                        `;
-                        // เริ่มการนับถอยหลังถ้าออเดอร์ยังไม่จบ
-                        if(order.status !== 'completed' && order.status !== 'rejected') {
-                            startCountdownTimer(`countdown-${docSnap.id}`, order.time, order.status);
-                        }
+                            </div>`;
+                        if(order.status !== 'completed' && order.status !== 'rejected') { startCountdownTimer(`countdown-${docSnap.id}`, order.time, order.status); }
                     }
                 });
                 container.innerHTML = html === '' ? '<div class="text-center text-slate-400 py-10 font-medium">คุณยังไม่มีประวัติการสั่งซื้อ</div>' : html;
             } catch (error) { console.error(error); container.innerHTML = '<div class="text-center text-rose-500 py-10">เกิดข้อผิดพลาดในการโหลดข้อมูล</div>'; }
         };
 
-        // นับถอยหลังง่ายๆ สำหรับวันนี้
         function startCountdownTimer(elementId, targetTime, status) {
             const interval = setInterval(() => {
-                const el = document.getElementById(elementId);
-                if(!el) { clearInterval(interval); return; }
-                
-                const now = new Date();
-                const [th, tm] = targetTime.split(':');
-                const target = new Date();
-                target.setHours(parseInt(th), parseInt(tm), 0, 0);
-                
+                const el = document.getElementById(elementId); if(!el) { clearInterval(interval); return; }
+                const now = new Date(); const [th, tm] = targetTime.split(':'); const target = new Date(); target.setHours(parseInt(th), parseInt(tm), 0, 0);
                 const diffMs = target - now;
                 if (diffMs > 0) {
-                    const h = Math.floor(diffMs / (1000 * 60 * 60));
-                    const m = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
-                    let timeStr = h > 0 ? `${h} ชม. ${m} นาที` : `${m} นาที`;
+                    const h = Math.floor(diffMs / (1000 * 60 * 60)); const m = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60)); let timeStr = h > 0 ? `${h} ชม. ${m} นาที` : `${m} นาที`;
                     el.innerHTML = `นัดหมายเวลา: <span class="text-xl mx-1">${targetTime}</span> น. <span class="ml-2 text-rose-500 bg-rose-50 px-2 py-1 rounded text-xs border border-rose-200"><i class="fa-regular fa-clock"></i> เหลือเวลา ${timeStr}</span>`;
                 } else {
-                    el.innerHTML = `นัดหมายเวลา: <span class="text-xl mx-1">${targetTime}</span> น. <span class="ml-2 text-eco-green bg-emerald-50 px-2 py-1 rounded text-xs border border-emerald-200">ถึงเวลานัดหมายแล้ว</span>`;
-                    clearInterval(interval);
+                    el.innerHTML = `นัดหมายเวลา: <span class="text-xl mx-1">${targetTime}</span> น. <span class="ml-2 text-eco-green bg-emerald-50 px-2 py-1 rounded text-xs border border-emerald-200">ถึงเวลานัดหมายแล้ว</span>`; clearInterval(interval);
                 }
-            }, 60000); // อัปเดตทุกนาที
-            activeCountdownIntervals.push(interval);
-            // ให้วิ่งรอบแรกทันที
-            setTimeout(() => { clearInterval(interval); startCountdownTimer(elementId, targetTime, status); }, 10); 
+            }, 60000); 
+            activeCountdownIntervals.push(interval); setTimeout(() => { clearInterval(interval); startCountdownTimer(elementId, targetTime, status); }, 10); 
         }
+        function clearAllCountdowns() { activeCountdownIntervals.forEach(clearInterval); activeCountdownIntervals = []; }
 
-        function clearAllCountdowns() {
-            activeCountdownIntervals.forEach(clearInterval);
-            activeCountdownIntervals = [];
-        }
-
-        // สำหรับหน้าผู้ขาย (ร้านค้า/เกษตรกร)
-        window.openMerchantOrders = async () => {
+        // ================= SEPARATED MERCHANT / FARMER ORDERS =================
+        window.openMerchantOrders = async (type) => {
             toggleModal('modal-merchant-orders');
-            const container = document.getElementById('merchantOrdersContainer');
-            container.innerHTML = '<div class="text-center text-slate-400 py-10"><i class="fa-solid fa-circle-notch fa-spin text-3xl mb-3"></i><br>กำลังโหลดออเดอร์...</div>';
+            document.getElementById('merchantOrdersTitle').innerHTML = type === 'surplus' ? '<i class="fa-solid fa-store mr-2 text-amber-600"></i>ออเดอร์ร้านค้า' : '<i class="fa-solid fa-seedling mr-2 text-eco-green"></i>ออเดอร์เกษตรกร';
+            const container = document.getElementById('merchantOrdersContainer'); container.innerHTML = '<div class="text-center text-slate-400 py-10"><i class="fa-solid fa-circle-notch fa-spin text-3xl mb-3"></i><br>กำลังโหลดออเดอร์...</div>';
             try {
-                const q = query(collection(db, "orders"), orderBy("created_at", "desc"));
-                const querySnapshot = await getDocs(q);
-                let html = '';
+                const q = query(collection(db, "orders"), orderBy("created_at", "desc")); const querySnapshot = await getDocs(q); let html = '';
                 querySnapshot.forEach((docSnap) => {
                     const order = docSnap.data();
-                    if (order.merchant_id === currentUser.uid) {
+                    // ตรวจสอบว่าเป็นออเดอร์ของคนนี้ และ เป็นประเภทที่เลือก (surplus / farm)
+                    if (order.seller_id === currentUser.uid && order.item_type === type) {
                         const dateStr = order.created_at ? order.created_at.toDate().toLocaleString('th-TH') : '';
-                        const priceText = order.type === 'bidding' ? `เสนอราคา <span class="text-amber-600 font-bold text-lg">฿${order.offer_price}</span>` : `ราคาปกติ`;
+                        const priceText = order.type === 'bidding' ? `เสนอราคา <span class="text-amber-600 font-bold text-lg">฿${order.total_price}</span>` : `฿${order.total_price}`;
                         
-                        // สร้างปุ่ม Action ตาม Status
                         let actionButtons = '';
-                        if (order.status === 'pending') {
-                            actionButtons = `
-                                <button onclick="handleMerchantAction('${docSnap.id}', 'approve', '${order.delivery_method}')" class="flex-1 bg-eco-green hover:bg-emerald-800 text-white py-2.5 rounded-xl font-bold shadow-md transition">ยอมรับออเดอร์</button>
-                                <button onclick="handleMerchantAction('${docSnap.id}', 'reject')" class="flex-1 bg-white border-2 border-rose-500 text-rose-500 hover:bg-rose-50 py-2.5 rounded-xl font-bold transition">ปฏิเสธออเดอร์</button>
-                            `;
-                        } else if (order.status === 'approved') {
-                            const nextBtn = order.delivery_method === 'delivery' 
-                                ? `<button onclick="updateOrderStatus('${docSnap.id}', 'preparing')" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-2.5 rounded-xl font-bold shadow-md transition">อัปเดต: เริ่มเตรียมจัดส่ง</button>`
-                                : `<button onclick="updateOrderStatus('${docSnap.id}', 'ready')" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-2.5 rounded-xl font-bold shadow-md transition">อัปเดต: พร้อมรับสินค้าแล้ว</button>`;
-                            actionButtons = nextBtn;
-                        } else if (order.status === 'preparing') {
-                            actionButtons = `<button onclick="updateOrderStatus('${docSnap.id}', 'delivering')" class="w-full bg-amber-500 hover:bg-amber-600 text-white py-2.5 rounded-xl font-bold shadow-md transition">อัปเดต: สินค้ากำลังจัดส่ง</button>`;
-                        } else if (order.status === 'delivering' || order.status === 'ready') {
-                            actionButtons = `<button onclick="updateOrderStatus('${docSnap.id}', 'completed')" class="w-full bg-eco-green hover:bg-emerald-800 text-white py-2.5 rounded-xl font-bold shadow-md transition">อัปเดต: สำเร็จเรียบร้อย</button>`;
-                        } else if (order.status === 'completed') {
-                            actionButtons = `<div class="w-full text-center py-2.5 bg-emerald-50 text-eco-green font-bold rounded-xl border border-emerald-200"><i class="fa-solid fa-check-circle mr-1"></i> จบรายการสำเร็จ</div>`;
-                        } else if (order.status === 'rejected') {
-                            actionButtons = `<div class="w-full text-center py-2.5 bg-rose-50 text-rose-600 font-bold rounded-xl border border-rose-200">ปฏิเสธแล้ว (${order.reject_reason})</div>`;
-                        }
+                        if (order.status === 'pending') { actionButtons = `<button onclick="handleMerchantAction('${docSnap.id}', 'approve', '${type}')" class="flex-1 bg-eco-green hover:bg-emerald-800 text-white py-2.5 rounded-xl font-bold shadow-md transition">ยอมรับออเดอร์</button><button onclick="handleMerchantAction('${docSnap.id}', 'reject', '${type}')" class="flex-1 bg-white border-2 border-rose-500 text-rose-500 hover:bg-rose-50 py-2.5 rounded-xl font-bold transition">ปฏิเสธออเดอร์</button>`; } 
+                        else if (order.status === 'approved') { actionButtons = order.delivery_method === 'delivery' ? `<button onclick="updateOrderStatus('${docSnap.id}', 'preparing', '${type}')" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-2.5 rounded-xl font-bold shadow-md transition">อัปเดต: เริ่มเตรียมจัดส่ง</button>` : `<button onclick="updateOrderStatus('${docSnap.id}', 'ready', '${type}')" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-2.5 rounded-xl font-bold shadow-md transition">อัปเดต: พร้อมรับสินค้าแล้ว</button>`; } 
+                        else if (order.status === 'preparing') { actionButtons = `<button onclick="updateOrderStatus('${docSnap.id}', 'delivering', '${type}')" class="w-full bg-amber-500 hover:bg-amber-600 text-white py-2.5 rounded-xl font-bold shadow-md transition">อัปเดต: สินค้ากำลังจัดส่ง</button>`; } 
+                        else if (order.status === 'delivering' || order.status === 'ready') { actionButtons = `<button onclick="updateOrderStatus('${docSnap.id}', 'completed', '${type}')" class="w-full bg-eco-green hover:bg-emerald-800 text-white py-2.5 rounded-xl font-bold shadow-md transition">อัปเดต: สำเร็จเรียบร้อย</button>`; } 
+                        else if (order.status === 'completed') { actionButtons = `<div class="w-full text-center py-2.5 bg-emerald-50 text-eco-green font-bold rounded-xl border border-emerald-200"><i class="fa-solid fa-check-circle mr-1"></i> จบรายการสำเร็จ</div>`; } 
+                        else if (order.status === 'rejected') { actionButtons = `<div class="w-full text-center py-2.5 bg-rose-50 text-rose-600 font-bold rounded-xl border border-rose-200">ปฏิเสธแล้ว (${order.reject_reason})</div>`; }
 
                         html += `
                             <div class="bg-white border border-slate-200 rounded-2xl p-6 mb-5 shadow-sm">
@@ -945,12 +958,11 @@
                                     </div>
                                     <span class="text-xs text-slate-400"><i class="fa-regular fa-clock"></i> ${dateStr}</span>
                                 </div>
-                                
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-5">
                                     <div class="bg-slate-50 p-4 rounded-xl border border-slate-100">
                                         <h5 class="text-xs text-slate-500 font-bold mb-2 uppercase tracking-wider">ข้อมูลสินค้า</h5>
-                                        <p class="font-bold text-lg text-slate-800">${order.item_name}</p>
-                                        <p class="text-sm text-slate-700 mt-1">รูปแบบ: ${priceText}</p>
+                                        <p class="font-bold text-lg text-slate-800">${order.item_name} <span class="text-eco-green bg-emerald-100 px-2 py-0.5 rounded text-sm">x ${order.quantity}</span></p>
+                                        <p class="text-sm text-slate-700 mt-1">ยอดรวม: ${priceText}</p>
                                     </div>
                                     <div class="bg-amber-50 p-4 rounded-xl border border-amber-100">
                                         <h5 class="text-xs text-amber-700 font-bold mb-2 uppercase tracking-wider">ข้อมูลลูกค้า (การติดต่อ)</h5>
@@ -958,50 +970,45 @@
                                         <p class="font-bold text-indigo-700 mt-1"><i class="fa-solid fa-phone mr-1 text-indigo-400"></i> ${order.buyer_phone}</p>
                                     </div>
                                 </div>
-
                                 <div class="text-sm text-slate-700 bg-emerald-50/50 p-4 rounded-xl border border-emerald-100 mb-5">
                                     <div class="flex gap-2 text-base mb-1">
-                                        <span class="font-bold">การรับสินค้า:</span> 
-                                        <span>${order.delivery_method === 'delivery' ? '<i class="fa-solid fa-motorcycle text-amber-600"></i> จัดส่งถึงที่' : '<i class="fa-solid fa-store text-emerald-600"></i> รับที่ร้าน'}</span>
+                                        <span class="font-bold">การรับสินค้า:</span> <span>${order.delivery_method === 'delivery' ? '<i class="fa-solid fa-motorcycle text-amber-600"></i> จัดส่งถึงที่' : '<i class="fa-solid fa-store text-emerald-600"></i> รับที่ร้าน'}</span>
                                     </div>
                                     <div class="text-lg font-bold text-eco-green my-2"><i class="fa-regular fa-clock"></i> เวลานัด: ${order.time} น.</div>
                                     ${order.address ? `<div class="mt-2 bg-white p-3 rounded-lg border border-slate-200 shadow-sm text-slate-600"><strong>ที่อยู่จัดส่ง:</strong> ${order.address}</div>` : ''}
                                 </div>
-
-                                <div class="flex gap-3 mt-4">
-                                    ${actionButtons}
-                                </div>
-                            </div>
-                        `;
+                                <div class="flex gap-3 mt-4">${actionButtons}</div>
+                            </div>`;
                     }
                 });
-                container.innerHTML = html === '' ? '<div class="text-center text-slate-400 py-10 font-medium">ยังไม่มีคำสั่งซื้อเข้ามา</div>' : html;
+                container.innerHTML = html === '' ? '<div class="text-center text-slate-400 py-10 font-medium">ยังไม่มีออเดอร์ในหมวดหมู่นี้</div>' : html;
             } catch (error) { console.error(error); container.innerHTML = '<div class="text-center text-rose-500 py-10">เกิดข้อผิดพลาดในการโหลดข้อมูล</div>'; }
         };
 
-        window.handleMerchantAction = async (orderId, action, deliveryMethod) => {
+        window.handleMerchantAction = async (orderId, action, type) => {
             const orderRef = doc(db, "orders", orderId);
             if (action === 'approve') {
-                if(confirm("ยืนยันการรับออเดอร์นี้?")) {
-                    await updateDoc(orderRef, { status: "approved" });
-                    alert("รับออเดอร์สำเร็จ ระบบจะแจ้งลูกค้าทันที");
-                    openMerchantOrders();
-                }
+                if(confirm("ยืนยันการรับออเดอร์นี้?")) { await updateDoc(orderRef, { status: "approved" }); alert("รับออเดอร์สำเร็จ"); openMerchantOrders(type); }
             } else if (action === 'reject') {
-                const reason = window.prompt("กรุณาระบุเหตุผลที่ปฏิเสธคำสั่งซื้อ (เพื่อให้ลูกค้าทราบ):");
+                const reason = window.prompt("กรุณาระบุเหตุผลที่ปฏิเสธคำสั่งซื้อ:");
                 if (reason !== null) {
+                    const orderSnap = await getDoc(orderRef);
+                    if(orderSnap.exists()){
+                        const orderData = orderSnap.data();
+                        if(orderData.type !== 'bidding') {
+                            const itemRef = doc(db, orderData.item_type === 'farm' ? "farm_products" : "surplus_foods", orderData.item_id);
+                            const itemSnap = await getDoc(itemRef);
+                            if(itemSnap.exists()) await updateDoc(itemRef, { quantity: itemSnap.data().quantity + orderData.quantity }); // คืนจำนวนสต๊อก
+                        }
+                    }
                     await updateDoc(orderRef, { status: "rejected", reject_reason: reason || "สินค้าหมด / ไม่สามารถให้บริการได้" });
-                    alert("ปฏิเสธออเดอร์เรียบร้อย");
-                    openMerchantOrders();
+                    alert("ปฏิเสธออเดอร์และคืนจำนวนสินค้าเรียบร้อย"); openMerchantOrders(type);
                 }
             }
         };
 
-        window.updateOrderStatus = async (orderId, nextStatus) => {
-            if(confirm("ยืนยันอัปเดตสถานะคำสั่งซื้อ?")) {
-                await updateDoc(doc(db, "orders", orderId), { status: nextStatus });
-                openMerchantOrders();
-            }
+        window.updateOrderStatus = async (orderId, nextStatus, type) => {
+            if(confirm("ยืนยันอัปเดตสถานะคำสั่งซื้อ?")) { await updateDoc(doc(db, "orders", orderId), { status: nextStatus }); openMerchantOrders(type); }
         };
 
     </script>
