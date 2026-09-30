@@ -14,7 +14,6 @@
         .modal { display: none; }
         .modal.active { display: flex; }
         .tab-active { border-bottom: 2px solid #2d7a5b; color: #2d7a5b; font-weight: 600; }
-        
         .text-eco-green { color: #2d7a5b; }
         .bg-eco-green { background-color: #2d7a5b; }
         .bg-eco-green-light { background-color: #eefcf5; }
@@ -25,29 +24,21 @@
 <body class="text-slate-800 h-screen flex flex-col">
 
     <!-- ================= VIEW: หน้า Login (Auth) ================= -->
-    <main id="auth-view" class="flex-grow flex items-center justify-center bg-slate-50 px-4">
-        <div class="bg-white p-8 rounded-3xl shadow-xl w-full max-w-md border border-slate-100 text-center relative overflow-hidden">
-            
-            <!-- Loading Overlay (แสดงตอนกำลัง Redirect กลับมา) -->
-            <div id="authLoading" class="absolute inset-0 bg-white bg-opacity-90 z-10 flex flex-col items-center justify-center hidden-view">
-                <i class="fa-solid fa-circle-notch fa-spin text-4xl text-eco-green mb-3"></i>
-                <p class="text-slate-600 font-medium">กำลังเข้าสู่ระบบ...</p>
-            </div>
-
+    <main id="auth-view" class="flex-grow flex items-center justify-center bg-slate-50 px-4 relative">
+        <div class="bg-white p-8 rounded-3xl shadow-xl w-full max-w-md border border-slate-100 text-center">
             <div class="flex justify-center items-center gap-2 mb-6">
                 <i class="fa-solid fa-recycle text-eco-green text-5xl"></i>
             </div>
             <h1 class="text-3xl font-bold text-eco-green mb-2 tracking-tight">EcoLoop</h1>
             <p class="text-slate-500 mb-8">เข้าสู่ระบบเพื่อร่วมเป็นส่วนหนึ่งของ<br>เศรษฐกิจหมุนเวียนในชุมชน</p>
 
-            <!-- ปุ่ม Google (ใช้ Redirect) -->
+            <!-- ปุ่ม Google -->
             <button onclick="loginWithGoogle()" class="w-full bg-white border border-slate-300 text-slate-700 py-3 rounded-xl font-medium hover:bg-slate-50 transition mb-4 flex items-center justify-center gap-3 shadow-sm">
-                <!-- โลโก้ G ของจริง -->
                 <svg width="20" height="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
                 ดำเนินการต่อด้วย Google
             </button>
             
-            <!-- ปุ่ม Apple (ใช้ Redirect) -->
+            <!-- ปุ่ม Apple -->
             <button onclick="loginWithApple()" class="w-full bg-black text-white py-3 rounded-xl font-medium hover:bg-gray-800 transition mb-4 flex items-center justify-center gap-3 shadow-sm">
                 <i class="fa-brands fa-apple text-xl"></i>
                 ดำเนินการต่อด้วย Apple
@@ -65,9 +56,9 @@
             </button>
 
             <div id="phoneLoginArea" class="hidden-view mt-4 text-left">
-                <label class="block text-sm font-medium text-slate-700 mb-1">เบอร์โทรศัพท์ (+66)</label>
+                <label class="block text-sm font-medium text-slate-700 mb-1">เบอร์โทรศัพท์ (ใส่ 09... ได้เลย)</label>
                 <div class="flex gap-2 mb-3">
-                    <input type="tel" id="phoneNumber" placeholder="+66812345678" class="w-full border rounded-xl px-4 py-2 focus:ring-2 focus:ring-emerald-500 outline-none">
+                    <input type="tel" id="phoneNumber" placeholder="09xxxxxxxx" class="w-full border rounded-xl px-4 py-2 focus:ring-2 focus:ring-emerald-500 outline-none">
                     <button id="btnSendOTP" onclick="sendOTP()" class="bg-eco-green text-white px-4 py-2 rounded-xl text-sm font-bold whitespace-nowrap">ส่ง OTP</button>
                 </div>
                 <div id="recaptcha-container" class="mb-3"></div>
@@ -77,6 +68,10 @@
                     <button onclick="verifyOTP()" class="w-full bg-slate-800 text-white py-2.5 rounded-xl font-bold">ยืนยันรหัส OTP</button>
                 </div>
             </div>
+            
+            <button onclick="demoLogin()" class="w-full mt-6 bg-slate-100 text-slate-400 text-xs py-2 rounded-lg hover:bg-slate-200 transition">
+                <i class="fa-solid fa-laptop-code mr-1"></i> (สำหรับฉุกเฉิน) ข้ามการล็อกอินเข้าโหมด Demo
+            </button>
         </div>
     </main>
 
@@ -99,10 +94,9 @@
 
     <!-- ================= VIEW: หน้าหลัก (Home) ================= -->
     <main id="home-view" class="hidden-view max-w-6xl mx-auto px-6 py-12 w-full">
-        <!-- (เนื้อหาเหมือนเดิม) -->
         <div class="text-center mb-16">
             <h2 class="text-4xl md:text-5xl font-bold text-eco-dark mb-6 tracking-wide">อาหารคุณภาพดี ในราคาที่เข้าถึงได้</h2>
-            <p class="text-slate-500 text-lg md:text-xl max-w-3xl mx-auto leading-relaxed">ร่วมเป็นส่วนหนึ่งในการขับเคลื่อน Circular Economy ลดขยะอาหาร<br class="hidden md:block">และสนับสนุนร้านอาหารในชุมชน</p>
+            <p class="text-slate-500 text-lg md:text-xl max-w-3xl mx-auto leading-relaxed">ร่วมเป็นส่วนหนึ่งในการขับเคลื่อน Circular Economy ลดขยะอาหารและสนับสนุนร้านอาหารในชุมชน</p>
         </div>
         <div class="flex justify-center gap-8 border-b border-slate-200 mb-10">
             <button class="pb-3 px-4 tab-active text-lg transition" onclick="switchTab(this, 'surplus')"><i class="fa-solid fa-utensils mr-2"></i> อาหารลดราคา (ร้านค้า)</button>
@@ -122,7 +116,6 @@
 
     <!-- ================= VIEW: ข้อมูลส่วนตัว (Profile) ================= -->
     <main id="profile-view" class="hidden-view max-w-6xl mx-auto px-6 py-12 w-full">
-        <!-- (เนื้อหาเหมือนเดิม) -->
         <div class="flex justify-between items-center mb-8">
             <h2 class="text-3xl font-bold text-eco-dark">จัดการข้อมูลส่วนตัว</h2>
             <button onclick="logoutUser()" class="text-rose-500 hover:text-rose-700 font-medium border border-rose-200 bg-rose-50 px-4 py-2 rounded-xl transition">
@@ -151,10 +144,7 @@
         </div>
     </main>
 
-    <!-- (ส่วน Modals ยกมาจากเวอร์ชันที่แล้วทั้งหมด ไม่มีการเปลี่ยนแปลง) -->
-    <!-- (ขออนุญาตละโค้ด HTML ส่วน Modal ไว้เพื่อให้โค้ดกระชับ คุณสามารถก๊อปปี้บล็อก Modal 4 ตัวจากเวอร์ชันก่อนมาต่อตรงนี้ได้เลย) -->
-    
-    <!-- Modal: ลงทะเบียนร้านค้า -->
+    <!-- ================= MODALS ================= -->
     <div id="modal-merchant-reg" class="modal fixed inset-0 bg-slate-900 bg-opacity-50 justify-center items-center z-50 backdrop-blur-sm">
         <div class="bg-white rounded-3xl shadow-xl w-11/12 max-w-md p-8 relative">
             <button onclick="toggleModal('modal-merchant-reg')" class="absolute top-6 right-6 text-slate-400 hover:text-slate-700 text-xl"><i class="fa-solid fa-xmark"></i></button>
@@ -171,8 +161,6 @@
             </form>
         </div>
     </div>
-
-    <!-- Modal: ลงทะเบียนเกษตรกร -->
     <div id="modal-farmer-reg" class="modal fixed inset-0 bg-slate-900 bg-opacity-50 justify-center items-center z-50 backdrop-blur-sm">
         <div class="bg-white rounded-3xl shadow-xl w-11/12 max-w-md p-8 relative">
             <button onclick="toggleModal('modal-farmer-reg')" class="absolute top-6 right-6 text-slate-400 hover:text-slate-700 text-xl"><i class="fa-solid fa-xmark"></i></button>
@@ -184,8 +172,6 @@
             </form>
         </div>
     </div>
-
-    <!-- Modal: โพสต์อาหาร -->
     <div id="modal-post-food" class="modal fixed inset-0 bg-slate-900 bg-opacity-50 justify-center items-center z-50 backdrop-blur-sm">
         <div class="bg-white rounded-3xl shadow-xl w-11/12 max-w-md p-8 relative">
             <button onclick="toggleModal('modal-post-food')" class="absolute top-6 right-6 text-slate-400 hover:text-slate-700 text-xl"><i class="fa-solid fa-xmark"></i></button>
@@ -201,22 +187,18 @@
             </form>
         </div>
     </div>
-
-    <!-- Modal: สั่งซื้อแบบสมบูรณ์ -->
     <div id="modal-buy" class="modal fixed inset-0 bg-slate-900 bg-opacity-50 justify-center items-center z-50 backdrop-blur-sm p-4">
         <div class="bg-white rounded-3xl shadow-xl w-full max-w-md overflow-hidden flex flex-col max-h-[90vh]">
             <div class="px-6 py-5 border-b border-slate-100 flex justify-between items-center bg-slate-50">
                 <h3 class="text-xl font-bold text-slate-800">รายละเอียดการสั่งซื้อ</h3>
                 <button onclick="toggleModal('modal-buy')" class="text-slate-400 hover:text-slate-700 text-xl"><i class="fa-solid fa-xmark"></i></button>
             </div>
-            
             <div class="p-6 overflow-y-auto">
                 <div class="bg-eco-green-light rounded-xl p-5 mb-6 border border-emerald-100">
                     <h4 id="buyFoodName" class="text-lg font-bold text-eco-green">ชื่อเมนู</h4>
                     <p id="buyShopName" class="text-sm text-emerald-600 mb-2"><i class="fa-solid fa-store"></i> ร้านค้า</p>
                     <div class="text-2xl font-bold text-slate-800">฿<span id="buyPrice">0</span></div>
                 </div>
-
                 <h5 class="font-bold text-slate-800 mb-3">รูปแบบราคา</h5>
                 <div class="grid grid-cols-2 gap-3 mb-6">
                     <label class="border-2 border-eco-green bg-eco-green-light rounded-xl p-3 cursor-pointer flex items-center gap-2">
@@ -228,11 +210,9 @@
                         <span class="font-medium text-slate-700">เสนอราคา</span>
                     </label>
                 </div>
-                
                 <div id="biddingArea" class="mb-6 hidden-view">
                     <input type="number" id="bidAmount" placeholder="ระบุราคาที่เสนอ (บาท)" class="w-full border rounded-xl px-4 py-3 focus:ring-2 focus:ring-emerald-500 outline-none">
                 </div>
-
                 <h5 class="font-bold text-slate-800 mb-3">วิธีการรับสินค้า</h5>
                 <div class="grid grid-cols-2 gap-3 mb-4">
                     <label class="border border-slate-200 rounded-xl p-3 cursor-pointer flex items-center gap-2 hover:bg-slate-50">
@@ -244,17 +224,14 @@
                         <span class="font-medium text-slate-700"><i class="fa-solid fa-motorcycle mr-1"></i> จัดส่งถึงที่</span>
                     </label>
                 </div>
-
                 <div class="mb-4">
                     <label id="timeLabel" class="block text-sm font-medium text-slate-700 mb-1">เวลาที่จะไปรับสินค้า</label>
                     <input type="time" id="orderTime" class="w-full border border-slate-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-emerald-500 outline-none">
                 </div>
-                
                 <div id="addressArea" class="mb-4 hidden-view">
                     <textarea id="orderAddress" rows="2" placeholder="ระบุสถานที่จัดส่ง / คณะ / หอพัก" class="w-full border border-slate-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-emerald-500 outline-none"></textarea>
                 </div>
             </div>
-            
             <div class="p-6 border-t border-slate-100 bg-slate-50">
                 <button onclick="confirmOrder()" class="w-full bg-eco-green text-white py-3.5 rounded-xl font-bold text-lg hover:bg-emerald-800 transition shadow-md">
                     ยืนยันคำสั่งซื้อ
@@ -268,8 +245,9 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js";
         import { getFirestore, collection, addDoc, getDocs, query, orderBy, doc, setDoc, getDoc, updateDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore.js";
-        // ⚠️ สังเกตว่าเราเพิ่ม getRedirectResult และ signInWithRedirect เข้ามา
-        import { getAuth, setPersistence, browserLocalPersistence, GoogleAuthProvider, OAuthProvider, signInWithRedirect, getRedirectResult, onAuthStateChanged, signOut, RecaptchaVerifier, signInWithPhoneNumber } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-auth.js";
+        
+        // 💡 กลับมาใช้ signInWithPopup เพราะตอนนี้รันบน GitHub Pages (ไม่มีปัญหาเรื่อง Sandbox แล้ว)
+        import { getAuth, setPersistence, browserLocalPersistence, GoogleAuthProvider, OAuthProvider, signInWithPopup, onAuthStateChanged, signOut, RecaptchaVerifier, signInWithPhoneNumber } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-auth.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyBa8M4mrFqajSHCOpcA4gr8bBoy7__nBl8",
@@ -277,8 +255,7 @@
             projectId: "ecoloop-8b449",
             storageBucket: "ecoloop-8b449.firebasestorage.app",
             messagingSenderId: "931335207188",
-            appId: "1:931335207188:web:315f55df419b3cf0b92a01",
-            measurementId: "G-1B7WZSBMQL"
+            appId: "1:931335207188:web:315f55df419b3cf0b92a01"
         };
 
         const app = initializeApp(firebaseConfig);
@@ -292,50 +269,21 @@
         let selectedFoodId = null;
         const THIRTY_DAYS_MS = 30 * 24 * 60 * 60 * 1000; 
 
-        // ตรวจสอบผลลัพธ์หลังจากกลับมาจาก Redirect Login
-        getRedirectResult(auth).then((result) => {
-            if (result) {
-                // ล็อกอินสำเร็จ ซ่อนหน้าโหลด
-                document.getElementById('authLoading').classList.add('hidden-view');
-            }
-        }).catch((error) => {
-            document.getElementById('authLoading').classList.add('hidden-view');
-            console.error("Redirect Error:", error);
-            alert("การเข้าสู่ระบบถูกยกเลิก หรือมีข้อผิดพลาด");
-        });
-
-
         // ================= 1. ระบบ AUTHENTICATION =================
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 const loginTimeStr = localStorage.getItem('ecoLoopLoginTime');
                 const currentTime = Date.now();
-
                 if (loginTimeStr) {
                     if (currentTime - parseInt(loginTimeStr) > THIRTY_DAYS_MS) {
-                        alert("เซสชันของคุณหมดอายุแล้ว (เกิน 30 วัน) กรุณาเข้าสู่ระบบใหม่");
+                        alert("เซสชันหมดอายุ กรุณาเข้าสู่ระบบใหม่");
                         logoutUser();
                         return; 
                     }
                 } else {
                     localStorage.setItem('ecoLoopLoginTime', currentTime.toString());
                 }
-
-                currentUser = user;
-                document.getElementById('auth-view').classList.add('hidden-view');
-                document.getElementById('main-nav').classList.remove('hidden-view');
-                document.getElementById('home-view').classList.remove('hidden-view');
-                
-                const userName = user.displayName || 'ผู้ใช้งาน (' + (user.phoneNumber || 'ไม่มีชื่อ') + ')';
-                const userEmail = user.email || user.phoneNumber || '';
-                const userPic = user.photoURL || 'https://via.placeholder.com/150';
-                
-                document.getElementById('profile-name').innerText = userName;
-                document.getElementById('profile-email').innerText = userEmail;
-                document.getElementById('profile-pic').src = userPic;
-                document.getElementById('nav-user-pic').src = userPic;
-
-                fetchFoods();
+                doLoginSuccess(user.uid, user.displayName, user.email || user.phoneNumber, user.photoURL);
             } else {
                 currentUser = null;
                 document.getElementById('auth-view').classList.remove('hidden-view');
@@ -345,35 +293,70 @@
             }
         });
 
-        // ⚠️ เปลี่ยนมาใช้ signInWithRedirect เพื่อเลี่ยงการโดนบล็อก Popup ใน iframe
+        function doLoginSuccess(uid, name, email, pic) {
+            currentUser = { uid: uid };
+            document.getElementById('auth-view').classList.add('hidden-view');
+            document.getElementById('main-nav').classList.remove('hidden-view');
+            document.getElementById('home-view').classList.remove('hidden-view');
+            
+            const userName = name || 'ผู้ใช้งาน Demo';
+            const userEmail = email || '';
+            const userPic = pic || 'https://ui-avatars.com/api/?name=User&background=2d7a5b&color=fff';
+            
+            document.getElementById('profile-name').innerText = userName;
+            document.getElementById('profile-email').innerText = userEmail;
+            document.getElementById('profile-pic').src = userPic;
+            document.getElementById('nav-user-pic').src = userPic;
+
+            fetchFoods();
+        }
+
+        // 💡 Google Login เปลี่ยนกลับมาใช้ signInWithPopup 
         window.loginWithGoogle = () => {
-            document.getElementById('authLoading').classList.remove('hidden-view'); // แสดงหน้าโหลด
             const provider = new GoogleAuthProvider();
-            signInWithRedirect(auth, provider);
+            signInWithPopup(auth, provider).catch((error) => {
+                console.error(error);
+                alert("เกิดข้อผิดพลาด: " + error.message);
+            });
         };
 
+        // 💡 ปุ่ม Apple แจ้งเตือนข้อจำกัด
         window.loginWithApple = () => {
-            document.getElementById('authLoading').classList.remove('hidden-view');
-            const provider = new OAuthProvider('apple.com');
-            signInWithRedirect(auth, provider);
+            alert("ฟีเจอร์ดำเนินการด้วย Apple จำเป็นต้องเชื่อมต่อบัญชี Apple Developer ($99/ปี) ในการใช้งานครับ แนะนำให้ใช้ Google Login สำหรับการนำเสนอโปรเจกต์");
         };
 
-        // (โค้ดโทรศัพท์ OTP และฟังก์ชันส่วนอื่นๆ ยังคงทำงานเหมือนเดิมทุกประการ)
+        window.demoLogin = () => {
+            const demoUid = "demo_user_" + Math.floor(Math.random() * 10000);
+            doLoginSuccess(demoUid, "กรรมการผู้ประเมิน (Demo)", "demo@ecoloop.local", null);
+            alert("เข้าสู่โหมด Demo เรียบร้อย");
+        };
+
         window.togglePhoneLogin = () => { document.getElementById('phoneLoginArea').classList.toggle('hidden-view'); };
 
         window.sendOTP = () => {
-            const phoneNumber = document.getElementById('phoneNumber').value;
+            let phoneNumber = document.getElementById('phoneNumber').value;
             if(!phoneNumber) return alert('กรุณากรอกเบอร์โทร');
-            if(!window.recaptchaVerifier) window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', { 'size': 'normal' });
+            if(phoneNumber.startsWith('0')) phoneNumber = '+66' + phoneNumber.substring(1);
+
+            if(!window.recaptchaVerifier) {
+                window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', { 'size': 'normal' });
+            }
             const btn = document.getElementById('btnSendOTP');
             btn.innerText = "กำลังส่ง...";
+            
             signInWithPhoneNumber(auth, phoneNumber, window.recaptchaVerifier)
                 .then((confirmationResult) => {
                     window.confirmationResult = confirmationResult;
                     document.getElementById('otpArea').classList.remove('hidden-view');
                     btn.innerText = "ส่งแล้ว";
                 }).catch((error) => {
-                    console.error(error); alert('ส่ง OTP ไม่สำเร็จ (ให้เช็คเบอร์ว่าขึ้นต้นด้วย +66 หรือโดนบล็อกใน Sandbox หรือไม่)'); btn.innerText = "ส่ง OTP";
+                    console.error(error); 
+                    // 💡 แสดง Error ที่แท้จริงจาก Firebase เพื่อให้เรารู้ว่าติดปัญหาตรงไหน
+                    alert('ส่ง OTP ไม่สำเร็จ สาเหตุ: ' + error.message); 
+                    btn.innerText = "ส่ง OTP";
+                    if(window.recaptchaVerifier) window.recaptchaVerifier.render().then(function(widgetId) {
+                        grecaptcha.reset(widgetId);
+                    });
                 });
         };
 
@@ -383,13 +366,18 @@
         };
 
         window.logoutUser = () => {
-            signOut(auth).then(() => {
+            if (currentUser && currentUser.uid && currentUser.uid.startsWith('demo_user_')) {
+                currentUser = null;
                 localStorage.removeItem('ecoLoopLoginTime');
-                alert('ออกจากระบบสำเร็จ');
-            });
+                location.reload();
+            } else {
+                signOut(auth).then(() => {
+                    localStorage.removeItem('ecoLoopLoginTime');
+                });
+            }
         };
 
-        // ================= 2. UI NAVIGATION & FIRESTORE FUNCTIONS (เหมือนเดิม) =================
+        // ================= UI NAVIGATION & FIRESTORE FUNCTIONS =================
         window.switchView = (viewId) => {
             document.getElementById('home-view').classList.add('hidden-view');
             document.getElementById('profile-view').classList.add('hidden-view');
