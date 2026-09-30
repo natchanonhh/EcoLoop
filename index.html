@@ -32,39 +32,34 @@
             <h1 class="text-3xl font-bold text-eco-green mb-2 tracking-tight">EcoLoop</h1>
             <p class="text-slate-500 mb-8">เข้าสู่ระบบเพื่อร่วมเป็นส่วนหนึ่งของ<br>เศรษฐกิจหมุนเวียนในชุมชน</p>
 
-            <!-- ปุ่ม Google -->
-            <button onclick="loginWithGoogle()" class="w-full bg-white border border-slate-300 text-slate-700 py-3 rounded-xl font-medium hover:bg-slate-50 transition mb-6 flex items-center justify-center gap-3 shadow-sm">
+            <!-- 1. ปุ่ม Google -->
+            <button onclick="loginWithGoogle()" class="w-full bg-white border border-slate-300 text-slate-700 py-3 rounded-xl font-medium hover:bg-slate-50 transition mb-4 flex items-center justify-center gap-3 shadow-sm">
                 <svg width="20" height="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
                 ดำเนินการต่อด้วย Google
+            </button>
+            
+            <!-- 2. ปุ่ม Facebook -->
+            <button onclick="loginWithFacebook()" class="w-full bg-[#1877F2] text-white py-3 rounded-xl font-medium hover:bg-blue-700 transition mb-4 flex items-center justify-center gap-3 shadow-sm">
+                <i class="fa-brands fa-facebook text-xl"></i>
+                ดำเนินการต่อด้วย Facebook
+            </button>
+
+            <!-- 3. ปุ่ม Microsoft -->
+            <button onclick="loginWithMicrosoft()" class="w-full bg-white border border-slate-300 text-slate-700 py-3 rounded-xl font-medium hover:bg-slate-50 transition mb-6 flex items-center justify-center gap-3 shadow-sm">
+                <i class="fa-brands fa-microsoft text-[#05a6f0] text-xl"></i>
+                ดำเนินการต่อด้วย Microsoft
             </button>
 
             <div class="relative flex py-4 items-center mb-2">
                 <div class="flex-grow border-t border-slate-200"></div>
-                <span class="flex-shrink-0 mx-4 text-slate-400 text-sm">หรือ</span>
+                <span class="flex-shrink-0 mx-4 text-slate-400 text-sm">หรือโหมดทดสอบ</span>
                 <div class="flex-grow border-t border-slate-200"></div>
             </div>
 
-            <button onclick="togglePhoneLogin()" class="w-full bg-eco-green-light text-eco-green py-3 rounded-xl font-medium hover:bg-emerald-100 transition flex items-center justify-center gap-3">
-                <i class="fa-solid fa-phone"></i>
-                เข้าสู่ระบบด้วยเบอร์โทรศัพท์
-            </button>
-
-            <div id="phoneLoginArea" class="hidden-view mt-4 text-left">
-                <label class="block text-sm font-medium text-slate-700 mb-1">เบอร์โทรศัพท์ (ใส่ 09... ได้เลย)</label>
-                <div class="flex gap-2 mb-3">
-                    <input type="tel" id="phoneNumber" placeholder="09xxxxxxxx" class="w-full border rounded-xl px-4 py-2 focus:ring-2 focus:ring-emerald-500 outline-none">
-                    <button id="btnSendOTP" onclick="sendOTP()" class="bg-eco-green text-white px-4 py-2 rounded-xl text-sm font-bold whitespace-nowrap">ส่ง OTP</button>
-                </div>
-                <div id="recaptcha-container" class="mb-3"></div>
-                <div id="otpArea" class="hidden-view">
-                    <label class="block text-sm font-medium text-slate-700 mb-1">รหัส OTP 6 หลัก</label>
-                    <input type="text" id="otpCode" placeholder="123456" class="w-full border rounded-xl px-4 py-2 mb-3 text-center tracking-widest text-lg font-bold outline-none">
-                    <button onclick="verifyOTP()" class="w-full bg-slate-800 text-white py-2.5 rounded-xl font-bold">ยืนยันรหัส OTP</button>
-                </div>
-            </div>
-            
-            <button onclick="demoLogin()" class="w-full mt-6 bg-slate-100 text-slate-400 text-xs py-2 rounded-lg hover:bg-slate-200 transition">
-                <i class="fa-solid fa-laptop-code mr-1"></i> (สำหรับฉุกเฉิน) ข้ามการล็อกอินเข้าโหมด Demo
+            <!-- ปุ่ม Demo -->
+            <button onclick="demoLogin()" class="w-full bg-slate-100 text-slate-500 py-3 rounded-xl font-medium hover:bg-slate-200 transition flex items-center justify-center gap-3">
+                <i class="fa-solid fa-laptop-code"></i>
+                ข้ามการล็อกอินเข้าโหมด Demo
             </button>
         </div>
     </main>
@@ -120,7 +115,7 @@
             <img id="profile-pic" src="https://via.placeholder.com/150" class="w-20 h-20 rounded-full border-4 border-eco-green-light object-cover">
             <div>
                 <h2 id="profile-name" class="text-2xl font-bold text-slate-800">ชื่อผู้ใช้งาน</h2>
-                <p id="profile-email" class="text-slate-500">อีเมล / เบอร์โทร</p>
+                <p id="profile-email" class="text-slate-500">อีเมล / ข้อมูลผู้ใช้</p>
             </div>
         </div>
         <h3 class="text-xl font-bold text-slate-800 mb-6">พาร์ทเนอร์ในระบบ EcoLoop</h3>
@@ -239,8 +234,9 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js";
         import { getFirestore, collection, addDoc, getDocs, query, orderBy, doc, setDoc, getDoc, updateDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore.js";
-        // นำ OAuthProvider ออกจากการ Import เนื่องจากไม่ได้ใช้แล้ว
-        import { getAuth, setPersistence, browserLocalPersistence, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut, RecaptchaVerifier, signInWithPhoneNumber } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-auth.js";
+        
+        // 💡 เปลี่ยนส่วน Import ให้รองรับ Facebook และ Microsoft OAuth
+        import { getAuth, setPersistence, browserLocalPersistence, GoogleAuthProvider, FacebookAuthProvider, OAuthProvider, signInWithPopup, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-auth.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyBa8M4mrFqajSHCOpcA4gr8bBoy7__nBl8",
@@ -276,7 +272,7 @@
                 } else {
                     localStorage.setItem('ecoLoopLoginTime', currentTime.toString());
                 }
-                doLoginSuccess(user.uid, user.displayName, user.email || user.phoneNumber, user.photoURL);
+                doLoginSuccess(user.uid, user.displayName, user.email, user.photoURL);
             } else {
                 currentUser = null;
                 document.getElementById('auth-view').classList.remove('hidden-view');
@@ -292,7 +288,7 @@
             document.getElementById('main-nav').classList.remove('hidden-view');
             document.getElementById('home-view').classList.remove('hidden-view');
             
-            const userName = name || 'ผู้ใช้งาน Demo';
+            const userName = name || 'ผู้ใช้งาน';
             const userEmail = email || '';
             const userPic = pic || 'https://ui-avatars.com/api/?name=User&background=2d7a5b&color=fff';
             
@@ -304,11 +300,28 @@
             fetchFoods();
         }
 
+        // 💡 ฟังก์ชันล็อกอิน 3 ช่องทาง
         window.loginWithGoogle = () => {
             const provider = new GoogleAuthProvider();
             signInWithPopup(auth, provider).catch((error) => {
                 console.error(error);
-                alert("เกิดข้อผิดพลาด: " + error.message);
+                alert("เกิดข้อผิดพลาดในการเข้าสู่ระบบ: " + error.message);
+            });
+        };
+
+        window.loginWithFacebook = () => {
+            const provider = new FacebookAuthProvider();
+            signInWithPopup(auth, provider).catch((error) => {
+                console.error(error);
+                alert("กรุณาตั้งค่า App ID / App Secret ของ Facebook ใน Firebase ให้เรียบร้อยก่อน\n\n(Error: " + error.message + ")");
+            });
+        };
+
+        window.loginWithMicrosoft = () => {
+            const provider = new OAuthProvider('microsoft.com');
+            signInWithPopup(auth, provider).catch((error) => {
+                console.error(error);
+                alert("กรุณาตั้งค่า Application ID / Secret ของ Microsoft Azure ใน Firebase ให้เรียบร้อยก่อน\n\n(Error: " + error.message + ")");
             });
         };
 
@@ -316,39 +329,6 @@
             const demoUid = "demo_user_" + Math.floor(Math.random() * 10000);
             doLoginSuccess(demoUid, "กรรมการผู้ประเมิน (Demo)", "demo@ecoloop.local", null);
             alert("เข้าสู่โหมด Demo เรียบร้อย");
-        };
-
-        window.togglePhoneLogin = () => { document.getElementById('phoneLoginArea').classList.toggle('hidden-view'); };
-
-        window.sendOTP = () => {
-            let phoneNumber = document.getElementById('phoneNumber').value;
-            if(!phoneNumber) return alert('กรุณากรอกเบอร์โทร');
-            if(phoneNumber.startsWith('0')) phoneNumber = '+66' + phoneNumber.substring(1);
-
-            if(!window.recaptchaVerifier) {
-                window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', { 'size': 'normal' });
-            }
-            const btn = document.getElementById('btnSendOTP');
-            btn.innerText = "กำลังส่ง...";
-            
-            signInWithPhoneNumber(auth, phoneNumber, window.recaptchaVerifier)
-                .then((confirmationResult) => {
-                    window.confirmationResult = confirmationResult;
-                    document.getElementById('otpArea').classList.remove('hidden-view');
-                    btn.innerText = "ส่งแล้ว";
-                }).catch((error) => {
-                    console.error(error); 
-                    alert('ส่ง OTP ไม่สำเร็จ สาเหตุ: ' + error.message); 
-                    btn.innerText = "ส่ง OTP";
-                    if(window.recaptchaVerifier) window.recaptchaVerifier.render().then(function(widgetId) {
-                        grecaptcha.reset(widgetId);
-                    });
-                });
-        };
-
-        window.verifyOTP = () => {
-            const code = document.getElementById('otpCode').value;
-            window.confirmationResult.confirm(code).catch((error) => { alert('รหัส OTP ไม่ถูกต้อง!'); });
         };
 
         window.logoutUser = () => {
@@ -391,6 +371,7 @@
         };
 
         window.toggleModal = (modalID) => { document.getElementById(modalID).classList.toggle('active'); };
+        
         window.toggleBiddingUI = (isBid) => {
             if(isBid) {
                 document.getElementById('biddingArea').classList.remove('hidden-view');
