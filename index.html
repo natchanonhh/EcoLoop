@@ -32,35 +32,42 @@
             <h1 class="text-3xl font-bold text-eco-green mb-2 tracking-tight">EcoLoop</h1>
             <p class="text-slate-500 mb-8">เข้าสู่ระบบเพื่อร่วมเป็นส่วนหนึ่งของ<br>เศรษฐกิจหมุนเวียนในชุมชน</p>
 
-            <!-- 1. ปุ่ม Google -->
-            <button onclick="loginWithGoogle()" class="w-full bg-white border border-slate-300 text-slate-700 py-3 rounded-xl font-medium hover:bg-slate-50 transition mb-4 flex items-center justify-center gap-3 shadow-sm">
+            <!-- ปุ่ม Google -->
+            <button onclick="loginWithGoogle()" class="w-full bg-white border border-slate-300 text-slate-700 py-3 rounded-xl font-medium hover:bg-slate-50 transition mb-6 flex items-center justify-center gap-3 shadow-sm">
                 <svg width="20" height="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
                 ดำเนินการต่อด้วย Google
             </button>
-            
-            <!-- 2. ปุ่ม Facebook -->
-            <button onclick="loginWithFacebook()" class="w-full bg-[#1877F2] text-white py-3 rounded-xl font-medium hover:bg-blue-700 transition mb-4 flex items-center justify-center gap-3 shadow-sm">
-                <i class="fa-brands fa-facebook text-xl"></i>
-                ดำเนินการต่อด้วย Facebook
-            </button>
 
-            <!-- 3. ปุ่ม Microsoft -->
-            <button onclick="loginWithMicrosoft()" class="w-full bg-white border border-slate-300 text-slate-700 py-3 rounded-xl font-medium hover:bg-slate-50 transition mb-6 flex items-center justify-center gap-3 shadow-sm">
-                <i class="fa-brands fa-microsoft text-[#05a6f0] text-xl"></i>
-                ดำเนินการต่อด้วย Microsoft
-            </button>
-
-            <div class="relative flex py-4 items-center mb-2">
+            <div class="relative flex py-4 items-center mb-4">
                 <div class="flex-grow border-t border-slate-200"></div>
-                <span class="flex-shrink-0 mx-4 text-slate-400 text-sm">หรือโหมดทดสอบ</span>
+                <span class="flex-shrink-0 mx-4 text-slate-400 text-sm">หรือใช้อีเมล / รหัสผ่าน</span>
                 <div class="flex-grow border-t border-slate-200"></div>
             </div>
 
-            <!-- ปุ่ม Demo -->
-            <button onclick="demoLogin()" class="w-full bg-slate-100 text-slate-500 py-3 rounded-xl font-medium hover:bg-slate-200 transition flex items-center justify-center gap-3">
-                <i class="fa-solid fa-laptop-code"></i>
-                ข้ามการล็อกอินเข้าโหมด Demo
-            </button>
+            <!-- ฟอร์มเข้าสู่ระบบ (Login) -->
+            <div id="loginFormArea">
+                <input type="email" id="loginEmail" placeholder="อีเมล" class="w-full border rounded-xl px-4 py-3 mb-3 outline-none focus:ring-2 focus:ring-eco-green">
+                <input type="password" id="loginPassword" placeholder="รหัสผ่าน" class="w-full border rounded-xl px-4 py-3 mb-4 outline-none focus:ring-2 focus:ring-eco-green">
+                <button onclick="loginWithEmail()" class="w-full bg-eco-green text-white py-3 rounded-xl font-medium hover:bg-emerald-800 transition shadow-sm mb-4">
+                    เข้าสู่ระบบ
+                </button>
+                <p class="text-sm text-slate-500">
+                    ยังไม่มีบัญชี? <button onclick="toggleAuthForm('register')" class="text-eco-green font-bold hover:underline">สมัครสมาชิก</button>
+                </p>
+            </div>
+
+            <!-- ฟอร์มสมัครสมาชิก (Register) - ซ่อนไว้เป็นค่าเริ่มต้น -->
+            <div id="registerFormArea" class="hidden-view">
+                <input type="text" id="regName" placeholder="ชื่อ - นามสกุล" class="w-full border rounded-xl px-4 py-3 mb-3 outline-none focus:ring-2 focus:ring-eco-green">
+                <input type="email" id="regEmail" placeholder="อีเมล" class="w-full border rounded-xl px-4 py-3 mb-3 outline-none focus:ring-2 focus:ring-eco-green">
+                <input type="password" id="regPassword" placeholder="รหัสผ่าน (6 ตัวอักษรขึ้นไป)" class="w-full border rounded-xl px-4 py-3 mb-4 outline-none focus:ring-2 focus:ring-eco-green">
+                <button onclick="registerWithEmail()" class="w-full bg-slate-800 text-white py-3 rounded-xl font-medium hover:bg-slate-700 transition shadow-sm mb-4">
+                    ยืนยันสมัครสมาชิก
+                </button>
+                <p class="text-sm text-slate-500">
+                    มีบัญชีอยู่แล้ว? <button onclick="toggleAuthForm('login')" class="text-eco-green font-bold hover:underline">เข้าสู่ระบบ</button>
+                </p>
+            </div>
         </div>
     </main>
 
@@ -115,7 +122,7 @@
             <img id="profile-pic" src="https://via.placeholder.com/150" class="w-20 h-20 rounded-full border-4 border-eco-green-light object-cover">
             <div>
                 <h2 id="profile-name" class="text-2xl font-bold text-slate-800">ชื่อผู้ใช้งาน</h2>
-                <p id="profile-email" class="text-slate-500">อีเมล / ข้อมูลผู้ใช้</p>
+                <p id="profile-email" class="text-slate-500">อีเมล</p>
             </div>
         </div>
         <h3 class="text-xl font-bold text-slate-800 mb-6">พาร์ทเนอร์ในระบบ EcoLoop</h3>
@@ -235,8 +242,8 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js";
         import { getFirestore, collection, addDoc, getDocs, query, orderBy, doc, setDoc, getDoc, updateDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore.js";
         
-        // 💡 เปลี่ยนส่วน Import ให้รองรับ Facebook และ Microsoft OAuth
-        import { getAuth, setPersistence, browserLocalPersistence, GoogleAuthProvider, FacebookAuthProvider, OAuthProvider, signInWithPopup, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-auth.js";
+        // นำเข้าโมดูลสำหรับ Google และ Email/Password
+        import { getAuth, setPersistence, browserLocalPersistence, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-auth.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyBa8M4mrFqajSHCOpcA4gr8bBoy7__nBl8",
@@ -288,59 +295,82 @@
             document.getElementById('main-nav').classList.remove('hidden-view');
             document.getElementById('home-view').classList.remove('hidden-view');
             
-            const userName = name || 'ผู้ใช้งาน';
-            const userEmail = email || '';
-            const userPic = pic || 'https://ui-avatars.com/api/?name=User&background=2d7a5b&color=fff';
-            
-            document.getElementById('profile-name').innerText = userName;
-            document.getElementById('profile-email').innerText = userEmail;
-            document.getElementById('profile-pic').src = userPic;
-            document.getElementById('nav-user-pic').src = userPic;
+            const fallbackPic = name 
+                ? `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=2d7a5b&color=fff` 
+                : 'https://ui-avatars.com/api/?name=User&background=2d7a5b&color=fff';
+
+            document.getElementById('profile-name').innerText = name || 'ผู้ใช้งานระบบ';
+            document.getElementById('profile-email').innerText = email || '';
+            document.getElementById('profile-pic').src = pic || fallbackPic;
+            document.getElementById('nav-user-pic').src = pic || fallbackPic;
 
             fetchFoods();
         }
 
-        // 💡 ฟังก์ชันล็อกอิน 3 ช่องทาง
+        window.toggleAuthForm = (type) => {
+            if (type === 'register') {
+                document.getElementById('loginFormArea').classList.add('hidden-view');
+                document.getElementById('registerFormArea').classList.remove('hidden-view');
+            } else {
+                document.getElementById('registerFormArea').classList.add('hidden-view');
+                document.getElementById('loginFormArea').classList.remove('hidden-view');
+            }
+        };
+
+        window.registerWithEmail = () => {
+            const name = document.getElementById('regName').value;
+            const email = document.getElementById('regEmail').value;
+            const password = document.getElementById('regPassword').value;
+
+            if (!name || !email || !password) return alert('กรุณากรอกข้อมูลให้ครบถ้วน');
+            if (password.length < 6) return alert('รหัสผ่านต้องมี 6 ตัวอักษรขึ้นไป');
+
+            createUserWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+                    return updateProfile(userCredential.user, {
+                        displayName: name
+                    });
+                })
+                .then(() => {
+                    alert('สมัครสมาชิกสำเร็จ!');
+                })
+                .catch((error) => {
+                    console.error(error);
+                    if (error.code === 'auth/email-already-in-use') alert('อีเมลนี้ถูกใช้งานแล้ว กรุณาเข้าสู่ระบบ');
+                    else if (error.code === 'auth/invalid-email') alert('รูปแบบอีเมลไม่ถูกต้อง');
+                    else alert("เกิดข้อผิดพลาด: " + error.message);
+                });
+        };
+
+        window.loginWithEmail = () => {
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+
+            if (!email || !password) return alert('กรุณากรอกอีเมลและรหัสผ่าน');
+
+            signInWithEmailAndPassword(auth, email, password)
+                .catch((error) => {
+                    console.error(error);
+                    if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password' || error.code === 'auth/invalid-credential') {
+                        alert('อีเมลหรือรหัสผ่านไม่ถูกต้อง');
+                    } else {
+                        alert("เกิดข้อผิดพลาด: " + error.message);
+                    }
+                });
+        };
+
         window.loginWithGoogle = () => {
             const provider = new GoogleAuthProvider();
             signInWithPopup(auth, provider).catch((error) => {
                 console.error(error);
-                alert("เกิดข้อผิดพลาดในการเข้าสู่ระบบ: " + error.message);
+                alert("เกิดข้อผิดพลาด: " + error.message);
             });
-        };
-
-        window.loginWithFacebook = () => {
-            const provider = new FacebookAuthProvider();
-            signInWithPopup(auth, provider).catch((error) => {
-                console.error(error);
-                alert("กรุณาตั้งค่า App ID / App Secret ของ Facebook ใน Firebase ให้เรียบร้อยก่อน\n\n(Error: " + error.message + ")");
-            });
-        };
-
-        window.loginWithMicrosoft = () => {
-            const provider = new OAuthProvider('microsoft.com');
-            signInWithPopup(auth, provider).catch((error) => {
-                console.error(error);
-                alert("กรุณาตั้งค่า Application ID / Secret ของ Microsoft Azure ใน Firebase ให้เรียบร้อยก่อน\n\n(Error: " + error.message + ")");
-            });
-        };
-
-        window.demoLogin = () => {
-            const demoUid = "demo_user_" + Math.floor(Math.random() * 10000);
-            doLoginSuccess(demoUid, "กรรมการผู้ประเมิน (Demo)", "demo@ecoloop.local", null);
-            alert("เข้าสู่โหมด Demo เรียบร้อย");
         };
 
         window.logoutUser = () => {
-            if (currentUser && currentUser.uid && currentUser.uid.startsWith('demo_user_')) {
-                currentUser = null;
+            signOut(auth).then(() => {
                 localStorage.removeItem('ecoLoopLoginTime');
-                location.reload();
-            } else {
-                signOut(auth).then(() => {
-                    localStorage.removeItem('ecoLoopLoginTime');
-                });
-            }
+            });
         };
 
         // ================= UI NAVIGATION & FIRESTORE FUNCTIONS =================
