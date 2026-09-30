@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        body { font-family: 'Prompt', sans-serif; background-color: #ffffff; }
+        body { font-family: 'Prompt', sans-serif; background-color: #f8fafc; }
         .hidden-view { display: none !important; }
         .modal { display: none; }
         .modal.active { display: flex; }
@@ -19,6 +19,20 @@
         .bg-eco-green-light { background-color: #eefcf5; }
         .hover-bg-eco-green-light:hover { background-color: #dcf5e7; }
         .text-eco-dark { color: #1e293b; }
+        
+        /* Custom Scrollbar for Modals */
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #f1f5f9; border-radius: 8px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 8px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        
+        /* Timeline Stepper CSS */
+        .step-active .step-icon { background-color: #2d7a5b; color: white; border-color: #2d7a5b; }
+        .step-active .step-line { background-color: #2d7a5b; }
+        .step-active .step-text { color: #2d7a5b; font-weight: 600; }
+        .step-pending .step-icon { background-color: white; color: #94a3b8; border-color: #cbd5e1; }
+        .step-pending .step-line { background-color: #e2e8f0; }
+        .step-pending .step-text { color: #94a3b8; }
     </style>
 </head>
 <body class="text-slate-800 h-screen flex flex-col">
@@ -32,7 +46,6 @@
             <h1 class="text-3xl font-bold text-eco-green mb-2 tracking-tight">EcoLoop</h1>
             <p class="text-slate-500 mb-8">เข้าสู่ระบบเพื่อร่วมเป็นส่วนหนึ่งของ<br>เศรษฐกิจหมุนเวียนในชุมชน</p>
 
-            <!-- ปุ่ม Google -->
             <button onclick="loginWithGoogle()" class="w-full bg-white border border-slate-300 text-slate-700 py-3 rounded-xl font-medium hover:bg-slate-50 transition mb-6 flex items-center justify-center gap-3 shadow-sm">
                 <svg width="20" height="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
                 ดำเนินการต่อด้วย Google
@@ -56,7 +69,7 @@
                 </p>
             </div>
 
-            <!-- ฟอร์มสมัครสมาชิก (Register) - ซ่อนไว้เป็นค่าเริ่มต้น -->
+            <!-- ฟอร์มสมัครสมาชิก (Register) -->
             <div id="registerFormArea" class="hidden-view">
                 <input type="text" id="regName" placeholder="ชื่อ - นามสกุล" class="w-full border rounded-xl px-4 py-3 mb-3 outline-none focus:ring-2 focus:ring-eco-green">
                 <input type="email" id="regEmail" placeholder="อีเมล" class="w-full border rounded-xl px-4 py-3 mb-3 outline-none focus:ring-2 focus:ring-eco-green">
@@ -72,7 +85,7 @@
     </main>
 
     <!-- ================= NAVBAR ================= -->
-    <nav id="main-nav" class="hidden-view bg-white border-b border-slate-100 sticky top-0 z-40 shadow-sm w-full">
+    <nav id="main-nav" class="hidden-view bg-white border-b border-slate-200 sticky top-0 z-40 shadow-sm w-full">
         <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
             <div class="flex items-center gap-2 cursor-pointer" onclick="switchView('home-view')">
                 <i class="fa-solid fa-recycle text-eco-green text-3xl"></i>
@@ -89,228 +102,248 @@
     </nav>
 
     <!-- ================= VIEW: หน้าหลัก (Home) ================= -->
-    <main id="home-view" class="hidden-view max-w-6xl mx-auto px-6 py-12 w-full">
-        <div class="text-center mb-16">
-            <h2 class="text-4xl md:text-5xl font-bold text-eco-dark mb-6 tracking-wide">อาหารคุณภาพดี ในราคาที่เข้าถึงได้</h2>
+    <main id="home-view" class="hidden-view max-w-6xl mx-auto px-6 py-10 w-full">
+        <div class="text-center mb-12">
+            <h2 class="text-4xl md:text-5xl font-bold text-eco-dark mb-4 tracking-wide">อาหารคุณภาพดี ในราคาที่เข้าถึงได้</h2>
             <p class="text-slate-500 text-lg md:text-xl max-w-3xl mx-auto leading-relaxed">ร่วมเป็นส่วนหนึ่งในการขับเคลื่อน Circular Economy ลดขยะอาหารและสนับสนุนร้านอาหารในชุมชน</p>
         </div>
-        <div class="flex justify-center gap-8 border-b border-slate-200 mb-10">
+        <div class="flex justify-center gap-8 border-b border-slate-300 mb-8">
             <button class="pb-3 px-4 tab-active text-lg transition" onclick="switchTab(this, 'surplus')"><i class="fa-solid fa-utensils mr-2"></i> อาหารลดราคา (ร้านค้า)</button>
             <button class="pb-3 px-4 text-slate-500 hover:text-eco-green text-lg transition" onclick="switchTab(this, 'farm')"><i class="fa-solid fa-basket-shopping mr-2"></i> สินค้าเกษตร (ฟาร์ม)</button>
         </div>
         
         <div id="section-surplus">
-            <div id="loadingText" class="text-center text-slate-400 py-10 text-lg">กำลังโหลดข้อมูล...</div>
+            <div id="loadingText" class="text-center text-slate-500 py-10 text-lg">กำลังโหลดข้อมูล...</div>
             <div id="foodContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 hidden-view"></div>
         </div>
         
         <div id="section-farm" class="hidden-view">
-            <div id="farmContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                <!-- ข้อมูลสินค้าเกษตรจะถูกโหลดมาแสดงที่นี่ -->
-            </div>
+            <div id="farmContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"></div>
         </div>
     </main>
 
     <!-- ================= VIEW: ข้อมูลส่วนตัว (Profile) ================= -->
-    <main id="profile-view" class="hidden-view max-w-6xl mx-auto px-6 py-12 w-full">
+    <main id="profile-view" class="hidden-view max-w-6xl mx-auto px-6 py-10 w-full">
         <div class="flex justify-between items-center mb-8">
             <h2 class="text-3xl font-bold text-eco-dark">จัดการข้อมูลส่วนตัว</h2>
-            <button onclick="logoutUser()" class="text-rose-500 hover:text-rose-700 font-medium border border-rose-200 bg-rose-50 px-4 py-2 rounded-xl transition">
+            <button onclick="logoutUser()" class="text-rose-600 hover:text-rose-800 font-medium border border-rose-200 bg-rose-50 hover:bg-rose-100 px-4 py-2 rounded-xl transition shadow-sm">
                 <i class="fa-solid fa-right-from-bracket mr-1"></i> ออกจากระบบ
             </button>
         </div>
-        <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-8 mb-8 flex items-center justify-between gap-6">
+        
+        <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-8 mb-8 flex items-center justify-between gap-6 flex-wrap">
             <div class="flex items-center gap-6">
-                <img id="profile-pic" src="https://via.placeholder.com/150" class="w-20 h-20 rounded-full border-4 border-eco-green-light object-cover">
+                <img id="profile-pic" src="https://via.placeholder.com/150" class="w-24 h-24 rounded-full border-4 border-eco-green-light object-cover shadow-sm">
                 <div>
                     <h2 id="profile-name" class="text-2xl font-bold text-slate-800">ชื่อผู้ใช้งาน</h2>
-                    <p id="profile-email" class="text-slate-500">อีเมล</p>
-                    <button onclick="openEditProfile()" class="mt-3 text-sm bg-slate-100 hover:bg-slate-200 text-slate-600 px-4 py-2 rounded-lg transition font-medium"><i class="fa-solid fa-pen mr-1"></i> แก้ไขข้อมูลและรูปภาพ</button>
+                    <p id="profile-email" class="text-slate-500 mb-3">อีเมล</p>
+                    <button onclick="openEditProfile()" class="text-sm bg-slate-100 hover:bg-slate-200 text-slate-700 px-4 py-2.5 rounded-lg transition font-medium shadow-sm"><i class="fa-solid fa-pen mr-1"></i> แก้ไขข้อมูลและรูปภาพ</button>
                 </div>
+            </div>
+            <div>
+                <button onclick="openBuyerOrders()" class="bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-200 px-6 py-3 rounded-xl transition font-bold shadow-sm flex items-center gap-2">
+                    <i class="fa-solid fa-clock-rotate-left"></i> ประวัติการสั่งซื้อของฉัน (ผู้ซื้อ)
+                </button>
             </div>
         </div>
         
-        <h3 class="text-xl font-bold text-slate-800 mb-6">พาร์ทเนอร์ในระบบ EcoLoop</h3>
+        <h3 class="text-xl font-bold text-slate-800 mb-6 border-b border-slate-200 pb-2">พื้นที่สำหรับพาร์ทเนอร์ในระบบ</h3>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-8 relative overflow-hidden group">
-                <div class="absolute top-0 right-0 p-6 opacity-5 text-8xl text-amber-500"><i class="fa-solid fa-store"></i></div>
+            <!-- ร้านค้า -->
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-8 relative overflow-hidden group hover:shadow-md transition">
+                <div class="absolute top-0 right-0 p-6 opacity-5 text-8xl text-amber-500 transition group-hover:scale-110"><i class="fa-solid fa-store"></i></div>
                 <h4 class="text-xl font-bold text-slate-800 mb-2">บัญชีร้านค้า</h4>
-                <div id="merchantStatus"><button onclick="toggleModal('modal-merchant-reg')" class="w-full bg-slate-800 text-white py-3 rounded-xl font-medium mt-4">ลงทะเบียนร้านค้า</button></div>
+                <div id="merchantStatus"><button onclick="toggleModal('modal-merchant-reg')" class="w-full bg-slate-800 text-white py-3 rounded-xl font-medium mt-4 shadow-sm hover:bg-slate-700 transition">ลงทะเบียนร้านค้าเปิดใช้งาน</button></div>
             </div>
-            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-8 relative overflow-hidden group">
-                <div class="absolute top-0 right-0 p-6 opacity-5 text-8xl text-eco-green"><i class="fa-solid fa-seedling"></i></div>
+            <!-- เกษตรกร -->
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-8 relative overflow-hidden group hover:shadow-md transition">
+                <div class="absolute top-0 right-0 p-6 opacity-5 text-8xl text-eco-green transition group-hover:scale-110"><i class="fa-solid fa-seedling"></i></div>
                 <h4 class="text-xl font-bold text-slate-800 mb-2">บัญชีเกษตรกร</h4>
-                <div id="farmerStatus"><button onclick="toggleModal('modal-farmer-reg')" class="w-full bg-slate-800 text-white py-3 rounded-xl font-medium mt-4">ลงทะเบียนเกษตรกร</button></div>
+                <div id="farmerStatus"><button onclick="toggleModal('modal-farmer-reg')" class="w-full bg-slate-800 text-white py-3 rounded-xl font-medium mt-4 shadow-sm hover:bg-slate-700 transition">ลงทะเบียนเกษตรกร</button></div>
             </div>
         </div>
     </main>
 
     <!-- ================= MODALS ================= -->
     
+    <!-- Modal: ประวัติคำสั่งซื้อของลูกค้า (Buyer Orders & Timeline) -->
+    <div id="modal-buyer-orders" class="modal fixed inset-0 bg-slate-900 bg-opacity-60 justify-center items-center z-50 backdrop-blur-sm p-4">
+        <div class="bg-white rounded-3xl shadow-2xl w-full max-w-3xl overflow-hidden flex flex-col max-h-[90vh]">
+            <div class="px-6 py-5 border-b border-slate-200 flex justify-between items-center bg-slate-50">
+                <h3 class="text-xl font-bold text-slate-800"><i class="fa-solid fa-bag-shopping mr-2 text-indigo-600"></i>ประวัติการสั่งซื้อของฉัน</h3>
+                <button onclick="toggleModal('modal-buyer-orders')" class="text-slate-400 hover:text-rose-500 transition text-xl"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="p-6 overflow-y-auto custom-scrollbar bg-slate-50/50" id="buyerOrdersContainer">
+                <!-- คำสั่งซื้อของผู้ซื้อจะถูกโหลดมาแสดงที่นี่ -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: จัดการออเดอร์ของร้านค้า/เกษตรกร (Merchant Orders) -->
+    <div id="modal-merchant-orders" class="modal fixed inset-0 bg-slate-900 bg-opacity-60 justify-center items-center z-50 backdrop-blur-sm p-4">
+        <div class="bg-white rounded-3xl shadow-2xl w-full max-w-4xl overflow-hidden flex flex-col max-h-[90vh]">
+            <div class="px-6 py-5 border-b border-slate-200 flex justify-between items-center bg-slate-50">
+                <h3 class="text-xl font-bold text-slate-800"><i class="fa-solid fa-clipboard-list mr-2 text-amber-600"></i>จัดการคำสั่งซื้อ (สำหรับผู้ขาย)</h3>
+                <button onclick="toggleModal('modal-merchant-orders')" class="text-slate-400 hover:text-rose-500 transition text-xl"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="p-6 overflow-y-auto custom-scrollbar bg-slate-50/50" id="merchantOrdersContainer">
+                <!-- คำสั่งซื้อของร้านค้าจะถูกโหลดมาแสดงที่นี่ -->
+            </div>
+        </div>
+    </div>
+
     <!-- Modal: แก้ไขโปรไฟล์ -->
-    <div id="modal-edit-profile" class="modal fixed inset-0 bg-slate-900 bg-opacity-50 justify-center items-center z-50 backdrop-blur-sm">
-        <div class="bg-white rounded-3xl shadow-xl w-11/12 max-w-md p-8 relative">
-            <button onclick="toggleModal('modal-edit-profile')" class="absolute top-6 right-6 text-slate-400 hover:text-slate-700 text-xl"><i class="fa-solid fa-xmark"></i></button>
+    <div id="modal-edit-profile" class="modal fixed inset-0 bg-slate-900 bg-opacity-50 justify-center items-center z-50 backdrop-blur-sm p-4">
+        <div class="bg-white rounded-3xl shadow-2xl w-full max-w-md p-8 relative">
+            <button onclick="toggleModal('modal-edit-profile')" class="absolute top-6 right-6 text-slate-400 hover:text-rose-500 text-xl transition"><i class="fa-solid fa-xmark"></i></button>
             <h3 class="text-2xl font-bold text-slate-800 mb-6">แก้ไขข้อมูลส่วนตัว</h3>
             <form id="formEditProfile">
-                <label class="block text-sm font-medium text-slate-700 mb-1">รูปโปรไฟล์ใหม่ (เลือกไฟล์รูปภาพ)</label>
-                <input type="file" id="editProfilePic" accept="image/*" class="w-full border rounded-xl px-4 py-2 mb-4 outline-none">
+                <label class="block text-sm font-medium text-slate-700 mb-2">รูปโปรไฟล์ใหม่ (เลือกไฟล์รูปภาพ)</label>
+                <input type="file" id="editProfilePic" accept="image/*" class="w-full border border-slate-300 rounded-xl px-4 py-2.5 mb-5 outline-none focus:ring-2 focus:ring-eco-green focus:border-eco-green bg-slate-50">
                 
-                <label class="block text-sm font-medium text-slate-700 mb-1">ชื่อผู้ใช้งาน</label>
-                <input type="text" id="editProfileName" required class="w-full border rounded-xl px-4 py-3 mb-6 outline-none">
+                <label class="block text-sm font-medium text-slate-700 mb-2">ชื่อผู้ใช้งาน</label>
+                <input type="text" id="editProfileName" required class="w-full border border-slate-300 rounded-xl px-4 py-3 mb-6 outline-none focus:ring-2 focus:ring-eco-green focus:border-eco-green">
                 
-                <button type="submit" class="w-full bg-eco-green text-white py-3 rounded-xl font-bold" id="btnSubmitProfile">บันทึกข้อมูล</button>
+                <button type="submit" class="w-full bg-eco-green hover:bg-emerald-800 text-white py-3 rounded-xl font-bold shadow-md transition" id="btnSubmitProfile">บันทึกข้อมูล</button>
             </form>
         </div>
     </div>
 
-    <!-- Modal: ออเดอร์ของร้านค้าและเกษตรกร -->
-    <div id="modal-my-orders" class="modal fixed inset-0 bg-slate-900 bg-opacity-50 justify-center items-center z-50 backdrop-blur-sm p-4">
-        <div class="bg-white rounded-3xl shadow-xl w-full max-w-2xl overflow-hidden flex flex-col max-h-[90vh]">
-            <div class="px-6 py-5 border-b border-slate-100 flex justify-between items-center bg-slate-50">
-                <h3 class="text-xl font-bold text-slate-800">รายการคำสั่งซื้อของฉัน</h3>
-                <button onclick="toggleModal('modal-my-orders')" class="text-slate-400 hover:text-slate-700 text-xl"><i class="fa-solid fa-xmark"></i></button>
-            </div>
-            <div class="p-6 overflow-y-auto" id="myOrdersContainer">
-                <!-- คำสั่งซื้อจะถูกโหลดมาแสดงที่นี่ -->
-            </div>
-        </div>
-    </div>
-
     <!-- Modal: ลงทะเบียนร้านค้า -->
-    <div id="modal-merchant-reg" class="modal fixed inset-0 bg-slate-900 bg-opacity-50 justify-center items-center z-50 backdrop-blur-sm">
-        <div class="bg-white rounded-3xl shadow-xl w-11/12 max-w-md p-8 relative">
-            <button onclick="toggleModal('modal-merchant-reg')" class="absolute top-6 right-6 text-slate-400 hover:text-slate-700 text-xl"><i class="fa-solid fa-xmark"></i></button>
+    <div id="modal-merchant-reg" class="modal fixed inset-0 bg-slate-900 bg-opacity-50 justify-center items-center z-50 backdrop-blur-sm p-4">
+        <div class="bg-white rounded-3xl shadow-2xl w-full max-w-md p-8 relative">
+            <button onclick="toggleModal('modal-merchant-reg')" class="absolute top-6 right-6 text-slate-400 hover:text-rose-500 text-xl transition"><i class="fa-solid fa-xmark"></i></button>
             <h3 class="text-2xl font-bold text-slate-800 mb-6">ลงทะเบียนร้านค้า</h3>
             <form id="formMerchantReg">
-                <input type="text" id="regShopName" required placeholder="ชื่อร้านค้า / โรงอาหาร" class="w-full border rounded-xl px-4 py-3 mb-4 outline-none">
-                <select id="regShopType" required class="w-full border rounded-xl px-4 py-3 mb-4 outline-none">
+                <input type="text" id="regShopName" required placeholder="ชื่อร้านค้า / โรงอาหาร" class="w-full border border-slate-300 rounded-xl px-4 py-3 mb-4 outline-none focus:ring-2 focus:ring-eco-green">
+                <select id="regShopType" required class="w-full border border-slate-300 rounded-xl px-4 py-3 mb-6 outline-none focus:ring-2 focus:ring-eco-green text-slate-600">
                     <option value="" disabled selected>เลือกประเภทอาหาร...</option>
                     <option value="อาหารตามสั่ง">อาหารตามสั่ง / ข้าวแกง</option>
                     <option value="เบเกอรี่">ขนม / เบเกอรี่</option>
                     <option value="เครื่องดื่ม">เครื่องดื่ม</option>
                 </select>
-                <button type="submit" class="w-full bg-eco-green text-white py-3 rounded-xl font-bold">ยืนยัน</button>
+                <button type="submit" class="w-full bg-eco-green hover:bg-emerald-800 text-white py-3 rounded-xl font-bold shadow-md transition">ยืนยัน</button>
             </form>
         </div>
     </div>
 
     <!-- Modal: ลงทะเบียนเกษตรกร -->
-    <div id="modal-farmer-reg" class="modal fixed inset-0 bg-slate-900 bg-opacity-50 justify-center items-center z-50 backdrop-blur-sm">
-        <div class="bg-white rounded-3xl shadow-xl w-11/12 max-w-md p-8 relative">
-            <button onclick="toggleModal('modal-farmer-reg')" class="absolute top-6 right-6 text-slate-400 hover:text-slate-700 text-xl"><i class="fa-solid fa-xmark"></i></button>
+    <div id="modal-farmer-reg" class="modal fixed inset-0 bg-slate-900 bg-opacity-50 justify-center items-center z-50 backdrop-blur-sm p-4">
+        <div class="bg-white rounded-3xl shadow-2xl w-full max-w-md p-8 relative">
+            <button onclick="toggleModal('modal-farmer-reg')" class="absolute top-6 right-6 text-slate-400 hover:text-rose-500 text-xl transition"><i class="fa-solid fa-xmark"></i></button>
             <h3 class="text-2xl font-bold text-slate-800 mb-6">ลงทะเบียนเกษตรกร</h3>
             <form id="formFarmerReg">
-                <input type="text" id="regFarmName" required placeholder="ชื่อแปลงเกษตร" class="w-full border rounded-xl px-4 py-3 mb-4 outline-none">
-                <input type="text" id="regFarmType" required placeholder="ประเภทผลผลิตหลัก" class="w-full border rounded-xl px-4 py-3 mb-4 outline-none">
-                <button type="submit" class="w-full bg-eco-green text-white py-3 rounded-xl font-bold">ยืนยัน</button>
+                <input type="text" id="regFarmName" required placeholder="ชื่อแปลงเกษตร / ชื่อฟาร์ม" class="w-full border border-slate-300 rounded-xl px-4 py-3 mb-4 outline-none focus:ring-2 focus:ring-eco-green">
+                <input type="text" id="regFarmType" required placeholder="ประเภทผลผลิตหลัก" class="w-full border border-slate-300 rounded-xl px-4 py-3 mb-6 outline-none focus:ring-2 focus:ring-eco-green">
+                <button type="submit" class="w-full bg-eco-green hover:bg-emerald-800 text-white py-3 rounded-xl font-bold shadow-md transition">ยืนยัน</button>
             </form>
         </div>
     </div>
 
-    <!-- Modal: โพสต์อาหารลดราคา (อัปเดตฟังก์ชัน) -->
+    <!-- Modal: โพสต์อาหารลดราคา -->
     <div id="modal-post-food" class="modal fixed inset-0 bg-slate-900 bg-opacity-50 justify-center items-center z-50 backdrop-blur-sm p-4">
-        <div class="bg-white rounded-3xl shadow-xl w-full max-w-md p-8 relative max-h-[90vh] overflow-y-auto">
-            <button onclick="toggleModal('modal-post-food')" class="absolute top-6 right-6 text-slate-400 hover:text-slate-700 text-xl"><i class="fa-solid fa-xmark"></i></button>
+        <div class="bg-white rounded-3xl shadow-2xl w-full max-w-md p-8 relative max-h-[90vh] overflow-y-auto custom-scrollbar">
+            <button onclick="toggleModal('modal-post-food')" class="absolute top-6 right-6 text-slate-400 hover:text-rose-500 text-xl transition"><i class="fa-solid fa-xmark"></i></button>
             <h3 class="text-2xl font-bold text-eco-green mb-6">โพสต์อาหารลดราคา</h3>
             <form id="formPostFood">
-                <label class="block text-sm font-medium text-slate-700 mb-1">รูปภาพอาหาร</label>
-                <input type="file" id="postFoodImage" accept="image/*" class="w-full border rounded-xl px-4 py-2 mb-4 outline-none">
+                <label class="block text-sm font-medium text-slate-700 mb-2">รูปภาพอาหาร</label>
+                <input type="file" id="postFoodImage" accept="image/*" class="w-full border border-slate-300 rounded-xl px-4 py-2.5 mb-4 outline-none focus:ring-2 focus:ring-eco-green bg-slate-50">
                 
-                <input type="text" id="postFoodName" required placeholder="ชื่อเมนูอาหาร" class="w-full border rounded-xl px-4 py-3 mb-4 outline-none">
-                
-                <textarea id="postFoodDesc" rows="2" placeholder="รายละเอียดเพิ่มเติม (ถ้ามี)" class="w-full border rounded-xl px-4 py-3 mb-4 outline-none"></textarea>
+                <input type="text" id="postFoodName" required placeholder="ชื่อเมนูอาหาร" class="w-full border border-slate-300 rounded-xl px-4 py-3 mb-4 outline-none focus:ring-2 focus:ring-eco-green">
+                <textarea id="postFoodDesc" rows="2" placeholder="รายละเอียดเพิ่มเติม (ถ้ามี)" class="w-full border border-slate-300 rounded-xl px-4 py-3 mb-4 outline-none focus:ring-2 focus:ring-eco-green custom-scrollbar"></textarea>
                 
                 <div class="flex gap-4 mb-4">
-                    <input type="number" id="postOriginalPrice" required placeholder="ราคาปกติ" class="w-1/2 border rounded-xl px-4 py-3 outline-none">
-                    <input type="number" id="postDiscountPrice" required placeholder="ราคาลด" class="w-1/2 border rounded-xl px-4 py-3 outline-none">
+                    <input type="number" id="postOriginalPrice" required placeholder="ราคาปกติ (฿)" class="w-1/2 border border-slate-300 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-eco-green">
+                    <input type="number" id="postDiscountPrice" required placeholder="ราคาลด (฿)" class="w-1/2 border border-slate-300 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-eco-green">
                 </div>
                 
                 <div class="flex gap-4 mb-6">
-                    <input type="number" id="postQuantity" required placeholder="จำนวนที่เหลือ" class="w-1/2 border rounded-xl px-4 py-3 outline-none">
+                    <input type="number" id="postQuantity" required placeholder="จำนวนที่เหลือ" class="w-1/2 border border-slate-300 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-eco-green">
                     <div class="w-1/2 relative">
-                        <label class="absolute -top-5 text-xs text-slate-500">เวลาหมดอายุโพสต์</label>
-                        <input type="datetime-local" id="postFoodExpiry" required class="w-full border rounded-xl px-4 py-3 outline-none text-slate-600">
+                        <label class="absolute -top-5 text-xs text-slate-500 font-medium">เวลาหมดอายุโพสต์</label>
+                        <input type="datetime-local" id="postFoodExpiry" required class="w-full border border-slate-300 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-eco-green text-slate-600">
                     </div>
                 </div>
-                <button type="submit" id="btnSubmitFood" class="w-full bg-eco-green text-white py-3 rounded-xl font-bold">โพสต์จำหน่าย</button>
+                <button type="submit" id="btnSubmitFood" class="w-full bg-eco-green hover:bg-emerald-800 text-white py-3.5 rounded-xl font-bold shadow-md transition text-lg">โพสต์จำหน่าย</button>
             </form>
         </div>
     </div>
 
     <!-- Modal: โพสต์สินค้าเกษตร -->
     <div id="modal-post-farm" class="modal fixed inset-0 bg-slate-900 bg-opacity-50 justify-center items-center z-50 backdrop-blur-sm p-4">
-        <div class="bg-white rounded-3xl shadow-xl w-full max-w-md p-8 relative max-h-[90vh] overflow-y-auto">
-            <button onclick="toggleModal('modal-post-farm')" class="absolute top-6 right-6 text-slate-400 hover:text-slate-700 text-xl"><i class="fa-solid fa-xmark"></i></button>
+        <div class="bg-white rounded-3xl shadow-2xl w-full max-w-md p-8 relative max-h-[90vh] overflow-y-auto custom-scrollbar">
+            <button onclick="toggleModal('modal-post-farm')" class="absolute top-6 right-6 text-slate-400 hover:text-rose-500 text-xl transition"><i class="fa-solid fa-xmark"></i></button>
             <h3 class="text-2xl font-bold text-eco-green mb-6">โพสต์สินค้าเกษตร</h3>
             <form id="formPostFarm">
-                <label class="block text-sm font-medium text-slate-700 mb-1">รูปภาพผลผลิต</label>
-                <input type="file" id="postFarmImage" accept="image/*" class="w-full border rounded-xl px-4 py-2 mb-4 outline-none">
+                <label class="block text-sm font-medium text-slate-700 mb-2">รูปภาพผลผลิต</label>
+                <input type="file" id="postFarmImage" accept="image/*" class="w-full border border-slate-300 rounded-xl px-4 py-2.5 mb-4 outline-none focus:ring-2 focus:ring-eco-green bg-slate-50">
                 
-                <input type="text" id="postFarmName" required placeholder="ชื่อสินค้า (เช่น มะพร้าวน้ำหอม)" class="w-full border rounded-xl px-4 py-3 mb-4 outline-none">
-                
-                <textarea id="postFarmDesc" rows="2" placeholder="รายละเอียดของสินค้า / แหล่งปลูก" class="w-full border rounded-xl px-4 py-3 mb-4 outline-none"></textarea>
+                <input type="text" id="postFarmName" required placeholder="ชื่อสินค้า (เช่น มะพร้าวน้ำหอม)" class="w-full border border-slate-300 rounded-xl px-4 py-3 mb-4 outline-none focus:ring-2 focus:ring-eco-green">
+                <textarea id="postFarmDesc" rows="2" placeholder="รายละเอียดของสินค้า / แหล่งปลูก" class="w-full border border-slate-300 rounded-xl px-4 py-3 mb-4 outline-none focus:ring-2 focus:ring-eco-green custom-scrollbar"></textarea>
                 
                 <div class="flex gap-4 mb-4">
-                    <input type="number" id="postFarmPrice" required placeholder="ราคา" class="w-1/2 border rounded-xl px-4 py-3 outline-none">
-                    <input type="text" id="postFarmUnit" required placeholder="หน่วย (เช่น กก., หวี)" class="w-1/2 border rounded-xl px-4 py-3 outline-none">
+                    <input type="number" id="postFarmPrice" required placeholder="ราคา (฿)" class="w-1/2 border border-slate-300 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-eco-green">
+                    <input type="text" id="postFarmUnit" required placeholder="หน่วย (เช่น กก., หวี)" class="w-1/2 border border-slate-300 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-eco-green">
                 </div>
                 
-                <input type="number" id="postFarmQuantity" required placeholder="จำนวนที่มีพร้อมขาย" class="w-full border rounded-xl px-4 py-3 mb-6 outline-none">
-                
-                <button type="submit" id="btnSubmitFarm" class="w-full bg-eco-green text-white py-3 rounded-xl font-bold">โพสต์จำหน่าย</button>
+                <input type="number" id="postFarmQuantity" required placeholder="จำนวนที่มีพร้อมขาย" class="w-full border border-slate-300 rounded-xl px-4 py-3 mb-6 outline-none focus:ring-2 focus:ring-eco-green">
+                <button type="submit" id="btnSubmitFarm" class="w-full bg-eco-green hover:bg-emerald-800 text-white py-3.5 rounded-xl font-bold shadow-md transition text-lg">โพสต์จำหน่าย</button>
             </form>
         </div>
     </div>
 
     <!-- Modal: ซื้อสินค้า / เสนอราคา -->
     <div id="modal-buy" class="modal fixed inset-0 bg-slate-900 bg-opacity-50 justify-center items-center z-50 backdrop-blur-sm p-4">
-        <div class="bg-white rounded-3xl shadow-xl w-full max-w-md overflow-hidden flex flex-col max-h-[90vh]">
-            <div class="px-6 py-5 border-b border-slate-100 flex justify-between items-center bg-slate-50">
+        <div class="bg-white rounded-3xl shadow-2xl w-full max-w-md overflow-hidden flex flex-col max-h-[90vh]">
+            <div class="px-6 py-5 border-b border-slate-200 flex justify-between items-center bg-slate-50">
                 <h3 class="text-xl font-bold text-slate-800">รายละเอียดการสั่งซื้อ</h3>
-                <button onclick="toggleModal('modal-buy')" class="text-slate-400 hover:text-slate-700 text-xl"><i class="fa-solid fa-xmark"></i></button>
+                <button onclick="toggleModal('modal-buy')" class="text-slate-400 hover:text-rose-500 text-xl transition"><i class="fa-solid fa-xmark"></i></button>
             </div>
-            <div class="p-6 overflow-y-auto">
-                <div class="bg-eco-green-light rounded-xl p-5 mb-6 border border-emerald-100">
+            <div class="p-6 overflow-y-auto custom-scrollbar">
+                <div class="bg-eco-green-light rounded-2xl p-5 mb-6 border border-emerald-100 shadow-sm">
                     <h4 id="buyFoodName" class="text-lg font-bold text-eco-green">ชื่อเมนู</h4>
-                    <p id="buyShopName" class="text-sm text-emerald-600 mb-2"><i class="fa-solid fa-store"></i> ร้านค้า</p>
-                    <div class="text-2xl font-bold text-slate-800">฿<span id="buyPrice">0</span> <span id="buyUnit" class="text-sm font-normal text-slate-500"></span></div>
+                    <p id="buyShopName" class="text-sm text-emerald-600 mb-2 font-medium"><i class="fa-solid fa-store"></i> ร้านค้า</p>
+                    <div class="text-3xl font-bold text-slate-800">฿<span id="buyPrice">0</span> <span id="buyUnit" class="text-base font-normal text-slate-500"></span></div>
                 </div>
-                <h5 class="font-bold text-slate-800 mb-3" id="buyPriceOptionsTitle">รูปแบบราคา</h5>
-                <div class="grid grid-cols-2 gap-3 mb-6" id="buyPriceOptionsArea">
-                    <label class="border-2 border-eco-green bg-eco-green-light rounded-xl p-3 cursor-pointer flex items-center gap-2">
+                
+                <h5 class="font-bold text-slate-800 mb-3 text-sm" id="buyPriceOptionsTitle">1. รูปแบบราคา</h5>
+                <div class="grid grid-cols-2 gap-3 mb-5" id="buyPriceOptionsArea">
+                    <label class="border-2 border-eco-green bg-eco-green-light rounded-xl p-3 cursor-pointer flex items-center gap-2 transition hover:shadow-sm">
                         <input type="radio" name="priceOption" value="full" checked onchange="toggleBiddingUI(false)" class="accent-eco-green w-4 h-4">
                         <span class="font-medium text-eco-green">ราคาปกติ</span>
                     </label>
-                    <label id="labelBid" class="border-2 border-slate-200 rounded-xl p-3 cursor-pointer flex items-center gap-2 hover:bg-slate-50">
+                    <label id="labelBid" class="border-2 border-slate-200 rounded-xl p-3 cursor-pointer flex items-center gap-2 hover:bg-slate-50 transition hover:shadow-sm">
                         <input type="radio" name="priceOption" value="bid" onchange="toggleBiddingUI(true)" class="accent-eco-green w-4 h-4">
                         <span class="font-medium text-slate-700">เสนอราคา</span>
                     </label>
                 </div>
-                <div id="biddingArea" class="mb-6 hidden-view">
-                    <input type="number" id="bidAmount" placeholder="ระบุราคาที่เสนอ (บาท)" class="w-full border rounded-xl px-4 py-3 focus:ring-2 focus:ring-emerald-500 outline-none">
+                <div id="biddingArea" class="mb-5 hidden-view">
+                    <input type="number" id="bidAmount" placeholder="ระบุราคาที่เสนอ (บาท)" class="w-full border border-slate-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-eco-green outline-none bg-slate-50">
                 </div>
-                <h5 class="font-bold text-slate-800 mb-3">วิธีการรับสินค้า</h5>
+                
+                <h5 class="font-bold text-slate-800 mb-3 text-sm">2. ข้อมูลผู้ซื้อและการรับสินค้า</h5>
+                <input type="tel" id="buyerPhone" required placeholder="เบอร์โทรศัพท์ติดต่อ" class="w-full border border-slate-300 rounded-xl px-4 py-3 mb-4 focus:ring-2 focus:ring-eco-green outline-none">
+                
                 <div class="grid grid-cols-2 gap-3 mb-4">
-                    <label class="border border-slate-200 rounded-xl p-3 cursor-pointer flex items-center gap-2 hover:bg-slate-50">
+                    <label class="border border-slate-300 rounded-xl p-3 cursor-pointer flex items-center gap-2 hover:bg-slate-50 transition">
                         <input type="radio" name="deliveryOption" value="pickup" checked onchange="toggleDeliveryUI('pickup')" class="accent-eco-green w-4 h-4">
-                        <span class="font-medium text-slate-700"><i class="fa-solid fa-store mr-1"></i> รับที่ร้าน</span>
+                        <span class="font-medium text-slate-700"><i class="fa-solid fa-store mr-1 text-slate-400"></i> รับที่ร้าน</span>
                     </label>
-                    <label class="border border-slate-200 rounded-xl p-3 cursor-pointer flex items-center gap-2 hover:bg-slate-50">
+                    <label class="border border-slate-300 rounded-xl p-3 cursor-pointer flex items-center gap-2 hover:bg-slate-50 transition">
                         <input type="radio" name="deliveryOption" value="delivery" onchange="toggleDeliveryUI('delivery')" class="accent-eco-green w-4 h-4">
-                        <span class="font-medium text-slate-700"><i class="fa-solid fa-motorcycle mr-1"></i> จัดส่งถึงที่</span>
+                        <span class="font-medium text-slate-700"><i class="fa-solid fa-motorcycle mr-1 text-slate-400"></i> จัดส่งถึงที่</span>
                     </label>
                 </div>
                 <div class="mb-4">
                     <label id="timeLabel" class="block text-sm font-medium text-slate-700 mb-1">เวลาที่จะไปรับสินค้า</label>
-                    <input type="time" id="orderTime" class="w-full border border-slate-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-emerald-500 outline-none">
+                    <input type="time" id="orderTime" required class="w-full border border-slate-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-eco-green outline-none">
                 </div>
                 <div id="addressArea" class="mb-4 hidden-view">
-                    <textarea id="orderAddress" rows="2" placeholder="ระบุสถานที่จัดส่ง / คณะ / หอพัก" class="w-full border border-slate-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-emerald-500 outline-none"></textarea>
+                    <textarea id="orderAddress" rows="2" placeholder="ระบุสถานที่จัดส่งอย่างละเอียด / คณะ / หอพัก" class="w-full border border-slate-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-eco-green outline-none custom-scrollbar"></textarea>
                 </div>
             </div>
-            <div class="p-6 border-t border-slate-100 bg-slate-50">
-                <button onclick="confirmOrder()" class="w-full bg-eco-green text-white py-3.5 rounded-xl font-bold text-lg hover:bg-emerald-800 transition shadow-md">
+            <div class="p-6 border-t border-slate-200 bg-white shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)]">
+                <button onclick="confirmOrder()" class="w-full bg-eco-green hover:bg-emerald-800 text-white py-3.5 rounded-xl font-bold text-lg shadow-md transition">
                     ยืนยันคำสั่งซื้อ
                 </button>
             </div>
@@ -318,14 +351,11 @@
     </div>
 
 
-    <!-- ================= FIREBASE LOGIC & AUTH SCRIPT ================= -->
+    <!-- ================= FIREBASE LOGIC ================= -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js";
         import { getFirestore, collection, addDoc, getDocs, query, orderBy, doc, setDoc, getDoc, updateDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore.js";
-        // นำเข้า Firebase Storage
         import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-storage.js";
-        
-        // นำเข้าโมดูลสำหรับ Auth
         import { getAuth, setPersistence, browserLocalPersistence, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-auth.js";
 
         const firebaseConfig = {
@@ -340,7 +370,7 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
         const auth = getAuth(app);
-        const storage = getStorage(app); // เรียกใช้ Storage
+        const storage = getStorage(app); 
         auth.useDeviceLanguage(); 
         setPersistence(auth, browserLocalPersistence);
 
@@ -348,8 +378,11 @@
         let currentMerchantInfo = null;
         
         let selectedFoodId = null;
+        let selectedItemName = '';
+        let selectedShopName = '';
         let selectedMerchantId = null;
-        let selectedItemType = 'surplus'; // 'surplus' หรือ 'farm'
+        let selectedItemType = 'surplus';
+        let activeCountdownIntervals = []; 
         
         const THIRTY_DAYS_MS = 30 * 24 * 60 * 60 * 1000; 
 
@@ -358,13 +391,11 @@
             if (user) {
                 const loginTimeStr = localStorage.getItem('ecoLoopLoginTime');
                 const currentTime = Date.now();
-                if (loginTimeStr) {
-                    if (currentTime - parseInt(loginTimeStr) > THIRTY_DAYS_MS) {
-                        alert("เซสชันหมดอายุ กรุณาเข้าสู่ระบบใหม่");
-                        logoutUser();
-                        return; 
-                    }
-                } else {
+                if (loginTimeStr && (currentTime - parseInt(loginTimeStr) > THIRTY_DAYS_MS)) {
+                    alert("เซสชันหมดอายุ กรุณาเข้าสู่ระบบใหม่");
+                    logoutUser();
+                    return; 
+                } else if (!loginTimeStr) {
                     localStorage.setItem('ecoLoopLoginTime', currentTime.toString());
                 }
                 doLoginSuccess(user.uid, user.displayName, user.email, user.photoURL);
@@ -378,7 +409,7 @@
         });
 
         function doLoginSuccess(uid, name, email, pic) {
-            currentUser = { uid: uid };
+            currentUser = { uid: uid, name: name };
             document.getElementById('auth-view').classList.add('hidden-view');
             document.getElementById('main-nav').classList.remove('hidden-view');
             document.getElementById('home-view').classList.remove('hidden-view');
@@ -397,72 +428,39 @@
         }
 
         window.toggleAuthForm = (type) => {
-            if (type === 'register') {
-                document.getElementById('loginFormArea').classList.add('hidden-view');
-                document.getElementById('registerFormArea').classList.remove('hidden-view');
-            } else {
-                document.getElementById('registerFormArea').classList.add('hidden-view');
-                document.getElementById('loginFormArea').classList.remove('hidden-view');
-            }
+            document.getElementById('loginFormArea').classList.toggle('hidden-view', type === 'register');
+            document.getElementById('registerFormArea').classList.toggle('hidden-view', type === 'login');
         };
 
         window.registerWithEmail = () => {
             const name = document.getElementById('regName').value;
             const email = document.getElementById('regEmail').value;
             const password = document.getElementById('regPassword').value;
-
             if (!name || !email || !password) return alert('กรุณากรอกข้อมูลให้ครบถ้วน');
             if (password.length < 6) return alert('รหัสผ่านต้องมี 6 ตัวอักษรขึ้นไป');
-
             createUserWithEmailAndPassword(auth, email, password)
-                .then((userCredential) => {
-                    return updateProfile(userCredential.user, {
-                        displayName: name
-                    });
-                })
-                .then(() => {
-                    alert('สมัครสมาชิกสำเร็จ!');
-                })
-                .catch((error) => {
-                    console.error(error);
-                    if (error.code === 'auth/email-already-in-use') alert('อีเมลนี้ถูกใช้งานแล้ว กรุณาเข้าสู่ระบบ');
-                    else if (error.code === 'auth/invalid-email') alert('รูปแบบอีเมลไม่ถูกต้อง');
-                    else alert("เกิดข้อผิดพลาด: " + error.message);
-                });
+                .then((userCred) => updateProfile(userCred.user, { displayName: name }))
+                .then(() => alert('สมัครสมาชิกสำเร็จ!'))
+                .catch((e) => alert("เกิดข้อผิดพลาด: " + (e.code === 'auth/email-already-in-use' ? 'อีเมลนี้ถูกใช้งานแล้ว' : e.message)));
         };
 
         window.loginWithEmail = () => {
             const email = document.getElementById('loginEmail').value;
             const password = document.getElementById('loginPassword').value;
-
             if (!email || !password) return alert('กรุณากรอกอีเมลและรหัสผ่าน');
-
             signInWithEmailAndPassword(auth, email, password)
-                .catch((error) => {
-                    console.error(error);
-                    if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password' || error.code === 'auth/invalid-credential') {
-                        alert('อีเมลหรือรหัสผ่านไม่ถูกต้อง');
-                    } else {
-                        alert("เกิดข้อผิดพลาด: " + error.message);
-                    }
-                });
+                .catch(() => alert('อีเมลหรือรหัสผ่านไม่ถูกต้อง'));
         };
 
         window.loginWithGoogle = () => {
-            const provider = new GoogleAuthProvider();
-            signInWithPopup(auth, provider).catch((error) => {
-                console.error(error);
-                alert("เกิดข้อผิดพลาด: " + error.message);
-            });
+            signInWithPopup(auth, new GoogleAuthProvider()).catch(e => alert("เกิดข้อผิดพลาด: " + e.message));
         };
 
         window.logoutUser = () => {
-            signOut(auth).then(() => {
-                localStorage.removeItem('ecoLoopLoginTime');
-            });
+            signOut(auth).then(() => localStorage.removeItem('ecoLoopLoginTime'));
         };
 
-        // ================= UI NAVIGATION & FIRESTORE FUNCTIONS =================
+        // ================= UI NAVIGATION =================
         window.switchView = (viewId) => {
             document.getElementById('home-view').classList.add('hidden-view');
             document.getElementById('profile-view').classList.add('hidden-view');
@@ -490,65 +488,59 @@
             document.getElementById('section-' + sectionId).classList.remove('hidden-view');
         };
 
-        window.toggleModal = (modalID) => { document.getElementById(modalID).classList.toggle('active'); };
+        window.toggleModal = (modalID) => { 
+            const modal = document.getElementById(modalID);
+            modal.classList.toggle('active'); 
+            if (!modal.classList.contains('active')) { clearAllCountdowns(); }
+        };
         
         window.toggleBiddingUI = (isBid) => {
-            if(isBid) {
-                document.getElementById('biddingArea').classList.remove('hidden-view');
-                document.getElementById('labelBid').classList.add('border-eco-green', 'bg-eco-green-light', 'border-2');
-            } else {
-                document.getElementById('biddingArea').classList.add('hidden-view');
-                document.getElementById('labelBid').classList.remove('border-eco-green', 'bg-eco-green-light', 'border-2');
-            }
+            document.getElementById('biddingArea').classList.toggle('hidden-view', !isBid);
+            document.getElementById('labelBid').classList.toggle('border-eco-green', isBid);
+            document.getElementById('labelBid').classList.toggle('bg-eco-green-light', isBid);
+            document.getElementById('labelBid').classList.toggle('border-2', isBid);
         };
         
         window.toggleDeliveryUI = (type) => {
-            if(type === 'delivery') {
-                document.getElementById('addressArea').classList.remove('hidden-view');
-                document.getElementById('timeLabel').innerText = "ระบุเวลาที่ต้องการให้จัดส่ง";
-            } else {
-                document.getElementById('addressArea').classList.add('hidden-view');
-                document.getElementById('timeLabel').innerText = "ระบุเวลาที่จะไปรับสินค้า";
-            }
+            const isDeliv = type === 'delivery';
+            document.getElementById('addressArea').classList.toggle('hidden-view', !isDeliv);
+            document.getElementById('timeLabel').innerText = isDeliv ? "ระบุเวลาที่ต้องการให้จัดส่ง" : "ระบุเวลาที่จะไปรับสินค้า";
         };
 
-        // ตรวจสอบสถานะบัญชีและปรับปุ่มเมนู
+        // ================= ROLES & PROFILE =================
         async function checkUserRoles() {
             if(!currentUser) return;
             try {
-                // เช็คร้านค้า
                 const merchantSnap = await getDoc(doc(db, "merchants", currentUser.uid));
                 if (merchantSnap.exists()) {
                     currentMerchantInfo = merchantSnap.data();
                     document.getElementById('merchantStatus').innerHTML = `
-                        <div class="bg-amber-50 p-4 rounded-xl border border-amber-100 mb-4 mt-4">
-                            <p class="font-bold text-amber-800 text-lg">${currentMerchantInfo.shop_name}</p>
+                        <div class="bg-amber-50 p-4 rounded-xl border border-amber-200 mb-4 mt-4">
+                            <p class="font-bold text-amber-800 text-lg"><i class="fa-solid fa-store mr-2"></i>${currentMerchantInfo.shop_name}</p>
                         </div>
-                        <div class="flex gap-2">
-                            <button onclick="toggleModal('modal-post-food')" class="w-1/2 bg-amber-500 text-white py-3 rounded-xl font-bold hover:bg-amber-600 transition">โพสต์อาหาร</button>
-                            <button onclick="openMyOrders()" class="w-1/2 bg-slate-800 text-white py-3 rounded-xl font-bold hover:bg-slate-700 transition">ดูออเดอร์</button>
+                        <div class="flex gap-3">
+                            <button onclick="toggleModal('modal-post-food')" class="w-1/2 bg-amber-500 text-white py-3 rounded-xl font-bold hover:bg-amber-600 transition shadow-sm">โพสต์อาหาร</button>
+                            <button onclick="openMerchantOrders()" class="w-1/2 bg-slate-800 text-white py-3 rounded-xl font-bold hover:bg-slate-700 transition shadow-sm">จัดการออเดอร์</button>
                         </div>
                     `;
                 }
 
-                // เช็คเกษตรกร
                 const farmerSnap = await getDoc(doc(db, "farmers", currentUser.uid));
                 if (farmerSnap.exists()) {
                     const farmerInfo = farmerSnap.data();
                     document.getElementById('farmerStatus').innerHTML = `
-                        <div class="bg-eco-green-light p-4 rounded-xl border border-emerald-100 mb-4 mt-4">
-                            <p class="font-bold text-eco-green text-lg">${farmerInfo.farm_name}</p>
+                        <div class="bg-eco-green-light p-4 rounded-xl border border-emerald-200 mb-4 mt-4">
+                            <p class="font-bold text-eco-green text-lg"><i class="fa-solid fa-leaf mr-2"></i>${farmerInfo.farm_name}</p>
                         </div>
-                        <div class="flex gap-2">
-                            <button onclick="toggleModal('modal-post-farm')" class="w-1/2 bg-emerald-600 text-white py-3 rounded-xl font-bold hover:bg-emerald-700 transition">โพสต์สินค้า</button>
-                            <button onclick="openMyOrders()" class="w-1/2 bg-slate-800 text-white py-3 rounded-xl font-bold hover:bg-slate-700 transition">ดูออเดอร์</button>
+                        <div class="flex gap-3">
+                            <button onclick="toggleModal('modal-post-farm')" class="w-1/2 bg-emerald-600 text-white py-3 rounded-xl font-bold hover:bg-emerald-700 transition shadow-sm">โพสต์สินค้า</button>
+                            <button onclick="openMerchantOrders()" class="w-1/2 bg-slate-800 text-white py-3 rounded-xl font-bold hover:bg-slate-700 transition shadow-sm">จัดการออเดอร์</button>
                         </div>
                     `;
                 }
             } catch (error) { console.error(error); }
         }
 
-        // ================= ฟังก์ชันจัดการข้อมูลส่วนตัว =================
         window.openEditProfile = () => {
             const user = auth.currentUser;
             if(user) {
@@ -560,328 +552,174 @@
         document.getElementById('formEditProfile').addEventListener('submit', async (e) => {
             e.preventDefault();
             const btn = document.getElementById('btnSubmitProfile');
-            btn.innerText = 'กำลังบันทึก...';
-            btn.disabled = true;
-
-            const user = auth.currentUser;
-            const newName = document.getElementById('editProfileName').value;
-            const fileInput = document.getElementById('editProfilePic');
-            let newPicUrl = user.photoURL;
-
+            btn.innerText = 'กำลังบันทึก...'; btn.disabled = true;
             try {
+                const user = auth.currentUser;
+                let newPicUrl = user.photoURL;
+                const fileInput = document.getElementById('editProfilePic');
                 if (fileInput.files.length > 0) {
-                    const file = fileInput.files[0];
                     const fileRef = storageRef(storage, `profiles/${user.uid}_${Date.now()}`);
-                    await uploadBytes(fileRef, file);
+                    await uploadBytes(fileRef, fileInput.files[0]);
                     newPicUrl = await getDownloadURL(fileRef);
                 }
-
-                await updateProfile(user, {
-                    displayName: newName,
-                    photoURL: newPicUrl
-                });
-
+                await updateProfile(user, { displayName: document.getElementById('editProfileName').value, photoURL: newPicUrl });
                 alert('อัปเดตข้อมูลสำเร็จ');
                 toggleModal('modal-edit-profile');
                 doLoginSuccess(user.uid, user.displayName, user.email, user.photoURL); 
-            } catch (error) {
-                console.error(error);
-                alert('เกิดข้อผิดพลาด: ' + error.message);
-            } finally {
-                btn.innerText = 'บันทึกข้อมูล';
-                btn.disabled = false;
-            }
+            } catch (error) { alert('เกิดข้อผิดพลาด: ' + error.message); } 
+            finally { btn.innerText = 'บันทึกข้อมูล'; btn.disabled = false; }
         });
 
-        // ================= ดูรายการออเดอร์ของร้านค้า / เกษตรกร =================
-        window.openMyOrders = async () => {
-            toggleModal('modal-my-orders');
-            const container = document.getElementById('myOrdersContainer');
-            container.innerHTML = '<div class="text-center text-slate-400 py-10">กำลังโหลดข้อมูล...</div>';
-            
-            try {
-                const q = query(collection(db, "orders"), orderBy("created_at", "desc"));
-                const querySnapshot = await getDocs(q);
-                let html = '';
-                
-                querySnapshot.forEach((docSnap) => {
-                    const order = docSnap.data();
-                    if (order.merchant_id === currentUser.uid) {
-                        const dateStr = order.created_at ? order.created_at.toDate().toLocaleString('th-TH') : 'ไม่ระบุเวลา';
-                        html += `
-                            <div class="bg-slate-50 border border-slate-200 rounded-xl p-5 mb-4">
-                                <div class="flex justify-between items-center mb-3">
-                                    <span class="font-bold text-eco-green bg-emerald-100 px-3 py-1 rounded-lg text-sm">ออเดอร์: ${docSnap.id.substring(0, 8)}</span>
-                                    <span class="text-xs text-slate-500"><i class="fa-regular fa-clock"></i> ${dateStr}</span>
-                                </div>
-                                <div class="text-slate-700 text-sm space-y-2">
-                                    <p><strong>ประเภทการซื้อ:</strong> ${order.type === 'bidding' ? 'เสนอราคา' : 'ราคาปกติ'} ${order.offer_price ? `(฿${order.offer_price})` : ''}</p>
-                                    <p><strong>การรับสินค้า:</strong> ${order.delivery_method === 'delivery' ? 'จัดส่งถึงที่' : 'รับที่ร้าน'} (เวลานัด: ${order.time})</p>
-                                    ${order.address ? `<p><strong>สถานที่จัดส่ง:</strong> ${order.address}</p>` : ''}
-                                </div>
-                            </div>
-                        `;
-                    }
-                });
-                
-                container.innerHTML = html === '' ? '<div class="text-center text-slate-400 py-10">ยังไม่มีคำสั่งซื้อเข้ามา</div>' : html;
-            } catch (error) {
-                console.error(error);
-                container.innerHTML = '<div class="text-center text-rose-400 py-10">เกิดข้อผิดพลาดในการโหลดข้อมูล</div>';
-            }
+        // ================= REGISTRATION & POSTING =================
+        const handleReg = async (e, role, coll) => {
+            e.preventDefault();
+            const data = role === 'merchant' 
+                ? { shop_name: document.getElementById('regShopName').value, shop_type: document.getElementById('regShopType').value }
+                : { farm_name: document.getElementById('regFarmName').value, farm_type: document.getElementById('regFarmType').value };
+            data.created_at = serverTimestamp();
+            await setDoc(doc(db, coll, currentUser.uid), data);
+            alert(`ลงทะเบียน${role === 'merchant' ? 'ร้านค้า' : 'เกษตรกร'}สำเร็จ!`);
+            toggleModal(`modal-${role}-reg`);
+            checkUserRoles();
         };
+        document.getElementById('formMerchantReg').addEventListener('submit', (e) => handleReg(e, 'merchant', 'merchants'));
+        document.getElementById('formFarmerReg').addEventListener('submit', (e) => handleReg(e, 'farmer', 'farmers'));
 
-        // ================= ลงทะเบียนร้านและโพสต์ =================
-        document.getElementById('formMerchantReg').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            await setDoc(doc(db, "merchants", currentUser.uid), {
-                shop_name: document.getElementById('regShopName').value,
-                shop_type: document.getElementById('regShopType').value,
-                created_at: serverTimestamp()
-            });
-            alert('ลงทะเบียนร้านค้าสำเร็จ!');
-            toggleModal('modal-merchant-reg');
-            checkUserRoles();
-        });
-
-        document.getElementById('formFarmerReg').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            await setDoc(doc(db, "farmers", currentUser.uid), {
-                farm_name: document.getElementById('regFarmName').value,
-                farm_type: document.getElementById('regFarmType').value,
-                created_at: serverTimestamp()
-            });
-            alert('ลงทะเบียนเกษตรกรสำเร็จ!');
-            toggleModal('modal-farmer-reg');
-            checkUserRoles();
-        });
-
-        // โพสต์อาหารลดราคา (อัปเดตรูป, รายละเอียด, ตั้งเวลาหมดอายุ)
         document.getElementById('formPostFood').addEventListener('submit', async (e) => {
             e.preventDefault();
             const btn = document.getElementById('btnSubmitFood');
-            btn.innerText = 'กำลังโพสต์...';
-            btn.disabled = true;
-
+            btn.innerText = 'กำลังโพสต์...'; btn.disabled = true;
             try {
                 const fileInput = document.getElementById('postFoodImage');
                 let imageUrl = null;
                 if (fileInput.files.length > 0) {
-                    const file = fileInput.files[0];
                     const fileRef = storageRef(storage, `foods/${currentUser.uid}_${Date.now()}`);
-                    await uploadBytes(fileRef, file);
+                    await uploadBytes(fileRef, fileInput.files[0]);
                     imageUrl = await getDownloadURL(fileRef);
                 }
-
                 await addDoc(collection(db, "surplus_foods"), {
-                    merchant_id: currentUser.uid,
-                    shop_name: currentMerchantInfo.shop_name, 
-                    food_name: document.getElementById('postFoodName').value,
-                    description: document.getElementById('postFoodDesc').value,
-                    original_price: parseFloat(document.getElementById('postOriginalPrice').value),
-                    discounted_price: parseFloat(document.getElementById('postDiscountPrice').value),
-                    quantity: parseInt(document.getElementById('postQuantity').value),
-                    expiry_time: document.getElementById('postFoodExpiry').value, // เก็บเวลาหมดอายุ
-                    image_url: imageUrl,
-                    created_at: serverTimestamp()
+                    merchant_id: currentUser.uid, shop_name: currentMerchantInfo.shop_name, 
+                    food_name: document.getElementById('postFoodName').value, description: document.getElementById('postFoodDesc').value,
+                    original_price: parseFloat(document.getElementById('postOriginalPrice').value), discounted_price: parseFloat(document.getElementById('postDiscountPrice').value),
+                    quantity: parseInt(document.getElementById('postQuantity').value), expiry_time: document.getElementById('postFoodExpiry').value,
+                    image_url: imageUrl, created_at: serverTimestamp()
                 });
-                
-                alert('โพสต์จำหน่ายเรียบร้อย!');
-                e.target.reset();
-                toggleModal('modal-post-food');
-                fetchFoods();
-            } catch (error) {
-                console.error(error);
-                alert("เกิดข้อผิดพลาด: " + error.message);
-            } finally {
-                btn.innerText = 'โพสต์จำหน่าย';
-                btn.disabled = false;
-            }
+                alert('โพสต์จำหน่ายเรียบร้อย!'); e.target.reset(); toggleModal('modal-post-food'); fetchFoods();
+            } catch (error) { alert("เกิดข้อผิดพลาด: " + error.message); } finally { btn.innerText = 'โพสต์จำหน่าย'; btn.disabled = false; }
         });
 
-        // โพสต์สินค้าเกษตร
         document.getElementById('formPostFarm').addEventListener('submit', async (e) => {
             e.preventDefault();
             const btn = document.getElementById('btnSubmitFarm');
-            btn.innerText = 'กำลังโพสต์...';
-            btn.disabled = true;
-
+            btn.innerText = 'กำลังโพสต์...'; btn.disabled = true;
             try {
-                const fileInput = document.getElementById('postFarmImage');
                 let imageUrl = null;
+                const fileInput = document.getElementById('postFarmImage');
                 if (fileInput.files.length > 0) {
-                    const file = fileInput.files[0];
                     const fileRef = storageRef(storage, `farms/${currentUser.uid}_${Date.now()}`);
-                    await uploadBytes(fileRef, file);
+                    await uploadBytes(fileRef, fileInput.files[0]);
                     imageUrl = await getDownloadURL(fileRef);
                 }
-
-                // ดึงข้อมูลชื่อฟาร์ม
                 const farmerSnap = await getDoc(doc(db, "farmers", currentUser.uid));
                 const farm_name = farmerSnap.exists() ? farmerSnap.data().farm_name : 'ไม่ทราบชื่อฟาร์ม';
-
                 await addDoc(collection(db, "farm_products"), {
-                    farmer_id: currentUser.uid,
-                    farm_name: farm_name,
-                    name: document.getElementById('postFarmName').value,
-                    description: document.getElementById('postFarmDesc').value,
-                    price: parseFloat(document.getElementById('postFarmPrice').value),
-                    unit: document.getElementById('postFarmUnit').value,
-                    quantity: parseInt(document.getElementById('postFarmQuantity').value),
-                    image_url: imageUrl,
-                    created_at: serverTimestamp()
+                    farmer_id: currentUser.uid, farm_name: farm_name, name: document.getElementById('postFarmName').value,
+                    description: document.getElementById('postFarmDesc').value, price: parseFloat(document.getElementById('postFarmPrice').value),
+                    unit: document.getElementById('postFarmUnit').value, quantity: parseInt(document.getElementById('postFarmQuantity').value),
+                    image_url: imageUrl, created_at: serverTimestamp()
                 });
-                
-                alert('โพสต์สินค้าเกษตรเรียบร้อย!');
-                e.target.reset();
-                toggleModal('modal-post-farm');
-                fetchFarmProducts();
-                
-                // สลับไปหน้าต่างฟาร์มอัตโนมัติ
-                document.querySelectorAll('button[onclick^="switchTab"]').forEach(b => {
-                    if(b.innerText.includes('สินค้าเกษตร')) b.click();
-                });
-            } catch (error) {
-                console.error(error);
-                alert("เกิดข้อผิดพลาด: " + error.message);
-            } finally {
-                btn.innerText = 'โพสต์จำหน่าย';
-                btn.disabled = false;
-            }
+                alert('โพสต์สินค้าเกษตรเรียบร้อย!'); e.target.reset(); toggleModal('modal-post-farm'); fetchFarmProducts();
+                document.querySelectorAll('button[onclick^="switchTab"]').forEach(b => { if(b.innerText.includes('สินค้าเกษตร')) b.click(); });
+            } catch (error) { alert("เกิดข้อผิดพลาด: " + error.message); } finally { btn.innerText = 'โพสต์จำหน่าย'; btn.disabled = false; }
         });
 
-        // ================= FETCH ข้อมูลสำหรับแสดงผล =================
+        // ================= FETCHING FEED =================
         async function fetchFoods() {
             const container = document.getElementById('foodContainer');
             const loadingText = document.getElementById('loadingText');
-            
-            loadingText.classList.remove('hidden-view');
-            container.classList.add('hidden-view');
-            container.innerHTML = '';
+            loadingText.classList.remove('hidden-view'); container.classList.add('hidden-view'); container.innerHTML = '';
             
             const q = query(collection(db, "surplus_foods"), orderBy("created_at", "desc"));
             const querySnapshot = await getDocs(q);
-            
-            let hasActiveItems = false;
-            let html = '';
-
+            let html = '', hasActive = false;
             querySnapshot.forEach((docSnap) => {
                 const item = docSnap.data();
                 if (item.quantity <= 0) return; 
+                if (item.expiry_time && new Date(item.expiry_time) < new Date()) return; 
                 
-                // เช็คเวลาหมดอายุ
-                if (item.expiry_time) {
-                    const expiryDate = new Date(item.expiry_time);
-                    if (expiryDate < new Date()) return; // หากหมดอายุ จะข้ามการแสดงผลทันที (ซ่อนโพสต์)
-                }
-                
-                hasActiveItems = true;
+                hasActive = true;
                 const discount = Math.round(((item.original_price - item.discounted_price) / item.original_price) * 100);
-                
-                let imgHTML = item.image_url 
-                    ? `<img src="${item.image_url}" class="w-full h-44 object-cover rounded-xl mb-4 border border-slate-100">` 
-                    : `<div class="w-full h-44 bg-slate-50 rounded-xl mb-4 border border-slate-100 flex items-center justify-center text-slate-300"><i class="fa-solid fa-utensils text-4xl"></i></div>`;
-
+                const imgHTML = item.image_url ? `<img src="${item.image_url}" class="w-full h-44 object-cover rounded-xl mb-4 border border-slate-100">` : `<div class="w-full h-44 bg-slate-50 rounded-xl mb-4 border border-slate-200 flex items-center justify-center text-slate-300"><i class="fa-solid fa-utensils text-4xl"></i></div>`;
                 html += `
-                    <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-5 flex flex-col group hover:shadow-md transition">
+                    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 flex flex-col group hover:shadow-lg hover:-translate-y-1 transition duration-300">
                         ${imgHTML}
                         <div class="flex justify-between items-start mb-3">
-                            <span class="bg-rose-100 text-rose-600 text-xs font-bold px-3 py-1.5 rounded-full">ลด ${discount}%</span>
-                            <span class="text-xs font-medium text-slate-500 bg-slate-100 px-3 py-1.5 rounded-full">เหลือ ${item.quantity} ที่</span>
+                            <span class="bg-rose-100 text-rose-600 text-xs font-bold px-3 py-1.5 rounded-full shadow-sm">ลด ${discount}%</span>
+                            <span class="text-xs font-bold text-slate-600 bg-slate-100 border border-slate-200 px-3 py-1.5 rounded-full">เหลือ ${item.quantity} ที่</span>
                         </div>
                         <h3 class="text-xl font-bold text-slate-800 line-clamp-1">${item.food_name}</h3>
                         <p class="text-sm text-emerald-600 mb-2 font-medium"><i class="fa-solid fa-store mr-1"></i> ${item.shop_name}</p>
                         ${item.description ? `<p class="text-sm text-slate-500 mb-4 line-clamp-2 leading-relaxed">${item.description}</p>` : ''}
                         
-                        <div class="flex items-baseline gap-2 mb-4 mt-auto pt-2">
+                        <div class="flex items-baseline gap-2 mb-5 mt-auto pt-2">
                             <span class="text-3xl font-bold text-eco-green">฿${item.discounted_price}</span>
                             <span class="text-sm text-slate-400 line-through">฿${item.original_price}</span>
                         </div>
-                        <button onclick="openBuyModal('${docSnap.id}', '${item.food_name}', ${item.discounted_price}, '${item.shop_name}', '${item.merchant_id}', 'surplus')" class="w-full bg-slate-800 text-white py-3 rounded-xl font-medium hover:bg-eco-green transition">สั่งซื้อ / เสนอราคา</button>
+                        <button onclick="openBuyModal('${docSnap.id}', '${item.food_name}', ${item.discounted_price}, '${item.shop_name}', '${item.merchant_id}', 'surplus')" class="w-full bg-slate-800 text-white py-3 rounded-xl font-bold hover:bg-eco-green transition shadow-md">สั่งซื้อ / เสนอราคา</button>
                     </div>
                 `;
             });
-
-            if (!hasActiveItems) {
-                loadingText.innerHTML = '<div class="py-10 text-slate-400">ขณะนี้ไม่มีอาหารลดราคาในระบบ</div>';
-            } else {
-                loadingText.classList.add('hidden-view');
-                container.classList.remove('hidden-view');
-                container.innerHTML = html;
-            }
+            if (!hasActive) { loadingText.innerHTML = '<div class="py-10 text-slate-400 font-medium"><i class="fa-solid fa-inbox text-3xl mb-3 block text-slate-300"></i>ขณะนี้ไม่มีอาหารลดราคาในระบบ</div>'; } 
+            else { loadingText.classList.add('hidden-view'); container.classList.remove('hidden-view'); container.innerHTML = html; }
         }
 
         async function fetchFarmProducts() {
             const container = document.getElementById('farmContainer');
             if (!container) return;
-            container.innerHTML = '<div class="text-center text-slate-400 py-10 w-full col-span-full">กำลังโหลดข้อมูล...</div>';
+            container.innerHTML = '<div class="text-center text-slate-500 py-10 w-full col-span-full">กำลังโหลดข้อมูล...</div>';
+            const querySnapshot = await getDocs(query(collection(db, "farm_products"), orderBy("created_at", "desc")));
             
-            const q = query(collection(db, "farm_products"), orderBy("created_at", "desc"));
-            const querySnapshot = await getDocs(q);
-            
-            if (querySnapshot.empty) {
-                container.innerHTML = '<div class="text-center text-slate-400 py-10 w-full col-span-full">ขณะนี้ไม่มีสินค้าเกษตรในระบบ</div>';
-                return;
-            }
-
-            let html = '';
+            let html = '', hasActive = false;
             querySnapshot.forEach((docSnap) => {
                 const item = docSnap.data();
                 if (item.quantity <= 0) return; 
-                
-                let imgHTML = item.image_url 
-                    ? `<img src="${item.image_url}" class="w-full h-44 object-cover rounded-xl mb-4 border border-slate-100">` 
-                    : `<div class="w-full h-44 bg-slate-50 rounded-xl mb-4 border border-slate-100 flex items-center justify-center text-slate-300"><i class="fa-solid fa-leaf text-4xl"></i></div>`;
-
+                hasActive = true;
+                const imgHTML = item.image_url ? `<img src="${item.image_url}" class="w-full h-44 object-cover rounded-xl mb-4 border border-slate-100">` : `<div class="w-full h-44 bg-slate-50 rounded-xl mb-4 border border-slate-200 flex items-center justify-center text-slate-300"><i class="fa-solid fa-leaf text-4xl"></i></div>`;
                 html += `
-                    <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-5 flex flex-col group hover:shadow-md transition">
+                    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 flex flex-col group hover:shadow-lg hover:-translate-y-1 transition duration-300">
                         ${imgHTML}
                         <div class="flex justify-end items-start mb-2">
-                            <span class="text-xs font-medium text-slate-500 bg-slate-100 px-3 py-1.5 rounded-full">มีสินค้า ${item.quantity} ${item.unit}</span>
+                            <span class="text-xs font-bold text-slate-600 bg-slate-100 border border-slate-200 px-3 py-1.5 rounded-full">มีสินค้า ${item.quantity} ${item.unit}</span>
                         </div>
                         <h3 class="text-xl font-bold text-slate-800 line-clamp-1">${item.name}</h3>
                         <p class="text-sm text-emerald-600 mb-2 font-medium"><i class="fa-solid fa-seedling mr-1"></i> ${item.farm_name}</p>
                         ${item.description ? `<p class="text-sm text-slate-500 mb-4 line-clamp-2 leading-relaxed">${item.description}</p>` : ''}
                         
-                        <div class="flex items-baseline gap-2 mb-4 mt-auto pt-2">
+                        <div class="flex items-baseline gap-2 mb-5 mt-auto pt-2">
                             <span class="text-3xl font-bold text-eco-green">฿${item.price}</span>
-                            <span class="text-sm text-slate-500">/ ${item.unit}</span>
+                            <span class="text-sm text-slate-500 font-medium">/ ${item.unit}</span>
                         </div>
-                        <button onclick="openBuyModal('${docSnap.id}', '${item.name}', ${item.price}, '${item.farm_name}', '${item.farmer_id}', 'farm', '${item.unit}')" class="w-full bg-emerald-600 text-white py-3 rounded-xl font-medium hover:bg-emerald-800 transition">สั่งซื้อสินค้า</button>
+                        <button onclick="openBuyModal('${docSnap.id}', '${item.name}', ${item.price}, '${item.farm_name}', '${item.farmer_id}', 'farm', '${item.unit}')" class="w-full bg-emerald-600 text-white py-3 rounded-xl font-bold hover:bg-emerald-800 transition shadow-md">สั่งซื้อสินค้า</button>
                     </div>
                 `;
             });
-            container.innerHTML = html === '' ? '<div class="text-center text-slate-400 py-10 w-full col-span-full">ขณะนี้ไม่มีสินค้าเกษตรในระบบ</div>' : html;
+            container.innerHTML = !hasActive ? '<div class="text-center text-slate-400 font-medium py-10 w-full col-span-full"><i class="fa-solid fa-basket-shopping text-3xl mb-3 block text-slate-300"></i>ขณะนี้ไม่มีสินค้าเกษตรในระบบ</div>' : html;
         }
 
-        // ================= สั่งซื้อสินค้า =================
+        // ================= BUY ORDER PROCESS =================
         window.openBuyModal = (id, name, price, shopName, merchantId, type = 'surplus', unit = '') => {
-            selectedFoodId = id;
-            selectedMerchantId = merchantId;
-            selectedItemType = type;
-
-            document.getElementById('buyFoodName').innerText = name;
-            document.getElementById('buyPrice').innerText = price;
+            selectedFoodId = id; selectedItemName = name; selectedShopName = shopName; selectedMerchantId = merchantId; selectedItemType = type;
+            document.getElementById('buyFoodName').innerText = name; document.getElementById('buyPrice').innerText = price;
             document.getElementById('buyShopName').innerHTML = type === 'surplus' ? `<i class="fa-solid fa-store"></i> ${shopName}` : `<i class="fa-solid fa-seedling"></i> ${shopName}`;
             document.getElementById('buyUnit').innerText = type === 'farm' ? `/ ${unit}` : '';
             
-            // ปิดการเสนอราคาชั่วคราวสำหรับสินค้าเกษตรเพื่อความเรียบง่าย
-            if (type === 'farm') {
-                document.getElementById('buyPriceOptionsTitle').classList.add('hidden-view');
-                document.getElementById('buyPriceOptionsArea').classList.add('hidden-view');
-            } else {
-                document.getElementById('buyPriceOptionsTitle').classList.remove('hidden-view');
-                document.getElementById('buyPriceOptionsArea').classList.remove('hidden-view');
-            }
-
-            document.querySelector('input[value="full"]').checked = true;
-            document.querySelector('input[value="pickup"]').checked = true;
-            toggleBiddingUI(false);
-            toggleDeliveryUI('pickup');
-            document.getElementById('bidAmount').value = '';
-            document.getElementById('orderTime').value = '';
-            document.getElementById('orderAddress').value = '';
+            document.getElementById('buyPriceOptionsTitle').classList.toggle('hidden-view', type === 'farm');
+            document.getElementById('buyPriceOptionsArea').classList.toggle('hidden-view', type === 'farm');
             
+            document.querySelector('input[value="full"]').checked = true; document.querySelector('input[value="pickup"]').checked = true;
+            toggleBiddingUI(false); toggleDeliveryUI('pickup');
+            
+            document.getElementById('bidAmount').value = ''; document.getElementById('orderTime').value = ''; document.getElementById('orderAddress').value = ''; document.getElementById('buyerPhone').value = '';
             toggleModal('modal-buy');
         };
 
@@ -890,37 +728,280 @@
             const bidPrice = document.getElementById('bidAmount').value;
             const deliveryMethod = document.querySelector('input[name="deliveryOption"]:checked').value;
             const time = document.getElementById('orderTime').value;
+            const phone = document.getElementById('buyerPhone').value;
 
+            if (!phone) return alert("กรุณาระบุเบอร์โทรศัพท์ติดต่อ");
             if (isBidding && !bidPrice) return alert("กรุณาระบุราคาที่เสนอ");
-            if (!time) return alert("กรุณาระบุเวลาที่จัดส่ง/รับสินค้า");
+            if (!time) return alert("กรุณาระบุเวลา");
 
             await addDoc(collection(db, "orders"), {
-                item_id: selectedFoodId,
-                item_type: selectedItemType,
-                merchant_id: selectedMerchantId,
-                buyer_id: currentUser.uid,
-                type: isBidding ? "bidding" : "normal",
-                offer_price: isBidding ? parseFloat(bidPrice) : null,
-                delivery_method: deliveryMethod,
-                time: time,
-                address: document.getElementById('orderAddress').value,
-                status: "pending",
-                created_at: serverTimestamp()
+                item_id: selectedFoodId, item_name: selectedItemName, item_type: selectedItemType,
+                shop_name: selectedShopName, merchant_id: selectedMerchantId,
+                buyer_id: currentUser.uid, buyer_name: currentUser.name || "ลูกค้า", buyer_phone: phone,
+                type: isBidding ? "bidding" : "normal", offer_price: isBidding ? parseFloat(bidPrice) : null,
+                delivery_method: deliveryMethod, time: time, address: document.getElementById('orderAddress').value,
+                status: "pending", reject_reason: "", created_at: serverTimestamp()
             });
 
             if(!isBidding) {
-                const colName = selectedItemType === 'farm' ? "farm_products" : "surplus_foods";
-                const itemRef = doc(db, colName, selectedFoodId);
+                const itemRef = doc(db, selectedItemType === 'farm' ? "farm_products" : "surplus_foods", selectedFoodId);
                 const itemSnap = await getDoc(itemRef);
                 if(itemSnap.exists()) await updateDoc(itemRef, { quantity: itemSnap.data().quantity - 1 });
-                alert("สั่งซื้อสำเร็จ!");
-            } else {
-                alert(`ส่งเสนอราคา ${bidPrice} บาทแล้ว รอร้านค้ายืนยัน`);
             }
             
+            alert(isBidding ? `ส่งเสนอราคา ${bidPrice} บาทแล้ว กรุณารอร้านค้ายืนยัน` : "สั่งซื้อสำเร็จ! รอร้านค้ายืนยันออเดอร์");
             toggleModal('modal-buy');
-            if (selectedItemType === 'farm') fetchFarmProducts();
-            else fetchFoods(); 
+            selectedItemType === 'farm' ? fetchFarmProducts() : fetchFoods(); 
+        };
+
+        // ================= ORDER MANAGEMENT (MERCHANT & BUYER) =================
+        
+        // ฟังก์ชันช่วยเหลือสถานะ
+        const getStatusLabel = (status, deliveryMethod) => {
+            if (status === 'pending') return "รอร้านค้ายอมรับ";
+            if (status === 'rejected') return "ถูกปฏิเสธ";
+            if (status === 'approved') return "สินค้าได้รับการอนุมัติ";
+            if (status === 'completed') return deliveryMethod === 'delivery' ? "จัดส่งสินค้าสำเร็จ" : "สินค้ารับสำเร็จ";
+            if (deliveryMethod === 'delivery') {
+                if (status === 'preparing') return "สินค้าอยู่ระหว่างเตรียมจัดส่ง";
+                if (status === 'delivering') return "สินค้ากำลังจัดส่ง";
+            } else {
+                if (status === 'ready') return "พร้อมรับสินค้าในเวลา";
+            }
+            return status;
+        };
+
+        const renderTimeline = (status, deliveryMethod, orderTime) => {
+            const stepsPickUp = [
+                { id: 'pending', label: 'รอร้านค้ายอมรับ' },
+                { id: 'approved', label: 'สินค้าได้รับการอนุมัติ' },
+                { id: 'ready', label: `พร้อมรับสินค้าในเวลา (${orderTime})` },
+                { id: 'completed', label: 'สินค้ารับสำเร็จ' }
+            ];
+            const stepsDeliv = [
+                { id: 'pending', label: 'รอร้านค้ายอมรับ' },
+                { id: 'approved', label: 'สินค้าได้รับการอนุมัติ' },
+                { id: 'preparing', label: 'สินค้าอยู่ระหว่างเตรียมจัดส่ง' },
+                { id: 'delivering', label: 'สินค้ากำลังจัดส่ง' },
+                { id: 'completed', label: 'จัดส่งสินค้าสำเร็จ' }
+            ];
+            
+            if (status === 'rejected') return `<div class="text-rose-600 font-bold text-center p-4 bg-rose-50 rounded-xl border border-rose-100"><i class="fa-solid fa-circle-xmark text-2xl mb-2"></i><br>คำสั่งซื้อถูกปฏิเสธโดยร้านค้า</div>`;
+
+            const steps = deliveryMethod === 'delivery' ? stepsDeliv : stepsPickUp;
+            let currentIdx = steps.findIndex(s => s.id === status);
+            if (currentIdx === -1) currentIdx = 0; // fallback
+
+            let html = `<div class="flex flex-col space-y-4 mt-6 px-2">`;
+            steps.forEach((step, idx) => {
+                const isPastOrCurrent = idx <= currentIdx;
+                const stateClass = isPastOrCurrent ? "step-active" : "step-pending";
+                html += `
+                    <div class="flex items-start ${stateClass} relative group">
+                        ${idx !== steps.length - 1 ? `<div class="absolute left-4 top-8 bottom-[-16px] w-0.5 step-line transition-all duration-300"></div>` : ''}
+                        <div class="w-8 h-8 rounded-full border-2 flex items-center justify-center step-icon z-10 shadow-sm transition-colors duration-300">
+                            ${isPastOrCurrent ? '<i class="fa-solid fa-check text-sm"></i>' : '<i class="fa-solid fa-circle text-[8px]"></i>'}
+                        </div>
+                        <div class="ml-4 mt-1 step-text transition-colors duration-300">
+                            <p class="text-[15px]">${step.label}</p>
+                        </div>
+                    </div>
+                `;
+            });
+            html += `</div>`;
+            return html;
+        };
+
+        // สำหรับหน้าผู้ซื้อ
+        window.openBuyerOrders = async () => {
+            toggleModal('modal-buyer-orders');
+            clearAllCountdowns();
+            const container = document.getElementById('buyerOrdersContainer');
+            container.innerHTML = '<div class="text-center text-slate-400 py-10"><i class="fa-solid fa-circle-notch fa-spin text-3xl mb-3"></i><br>กำลังโหลดข้อมูล...</div>';
+            try {
+                const q = query(collection(db, "orders"), orderBy("created_at", "desc"));
+                const querySnapshot = await getDocs(q);
+                let html = '';
+                querySnapshot.forEach((docSnap) => {
+                    const order = docSnap.data();
+                    if (order.buyer_id === currentUser.uid) {
+                        const dateStr = order.created_at ? order.created_at.toDate().toLocaleString('th-TH') : '';
+                        const priceText = order.type === 'bidding' ? `เสนอราคา (฿${order.offer_price})` : `ราคาปกติ`;
+                        
+                        html += `
+                            <div class="bg-white border border-slate-200 rounded-2xl p-6 mb-5 shadow-sm hover:shadow-md transition">
+                                <div class="flex justify-between items-start mb-4 border-b border-slate-100 pb-3">
+                                    <div>
+                                        <h4 class="font-bold text-lg text-slate-800">${order.item_name}</h4>
+                                        <p class="text-sm text-slate-500"><i class="fa-solid fa-store mr-1"></i> ${order.shop_name}</p>
+                                    </div>
+                                    <div class="text-right">
+                                        <span class="text-xs text-slate-400"><i class="fa-regular fa-clock"></i> ${dateStr}</span>
+                                        <div class="text-xs bg-slate-100 text-slate-600 px-2 py-1 rounded mt-1 font-medium border border-slate-200 inline-block">ออเดอร์: ${docSnap.id.substring(0, 8)}</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="grid grid-cols-2 gap-4 text-sm text-slate-700 bg-slate-50 p-4 rounded-xl mb-4 border border-slate-100">
+                                    <div><strong>รูปแบบการซื้อ:</strong> ${priceText}</div>
+                                    <div><strong>การรับสินค้า:</strong> ${order.delivery_method === 'delivery' ? 'จัดส่งถึงที่' : 'รับที่ร้าน'}</div>
+                                    ${order.address ? `<div class="col-span-2"><strong>สถานที่จัดส่ง:</strong> ${order.address}</div>` : ''}
+                                    <div class="col-span-2 font-bold text-indigo-700" id="countdown-${docSnap.id}">
+                                        นัดหมายเวลา: <span class="text-xl">${order.time}</span> น.
+                                    </div>
+                                </div>
+
+                                <div class="bg-white border border-slate-100 p-4 rounded-xl shadow-inner">
+                                    <h5 class="font-bold text-slate-700 text-sm border-b border-slate-100 pb-2">สถานะคำสั่งซื้อ</h5>
+                                    ${renderTimeline(order.status, order.delivery_method, order.time)}
+                                    ${order.status === 'rejected' && order.reject_reason ? `<p class="mt-3 text-sm text-rose-600 bg-rose-50 p-3 rounded-lg border border-rose-100"><strong>เหตุผล:</strong> ${order.reject_reason}</p>` : ''}
+                                </div>
+                            </div>
+                        `;
+                        // เริ่มการนับถอยหลังถ้าออเดอร์ยังไม่จบ
+                        if(order.status !== 'completed' && order.status !== 'rejected') {
+                            startCountdownTimer(`countdown-${docSnap.id}`, order.time, order.status);
+                        }
+                    }
+                });
+                container.innerHTML = html === '' ? '<div class="text-center text-slate-400 py-10 font-medium">คุณยังไม่มีประวัติการสั่งซื้อ</div>' : html;
+            } catch (error) { console.error(error); container.innerHTML = '<div class="text-center text-rose-500 py-10">เกิดข้อผิดพลาดในการโหลดข้อมูล</div>'; }
+        };
+
+        // นับถอยหลังง่ายๆ สำหรับวันนี้
+        function startCountdownTimer(elementId, targetTime, status) {
+            const interval = setInterval(() => {
+                const el = document.getElementById(elementId);
+                if(!el) { clearInterval(interval); return; }
+                
+                const now = new Date();
+                const [th, tm] = targetTime.split(':');
+                const target = new Date();
+                target.setHours(parseInt(th), parseInt(tm), 0, 0);
+                
+                const diffMs = target - now;
+                if (diffMs > 0) {
+                    const h = Math.floor(diffMs / (1000 * 60 * 60));
+                    const m = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
+                    let timeStr = h > 0 ? `${h} ชม. ${m} นาที` : `${m} นาที`;
+                    el.innerHTML = `นัดหมายเวลา: <span class="text-xl mx-1">${targetTime}</span> น. <span class="ml-2 text-rose-500 bg-rose-50 px-2 py-1 rounded text-xs border border-rose-200"><i class="fa-regular fa-clock"></i> เหลือเวลา ${timeStr}</span>`;
+                } else {
+                    el.innerHTML = `นัดหมายเวลา: <span class="text-xl mx-1">${targetTime}</span> น. <span class="ml-2 text-eco-green bg-emerald-50 px-2 py-1 rounded text-xs border border-emerald-200">ถึงเวลานัดหมายแล้ว</span>`;
+                    clearInterval(interval);
+                }
+            }, 60000); // อัปเดตทุกนาที
+            activeCountdownIntervals.push(interval);
+            // ให้วิ่งรอบแรกทันที
+            setTimeout(() => { clearInterval(interval); startCountdownTimer(elementId, targetTime, status); }, 10); 
+        }
+
+        function clearAllCountdowns() {
+            activeCountdownIntervals.forEach(clearInterval);
+            activeCountdownIntervals = [];
+        }
+
+        // สำหรับหน้าผู้ขาย (ร้านค้า/เกษตรกร)
+        window.openMerchantOrders = async () => {
+            toggleModal('modal-merchant-orders');
+            const container = document.getElementById('merchantOrdersContainer');
+            container.innerHTML = '<div class="text-center text-slate-400 py-10"><i class="fa-solid fa-circle-notch fa-spin text-3xl mb-3"></i><br>กำลังโหลดออเดอร์...</div>';
+            try {
+                const q = query(collection(db, "orders"), orderBy("created_at", "desc"));
+                const querySnapshot = await getDocs(q);
+                let html = '';
+                querySnapshot.forEach((docSnap) => {
+                    const order = docSnap.data();
+                    if (order.merchant_id === currentUser.uid) {
+                        const dateStr = order.created_at ? order.created_at.toDate().toLocaleString('th-TH') : '';
+                        const priceText = order.type === 'bidding' ? `เสนอราคา <span class="text-amber-600 font-bold text-lg">฿${order.offer_price}</span>` : `ราคาปกติ`;
+                        
+                        // สร้างปุ่ม Action ตาม Status
+                        let actionButtons = '';
+                        if (order.status === 'pending') {
+                            actionButtons = `
+                                <button onclick="handleMerchantAction('${docSnap.id}', 'approve', '${order.delivery_method}')" class="flex-1 bg-eco-green hover:bg-emerald-800 text-white py-2.5 rounded-xl font-bold shadow-md transition">ยอมรับออเดอร์</button>
+                                <button onclick="handleMerchantAction('${docSnap.id}', 'reject')" class="flex-1 bg-white border-2 border-rose-500 text-rose-500 hover:bg-rose-50 py-2.5 rounded-xl font-bold transition">ปฏิเสธออเดอร์</button>
+                            `;
+                        } else if (order.status === 'approved') {
+                            const nextBtn = order.delivery_method === 'delivery' 
+                                ? `<button onclick="updateOrderStatus('${docSnap.id}', 'preparing')" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-2.5 rounded-xl font-bold shadow-md transition">อัปเดต: เริ่มเตรียมจัดส่ง</button>`
+                                : `<button onclick="updateOrderStatus('${docSnap.id}', 'ready')" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-2.5 rounded-xl font-bold shadow-md transition">อัปเดต: พร้อมรับสินค้าแล้ว</button>`;
+                            actionButtons = nextBtn;
+                        } else if (order.status === 'preparing') {
+                            actionButtons = `<button onclick="updateOrderStatus('${docSnap.id}', 'delivering')" class="w-full bg-amber-500 hover:bg-amber-600 text-white py-2.5 rounded-xl font-bold shadow-md transition">อัปเดต: สินค้ากำลังจัดส่ง</button>`;
+                        } else if (order.status === 'delivering' || order.status === 'ready') {
+                            actionButtons = `<button onclick="updateOrderStatus('${docSnap.id}', 'completed')" class="w-full bg-eco-green hover:bg-emerald-800 text-white py-2.5 rounded-xl font-bold shadow-md transition">อัปเดต: สำเร็จเรียบร้อย</button>`;
+                        } else if (order.status === 'completed') {
+                            actionButtons = `<div class="w-full text-center py-2.5 bg-emerald-50 text-eco-green font-bold rounded-xl border border-emerald-200"><i class="fa-solid fa-check-circle mr-1"></i> จบรายการสำเร็จ</div>`;
+                        } else if (order.status === 'rejected') {
+                            actionButtons = `<div class="w-full text-center py-2.5 bg-rose-50 text-rose-600 font-bold rounded-xl border border-rose-200">ปฏิเสธแล้ว (${order.reject_reason})</div>`;
+                        }
+
+                        html += `
+                            <div class="bg-white border border-slate-200 rounded-2xl p-6 mb-5 shadow-sm">
+                                <div class="flex justify-between items-center mb-4 border-b border-slate-100 pb-4">
+                                    <div class="flex items-center gap-3">
+                                        <div class="bg-indigo-100 text-indigo-700 px-3 py-1.5 rounded-lg text-xs font-bold font-mono">ID: ${docSnap.id.substring(0, 8)}</div>
+                                        <span class="text-sm font-bold text-slate-700 bg-slate-100 px-3 py-1.5 rounded-lg border border-slate-200">${getStatusLabel(order.status, order.delivery_method)}</span>
+                                    </div>
+                                    <span class="text-xs text-slate-400"><i class="fa-regular fa-clock"></i> ${dateStr}</span>
+                                </div>
+                                
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-5">
+                                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-100">
+                                        <h5 class="text-xs text-slate-500 font-bold mb-2 uppercase tracking-wider">ข้อมูลสินค้า</h5>
+                                        <p class="font-bold text-lg text-slate-800">${order.item_name}</p>
+                                        <p class="text-sm text-slate-700 mt-1">รูปแบบ: ${priceText}</p>
+                                    </div>
+                                    <div class="bg-amber-50 p-4 rounded-xl border border-amber-100">
+                                        <h5 class="text-xs text-amber-700 font-bold mb-2 uppercase tracking-wider">ข้อมูลลูกค้า (การติดต่อ)</h5>
+                                        <p class="font-bold text-slate-800"><i class="fa-solid fa-user mr-1 text-amber-500"></i> ${order.buyer_name}</p>
+                                        <p class="font-bold text-indigo-700 mt-1"><i class="fa-solid fa-phone mr-1 text-indigo-400"></i> ${order.buyer_phone}</p>
+                                    </div>
+                                </div>
+
+                                <div class="text-sm text-slate-700 bg-emerald-50/50 p-4 rounded-xl border border-emerald-100 mb-5">
+                                    <div class="flex gap-2 text-base mb-1">
+                                        <span class="font-bold">การรับสินค้า:</span> 
+                                        <span>${order.delivery_method === 'delivery' ? '<i class="fa-solid fa-motorcycle text-amber-600"></i> จัดส่งถึงที่' : '<i class="fa-solid fa-store text-emerald-600"></i> รับที่ร้าน'}</span>
+                                    </div>
+                                    <div class="text-lg font-bold text-eco-green my-2"><i class="fa-regular fa-clock"></i> เวลานัด: ${order.time} น.</div>
+                                    ${order.address ? `<div class="mt-2 bg-white p-3 rounded-lg border border-slate-200 shadow-sm text-slate-600"><strong>ที่อยู่จัดส่ง:</strong> ${order.address}</div>` : ''}
+                                </div>
+
+                                <div class="flex gap-3 mt-4">
+                                    ${actionButtons}
+                                </div>
+                            </div>
+                        `;
+                    }
+                });
+                container.innerHTML = html === '' ? '<div class="text-center text-slate-400 py-10 font-medium">ยังไม่มีคำสั่งซื้อเข้ามา</div>' : html;
+            } catch (error) { console.error(error); container.innerHTML = '<div class="text-center text-rose-500 py-10">เกิดข้อผิดพลาดในการโหลดข้อมูล</div>'; }
+        };
+
+        window.handleMerchantAction = async (orderId, action, deliveryMethod) => {
+            const orderRef = doc(db, "orders", orderId);
+            if (action === 'approve') {
+                if(confirm("ยืนยันการรับออเดอร์นี้?")) {
+                    await updateDoc(orderRef, { status: "approved" });
+                    alert("รับออเดอร์สำเร็จ ระบบจะแจ้งลูกค้าทันที");
+                    openMerchantOrders();
+                }
+            } else if (action === 'reject') {
+                const reason = window.prompt("กรุณาระบุเหตุผลที่ปฏิเสธคำสั่งซื้อ (เพื่อให้ลูกค้าทราบ):");
+                if (reason !== null) {
+                    await updateDoc(orderRef, { status: "rejected", reject_reason: reason || "สินค้าหมด / ไม่สามารถให้บริการได้" });
+                    alert("ปฏิเสธออเดอร์เรียบร้อย");
+                    openMerchantOrders();
+                }
+            }
+        };
+
+        window.updateOrderStatus = async (orderId, nextStatus) => {
+            if(confirm("ยืนยันอัปเดตสถานะคำสั่งซื้อ?")) {
+                await updateDoc(doc(db, "orders", orderId), { status: nextStatus });
+                openMerchantOrders();
+            }
         };
 
     </script>
