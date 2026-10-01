@@ -17,20 +17,16 @@
         .text-eco-green { color: #2d7a5b; }
         .bg-eco-green { background-color: #2d7a5b; }
         .bg-eco-green-light { background-color: #eefcf5; }
-        .hover-bg-eco-green-light:hover { background-color: #dcf5e7; }
         .text-eco-dark { color: #1e293b; }
         
         .custom-scrollbar::-webkit-scrollbar { width: 6px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: #f1f5f9; border-radius: 8px; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 8px; }
-        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
         
         .step-active .step-icon { background-color: #2d7a5b; color: white; border-color: #2d7a5b; }
         .step-active .step-line { background-color: #2d7a5b; }
-        .step-active .step-text { color: #2d7a5b; font-weight: 600; }
         .step-pending .step-icon { background-color: white; color: #94a3b8; border-color: #cbd5e1; }
         .step-pending .step-line { background-color: #e2e8f0; }
-        .step-pending .step-text { color: #94a3b8; }
 
         @keyframes slideUp { from { transform: translateY(100%); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
         .animate-slideUp { animation: slideUp 0.4s ease-out forwards; }
@@ -41,11 +37,9 @@
     <!-- ================= VIEW: หน้า Login (Auth) ================= -->
     <main id="auth-view" class="flex-grow flex items-center justify-center bg-slate-50 px-4 relative">
         <div class="bg-white p-10 rounded-3xl shadow-xl w-full max-w-md border border-slate-200 text-center">
-            <div class="flex justify-center items-center gap-2 mb-6">
-                <i class="fa-solid fa-recycle text-eco-green text-5xl"></i>
-            </div>
+            <div class="flex justify-center items-center gap-2 mb-6"><i class="fa-solid fa-recycle text-eco-green text-5xl"></i></div>
             <h1 class="text-3xl font-bold text-eco-green mb-3 tracking-tight">EcoLoop</h1>
-            <p class="text-slate-500 mb-8 text-sm leading-relaxed">แพลตฟอร์มจัดการขยะอาหารและผลผลิตหมุนเวียน<br>สร้างระบบนิเวศที่ยั่งยืนสำหรับชุมชน</p>
+            <p class="text-slate-500 mb-8 text-sm leading-relaxed">แพลตฟอร์มจัดการขยะอาหารและผลผลิตหมุนเวียน</p>
 
             <button onclick="loginWithGoogle()" class="w-full bg-white border border-slate-300 text-slate-700 py-3.5 rounded-xl font-medium hover:bg-slate-50 transition mb-6 flex items-center justify-center gap-3 shadow-sm">
                 <svg width="20" height="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
@@ -54,23 +48,22 @@
 
             <div class="relative flex py-4 items-center mb-4">
                 <div class="flex-grow border-t border-slate-200"></div>
-                <span class="flex-shrink-0 mx-4 text-slate-400 text-sm">หรือเข้าสู่ระบบด้วยอีเมล</span>
+                <span class="flex-shrink-0 mx-4 text-slate-400 text-sm">หรืออีเมล</span>
                 <div class="flex-grow border-t border-slate-200"></div>
             </div>
 
             <div id="loginFormArea">
-                <input type="email" id="loginEmail" placeholder="อีเมลองค์กร / อีเมลส่วนตัว" class="w-full border border-slate-300 rounded-xl px-4 py-3 mb-3 outline-none focus:ring-2 focus:ring-eco-green bg-slate-50">
+                <input type="email" id="loginEmail" placeholder="อีเมล" class="w-full border border-slate-300 rounded-xl px-4 py-3 mb-3 outline-none focus:ring-2 focus:ring-eco-green bg-slate-50">
                 <input type="password" id="loginPassword" placeholder="รหัสผ่าน" class="w-full border border-slate-300 rounded-xl px-4 py-3 mb-4 outline-none focus:ring-2 focus:ring-eco-green bg-slate-50">
                 <button onclick="loginWithEmail()" class="w-full bg-eco-green text-white py-3.5 rounded-xl font-bold hover:bg-emerald-800 transition shadow-md mb-4">เข้าสู่ระบบ</button>
-                <p class="text-sm text-slate-500">ยังไม่มีบัญชีผู้ใช้งาน? <button onclick="toggleAuthForm('register')" class="text-eco-green font-bold hover:underline">ลงทะเบียนที่นี่</button></p>
+                <p class="text-sm text-slate-500">ไม่มีบัญชี? <button onclick="toggleAuthForm('register')" class="text-eco-green font-bold hover:underline">ลงทะเบียน</button></p>
             </div>
-
             <div id="registerFormArea" class="hidden-view">
                 <input type="text" id="regName" placeholder="ชื่อ - นามสกุล" class="w-full border border-slate-300 rounded-xl px-4 py-3 mb-3 outline-none focus:ring-2 focus:ring-eco-green bg-slate-50">
                 <input type="email" id="regEmail" placeholder="อีเมล" class="w-full border border-slate-300 rounded-xl px-4 py-3 mb-3 outline-none focus:ring-2 focus:ring-eco-green bg-slate-50">
                 <input type="password" id="regPassword" placeholder="รหัสผ่าน (6 ตัวอักษรขึ้นไป)" class="w-full border border-slate-300 rounded-xl px-4 py-3 mb-4 outline-none focus:ring-2 focus:ring-eco-green bg-slate-50">
-                <button onclick="registerWithEmail()" class="w-full bg-slate-800 text-white py-3.5 rounded-xl font-bold hover:bg-slate-700 transition shadow-md mb-4">ยืนยันการลงทะเบียน</button>
-                <p class="text-sm text-slate-500">มีบัญชีอยู่แล้ว? <button onclick="toggleAuthForm('login')" class="text-eco-green font-bold hover:underline">เข้าสู่ระบบ</button></p>
+                <button onclick="registerWithEmail()" class="w-full bg-slate-800 text-white py-3.5 rounded-xl font-bold hover:bg-slate-700 transition shadow-md mb-4">ยืนยัน</button>
+                <p class="text-sm text-slate-500">มีบัญชีแล้ว? <button onclick="toggleAuthForm('login')" class="text-eco-green font-bold hover:underline">เข้าสู่ระบบ</button></p>
             </div>
         </div>
     </main>
@@ -84,9 +77,8 @@
             </div>
             <div class="flex items-center gap-6">
                 <button onclick="switchView('home-view')" id="nav-home" class="text-eco-green font-bold transition text-lg">กระดานหลัก</button>
-                <button onclick="switchView('profile-view')" id="nav-profile" class="bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 px-5 py-2.5 rounded-xl font-medium transition flex items-center gap-2 text-base">
-                    <img id="nav-user-pic" src="https://via.placeholder.com/150" class="w-6 h-6 rounded-full object-cover">
-                    บัญชีของฉัน
+                <button onclick="switchView('profile-view')" id="nav-profile" class="bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 px-5 py-2 rounded-full font-medium transition flex items-center gap-2 text-sm shadow-sm">
+                    <img id="nav-user-pic" src="https://via.placeholder.com/150" class="w-6 h-6 rounded-full object-cover"> บัญชีของฉัน
                 </button>
             </div>
         </div>
@@ -94,8 +86,7 @@
 
     <!-- ================= VIEW: หน้าหลัก (Home) ================= -->
     <main id="home-view" class="hidden-view max-w-6xl mx-auto px-6 py-8 w-full">
-        
-        <!-- Environmental Impact Dashboard -->
+        <!-- Dashboard -->
         <div class="bg-slate-800 rounded-3xl p-8 mb-10 text-white shadow-lg flex flex-col md:flex-row items-center justify-between border-t-4 border-eco-green">
             <div class="mb-6 md:mb-0 text-center md:text-left">
                 <h3 class="text-2xl font-bold mb-2 tracking-wide"><i class="fa-solid fa-globe text-emerald-400 mr-2"></i>Impact Dashboard</h3>
@@ -119,989 +110,383 @@
             </div>
         </div>
 
-        <!-- Navigation Tabs -->
+        <!-- Tabs -->
         <div class="flex justify-center gap-6 border-b border-slate-300 mb-8 font-medium">
             <button class="pb-3 px-4 tab-active text-lg transition" onclick="switchTab(this, 'surplus')"><i class="fa-solid fa-utensils mr-2"></i> อาหารลดราคา (ร้านค้า)</button>
-            <button class="pb-3 px-4 text-slate-500 hover:text-eco-green text-lg transition" onclick="switchTab(this, 'farm')"><i class="fa-solid fa-basket-shopping mr-2"></i> สินค้าเกษตร (ส่งตรงจากฟาร์ม)</button>
-            <button class="pb-3 px-4 text-slate-500 hover:text-eco-green text-lg transition" onclick="switchTab(this, 'waste')"><i class="fa-solid fa-leaf mr-2 text-amber-600"></i> เศษอาหารทำปุ๋ย (ฟรี)</button>
+            <button class="pb-3 px-4 text-slate-500 hover:text-eco-green text-lg transition" onclick="switchTab(this, 'farm')"><i class="fa-solid fa-basket-shopping mr-2"></i> สินค้าเกษตร</button>
+            <button class="pb-3 px-4 text-slate-500 hover:text-eco-green text-lg transition" onclick="switchTab(this, 'waste')"><i class="fa-solid fa-leaf mr-2 text-amber-600"></i> เศษอาหารทำปุ๋ย</button>
         </div>
         
         <div id="section-surplus">
-            <div id="loadingTextSurplus" class="text-center text-slate-500 py-10 text-lg"><i class="fa-solid fa-circle-notch fa-spin mr-2"></i>กำลังโหลดข้อมูล...</div>
+            <div id="loadingTextSurplus" class="text-center text-slate-500 py-10"><i class="fa-solid fa-circle-notch fa-spin mr-2"></i>กำลังโหลด...</div>
             <div id="foodContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 hidden-view"></div>
         </div>
-        
         <div id="section-farm" class="hidden-view">
-            <div id="loadingTextFarm" class="text-center text-slate-500 py-10 text-lg"><i class="fa-solid fa-circle-notch fa-spin mr-2"></i>กำลังโหลดข้อมูล...</div>
+            <div id="loadingTextFarm" class="text-center text-slate-500 py-10"><i class="fa-solid fa-circle-notch fa-spin mr-2"></i>กำลังโหลด...</div>
             <div id="farmContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 hidden-view"></div>
         </div>
-
         <div id="section-waste" class="hidden-view">
-            <div class="bg-amber-50 border border-amber-200 rounded-2xl p-6 mb-8 text-amber-800 text-sm flex items-start gap-4 shadow-sm">
-                <i class="fa-solid fa-circle-info text-2xl text-amber-500 mt-1"></i>
-                <p><strong>พื้นที่สำหรับเกษตรกร:</strong> รายการด้านล่างคือขยะอินทรีย์และเศษอาหารจากร้านค้าในเครือข่ายที่ต้องการกำจัด เกษตรกรสามารถกด "ขอรับเศษอาหาร" เพื่อนำไปทำปุ๋ยหมักชีวภาพได้โดยไม่มีค่าใช้จ่าย เป็นการร่วมลดขยะฝังกลบตามหลักเศรษฐกิจหมุนเวียน</p>
-            </div>
-            <div id="loadingTextWaste" class="text-center text-slate-500 py-10 text-lg"><i class="fa-solid fa-circle-notch fa-spin mr-2"></i>กำลังโหลดข้อมูล...</div>
+            <div id="loadingTextWaste" class="text-center text-slate-500 py-10"><i class="fa-solid fa-circle-notch fa-spin mr-2"></i>กำลังโหลด...</div>
             <div id="wasteContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 hidden-view"></div>
         </div>
     </main>
 
-    <!-- ================= VIEW: ข้อมูลส่วนตัว (Profile) ================= -->
+    <!-- ================= VIEW: ข้อมูลส่วนตัว (Profile Updated) ================= -->
     <main id="profile-view" class="hidden-view max-w-6xl mx-auto px-6 py-10 w-full">
-        <div class="flex justify-between items-center mb-8 border-b border-slate-200 pb-4">
-            <h2 class="text-3xl font-bold text-eco-dark">การจัดการบัญชีส่วนบุคคล</h2>
-            <button onclick="logoutUser()" class="text-rose-600 hover:text-rose-800 font-bold bg-white border border-rose-200 hover:bg-rose-50 px-5 py-2.5 rounded-xl transition shadow-sm">
+        <div class="flex justify-between items-center mb-6">
+            <h2 class="text-2xl font-bold text-slate-800">การจัดการบัญชีส่วนบุคคล</h2>
+            <button onclick="logoutUser()" class="text-rose-500 text-sm font-bold border border-rose-200 bg-rose-50 hover:bg-rose-100 px-4 py-2 rounded-lg transition">
                 <i class="fa-solid fa-right-from-bracket mr-1"></i> ออกจากระบบ
             </button>
         </div>
         
-        <div class="bg-white rounded-3xl shadow-sm border border-slate-200 p-8 mb-10 flex items-center justify-between gap-6 flex-wrap">
-            <div class="flex items-center gap-6">
-                <img id="profile-pic" src="https://via.placeholder.com/150" class="w-24 h-24 rounded-full border-4 border-slate-100 object-cover shadow-sm">
+        <!-- Profile Card -->
+        <div class="bg-white rounded-3xl shadow-sm border border-slate-200 p-8 mb-10 flex flex-col md:flex-row items-center justify-between gap-8">
+            <!-- Left: User Details -->
+            <div class="flex items-center gap-6 w-full md:w-1/2 justify-center md:justify-start">
+                <img id="profile-pic" src="https://via.placeholder.com/150" class="w-24 h-24 rounded-full border-2 border-slate-200 object-cover shadow-sm">
                 <div>
-                    <h2 id="profile-name" class="text-2xl font-bold text-slate-800 tracking-wide">ชื่อผู้ใช้งาน</h2>
-                    <p id="profile-email" class="text-slate-500 mb-3 font-mono text-sm">อีเมล</p>
-                    <button onclick="openEditProfile()" class="text-sm bg-slate-100 hover:bg-slate-200 text-slate-700 px-4 py-2 rounded-lg transition font-medium border border-slate-200"><i class="fa-solid fa-pen mr-1"></i> ปรับปรุงข้อมูลส่วนตัว</button>
+                    <h2 id="profile-name" class="text-xl font-bold text-slate-800">Natchanon</h2>
+                    <p id="profile-email" class="text-slate-500 mb-3 text-sm font-mono">natchanon@gmail.com</p>
+                    <button onclick="toggleModal('modal-edit-profile')" class="text-xs bg-slate-100 hover:bg-slate-200 text-slate-600 px-4 py-2 rounded-full transition font-medium border border-slate-200"><i class="fa-solid fa-pen mr-1"></i> ปรับปรุงข้อมูลส่วนตัว</button>
                 </div>
             </div>
-            <div>
-                <button onclick="openBuyerOrders()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3.5 rounded-xl transition font-bold shadow-md flex items-center gap-2 text-base tracking-wide">
+            
+            <!-- Right: Action Buttons -->
+            <div class="w-full md:w-1/2 flex flex-col gap-3">
+                <div class="flex gap-2">
+                    <button onclick="toggleModal('modal-address')" class="flex-1 bg-black text-white hover:bg-slate-800 py-3 rounded-xl font-bold text-sm shadow-sm transition">สมุดที่อยู่</button>
+                    <!-- ปุ่มถูกซ่อนไว้เริ่มต้น และจะแสดงเมื่อมีสิทธิ์ -->
+                    <button id="btn-store-profile" onclick="toggleModal('modal-store-profile')" class="hidden-view flex-1 bg-black text-white hover:bg-slate-800 py-3 rounded-xl font-bold text-sm shadow-sm transition">ข้อมูลร้านค้า</button>
+                    <button id="btn-farmer-profile" onclick="toggleModal('modal-farmer-profile')" class="hidden-view flex-1 bg-black text-white hover:bg-slate-800 py-3 rounded-xl font-bold text-sm shadow-sm transition">ข้อมูลเกษตรกร</button>
+                </div>
+                <button onclick="openBuyerOrders()" class="w-full bg-black text-white hover:bg-slate-800 py-3 rounded-xl font-bold text-sm shadow-sm transition flex items-center justify-center gap-2">
                     <i class="fa-solid fa-clock-rotate-left"></i> ประวัติคำสั่งซื้อ (สำหรับผู้บริโภค)
                 </button>
             </div>
         </div>
         
-        <h3 class="text-xl font-bold text-slate-800 mb-6 flex items-center gap-2"><i class="fa-solid fa-briefcase text-slate-400"></i> พื้นที่ปฏิบัติการสำหรับพาร์ทเนอร์</h3>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <!-- ร้านค้า -->
-            <div class="bg-white rounded-3xl shadow-sm border border-slate-200 p-8 relative overflow-hidden group hover:shadow-md transition">
-                <div class="absolute -top-4 -right-4 p-6 opacity-5 text-9xl text-amber-500 pointer-events-none"><i class="fa-solid fa-store"></i></div>
-                <h4 class="text-xl font-bold text-slate-800 mb-2 border-b border-slate-100 pb-3">การจัดการบัญชีร้านค้า</h4>
-                <div id="merchantStatus"><button onclick="toggleModal('modal-merchant-reg')" class="w-full bg-slate-800 text-white py-3.5 rounded-xl font-bold mt-4 shadow-sm hover:bg-slate-700 transition">ลงทะเบียนองค์กร/ร้านค้า</button></div>
+        <h3 class="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2"><i class="fa-solid fa-briefcase text-slate-400"></i> พื้นที่ปฏิบัติการสำหรับพาร์ทเนอร์</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- จัดการร้านค้า -->
+            <div class="bg-white rounded-3xl shadow-sm border border-slate-200 p-8">
+                <h4 class="font-bold text-slate-800 mb-6 text-center text-lg">การจัดการบัญชีร้านค้า</h4>
+                <div id="merchantStatus">
+                    <button onclick="toggleModal('modal-merchant-reg')" class="w-full bg-slate-800 text-white py-3 rounded-xl font-bold shadow-sm hover:bg-slate-900 transition">ลงทะเบียนเปิดร้านค้า</button>
+                </div>
             </div>
-            <!-- เกษตรกร -->
-            <div class="bg-white rounded-3xl shadow-sm border border-slate-200 p-8 relative overflow-hidden group hover:shadow-md transition">
-                <div class="absolute -top-4 -right-4 p-6 opacity-5 text-9xl text-eco-green pointer-events-none"><i class="fa-solid fa-seedling"></i></div>
-                <h4 class="text-xl font-bold text-slate-800 mb-2 border-b border-slate-100 pb-3">การจัดการบัญชีเกษตรกร</h4>
-                <div id="farmerStatus"><button onclick="toggleModal('modal-farmer-reg')" class="w-full bg-slate-800 text-white py-3.5 rounded-xl font-bold mt-4 shadow-sm hover:bg-slate-700 transition">ลงทะเบียนฟาร์ม/เกษตรกร</button></div>
+            <!-- จัดการเกษตรกร -->
+            <div class="bg-white rounded-3xl shadow-sm border border-slate-200 p-8">
+                <h4 class="font-bold text-slate-800 mb-6 text-center text-lg">การจัดการบัญชีเกษตรกร</h4>
+                <div id="farmerStatus">
+                    <button onclick="toggleModal('modal-farmer-reg')" class="w-full bg-slate-800 text-white py-3 rounded-xl font-bold shadow-sm hover:bg-slate-900 transition">ลงทะเบียนเกษตรกร</button>
+                </div>
             </div>
         </div>
     </main>
 
-    <!-- ================= FLOATING NOTIFICATION BAR (ลูกค้า) ================= -->
-    <div id="buyer-status-bar" class="hidden-view fixed bottom-0 left-0 w-full bg-indigo-700 text-white z-40 shadow-[0_-10px_20px_rgba(0,0,0,0.15)] animate-slideUp cursor-pointer hover:bg-indigo-800 transition-colors" onclick="openBuyerOrders()">
+    <!-- ================= FLOATING BAR ================= -->
+    <div id="buyer-status-bar" class="hidden-view fixed bottom-0 left-0 w-full bg-indigo-700 text-white z-40 shadow-lg animate-slideUp cursor-pointer hover:bg-indigo-800 transition" onclick="openBuyerOrders()">
         <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
             <div class="flex items-center gap-4">
-                <div class="relative">
-                    <div class="w-10 h-10 bg-indigo-500 rounded-full flex items-center justify-center animate-pulse border-2 border-indigo-400"><i class="fa-solid fa-bell text-lg"></i></div>
-                    <span id="active-order-count" class="absolute -top-1 -right-1 bg-rose-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full border border-indigo-600">1</span>
-                </div>
-                <div>
-                    <p class="font-medium text-xs md:text-sm text-indigo-200 uppercase tracking-wider">อัปเดตสถานะคำสั่งซื้อ</p>
-                    <p id="active-order-status-text" class="text-sm md:text-base font-bold text-white tracking-wide">กำลังดำเนินการ...</p>
-                </div>
+                <div class="w-10 h-10 bg-indigo-500 rounded-full flex items-center justify-center animate-pulse border-2 border-indigo-400 relative"><i class="fa-solid fa-bell"></i><span id="active-order-count" class="absolute -top-1 -right-1 bg-rose-500 text-white text-[10px] px-1.5 rounded-full">1</span></div>
+                <div><p class="text-xs text-indigo-200 uppercase">สถานะคำสั่งซื้อ</p><p id="active-order-status-text" class="text-sm font-bold">กำลังดำเนินการ...</p></div>
             </div>
-            <button class="bg-white text-indigo-800 px-4 py-2 rounded-lg text-sm font-bold shadow-md hover:bg-indigo-50 transition flex items-center gap-2">ดูรายละเอียด <i class="fa-solid fa-chevron-right text-xs"></i></button>
+            <button class="bg-white text-indigo-800 px-4 py-2 rounded-lg text-sm font-bold shadow-sm">ดูรายละเอียด</button>
         </div>
     </div>
 
-    <!-- ================= MODALS ================= -->
+    <!-- ================= MODALS (ฟอร์ม) ================= -->
     
-    <!-- Modal: แจ้งเศษอาหาร (Post Food Waste) -->
-    <div id="modal-post-waste" class="modal fixed inset-0 bg-slate-900 bg-opacity-60 justify-center items-center z-50 backdrop-blur-sm p-4">
-        <div class="bg-white rounded-3xl shadow-2xl w-full max-w-md p-8 relative">
-            <button onclick="toggleModal('modal-post-waste')" class="absolute top-6 right-6 text-slate-400 hover:text-rose-500 text-xl transition"><i class="fa-solid fa-xmark"></i></button>
-            <h3 class="text-2xl font-bold text-amber-600 mb-2"><i class="fa-solid fa-leaf mr-2"></i>แจ้งขยะอินทรีย์ทำปุ๋ย</h3>
-            <p class="text-slate-500 text-sm mb-6">บันทึกปริมาณขยะอาหารเพื่อส่งต่อให้เกษตรกรฟรี</p>
-            <form id="formPostWaste">
-                <label class="block text-sm font-medium text-slate-700 mb-2">ปริมาณที่คาดการณ์ (กิโลกรัม)</label>
-                <input type="number" step="0.1" id="wasteWeight" required placeholder="เช่น 5.5" class="w-full border border-slate-300 rounded-xl px-4 py-3 mb-4 outline-none focus:ring-2 focus:ring-amber-500">
+    <!-- Modal: สมุดที่อยู่ (Address Book) -->
+    <div id="modal-address" class="modal fixed inset-0 bg-slate-900 bg-opacity-60 justify-center items-center z-50 backdrop-blur-sm p-4">
+        <div class="bg-white rounded-3xl shadow-2xl w-full max-w-lg p-8 relative max-h-[90vh] overflow-y-auto custom-scrollbar">
+            <button onclick="toggleModal('modal-address')" class="absolute top-6 right-6 text-slate-400 hover:text-rose-500 text-xl"><i class="fa-solid fa-xmark"></i></button>
+            <h3 class="text-2xl font-bold text-slate-800 mb-4">สมุดที่อยู่</h3>
+            <form id="formAddress">
+                <h4 class="font-bold text-sm text-slate-500 mb-2 border-b pb-1">1. ข้อมูลผู้ติดต่อ</h4>
+                <input type="text" id="addrName" required placeholder="ชื่อ-นามสกุล ผู้รับ" class="w-full border rounded-xl px-4 py-3 mb-3 bg-slate-50">
+                <input type="tel" id="addrPhone" required placeholder="หมายเลขโทรศัพท์" class="w-full border rounded-xl px-4 py-3 mb-4 bg-slate-50">
                 
-                <label class="block text-sm font-medium text-slate-700 mb-2">รายละเอียด (เช่น เศษผักผลไม้, กากกาแฟ)</label>
-                <textarea id="wasteDesc" required rows="2" placeholder="ระบุประเภทเศษอาหารเพื่อให้เกษตรกรประเมิน" class="w-full border border-slate-300 rounded-xl px-4 py-3 mb-4 outline-none focus:ring-2 focus:ring-amber-500 custom-scrollbar"></textarea>
-                
-                <label class="block text-sm font-medium text-slate-700 mb-2">เวลาที่สะดวกให้มารับ (ภายในวันนี้)</label>
-                <input type="time" id="wasteTime" required class="w-full border border-slate-300 rounded-xl px-4 py-3 mb-6 outline-none focus:ring-2 focus:ring-amber-500 text-slate-700">
-                
-                <button type="submit" id="btnSubmitWaste" class="w-full bg-amber-600 hover:bg-amber-700 text-white py-3.5 rounded-xl font-bold shadow-md transition text-lg">ประกาศแจ้งให้เกษตรกรทราบ</button>
-            </form>
-        </div>
-    </div>
-
-    <!-- Modal: จัดการโพสต์ (Merchant/Farmer) -->
-    <div id="modal-manage-posts" class="modal fixed inset-0 bg-slate-900 bg-opacity-60 justify-center items-center z-50 backdrop-blur-sm p-4">
-        <div class="bg-white rounded-3xl shadow-2xl w-full max-w-4xl overflow-hidden flex flex-col max-h-[90vh]">
-            <div class="px-6 py-5 border-b border-slate-200 flex justify-between items-center bg-slate-50">
-                <h3 class="text-xl font-bold text-slate-800" id="managePostsTitle"><i class="fa-solid fa-list mr-2"></i>จัดการโพสต์ของฉัน</h3>
-                <button onclick="toggleModal('modal-manage-posts')" class="text-slate-400 hover:text-rose-500 transition text-xl"><i class="fa-solid fa-xmark"></i></button>
-            </div>
-            <div class="p-6 overflow-y-auto custom-scrollbar bg-slate-50/50" id="managePostsContainer"></div>
-        </div>
-    </div>
-
-    <!-- Modal: ประวัติคำสั่งซื้อของลูกค้า -->
-    <div id="modal-buyer-orders" class="modal fixed inset-0 bg-slate-900 bg-opacity-60 justify-center items-center z-50 backdrop-blur-sm p-4">
-        <div class="bg-white rounded-3xl shadow-2xl w-full max-w-3xl overflow-hidden flex flex-col max-h-[90vh]">
-            <div class="px-6 py-5 border-b border-slate-200 flex justify-between items-center bg-slate-50">
-                <h3 class="text-xl font-bold text-slate-800"><i class="fa-solid fa-bag-shopping mr-2 text-indigo-600"></i>ประวัติคำสั่งซื้อ (ผู้บริโภค)</h3>
-                <button onclick="toggleModal('modal-buyer-orders')" class="text-slate-400 hover:text-rose-500 transition text-xl"><i class="fa-solid fa-xmark"></i></button>
-            </div>
-            <div class="p-6 overflow-y-auto custom-scrollbar bg-slate-50/50" id="buyerOrdersContainer"></div>
-        </div>
-    </div>
-
-    <!-- Modal: จัดการออเดอร์ของร้านค้า/เกษตรกร -->
-    <div id="modal-merchant-orders" class="modal fixed inset-0 bg-slate-900 bg-opacity-60 justify-center items-center z-50 backdrop-blur-sm p-4">
-        <div class="bg-white rounded-3xl shadow-2xl w-full max-w-4xl overflow-hidden flex flex-col max-h-[90vh]">
-            <div class="px-6 py-5 border-b border-slate-200 flex justify-between items-center bg-slate-50">
-                <h3 class="text-xl font-bold text-slate-800" id="merchantOrdersTitle"><i class="fa-solid fa-clipboard-list mr-2 text-amber-600"></i>การจัดการคำสั่งซื้อ (ระบบหลังบ้าน)</h3>
-                <button onclick="toggleModal('modal-merchant-orders')" class="text-slate-400 hover:text-rose-500 transition text-xl"><i class="fa-solid fa-xmark"></i></button>
-            </div>
-            <div class="p-6 overflow-y-auto custom-scrollbar bg-slate-50/50" id="merchantOrdersContainer"></div>
-        </div>
-    </div>
-
-    <!-- Modal: แก้ไขโปรไฟล์ -->
-    <div id="modal-edit-profile" class="modal fixed inset-0 bg-slate-900 bg-opacity-60 justify-center items-center z-50 backdrop-blur-sm p-4">
-        <div class="bg-white rounded-3xl shadow-2xl w-full max-w-md p-8 relative">
-            <button onclick="toggleModal('modal-edit-profile')" class="absolute top-6 right-6 text-slate-400 hover:text-rose-500 text-xl transition"><i class="fa-solid fa-xmark"></i></button>
-            <h3 class="text-2xl font-bold text-slate-800 mb-6">แก้ไขข้อมูลส่วนบุคคล</h3>
-            <form id="formEditProfile">
-                <label class="block text-sm font-medium text-slate-700 mb-2">รูปโปรไฟล์ (เลือกไฟล์รูปภาพ)</label>
-                <input type="file" id="editProfilePic" accept="image/*" class="w-full border border-slate-300 rounded-xl px-4 py-2.5 mb-5 outline-none focus:ring-2 focus:ring-eco-green bg-slate-50">
-                <label class="block text-sm font-medium text-slate-700 mb-2">ชื่อผู้ใช้งาน</label>
-                <input type="text" id="editProfileName" required class="w-full border border-slate-300 rounded-xl px-4 py-3 mb-6 outline-none focus:ring-2 focus:ring-eco-green">
-                <button type="submit" class="w-full bg-slate-800 hover:bg-slate-900 text-white py-3 rounded-xl font-bold shadow-md transition tracking-wide" id="btnSubmitProfile">บันทึกการเปลี่ยนแปลง</button>
-            </form>
-        </div>
-    </div>
-
-    <!-- Modal: ลงทะเบียนร้านค้า -->
-    <div id="modal-merchant-reg" class="modal fixed inset-0 bg-slate-900 bg-opacity-60 justify-center items-center z-50 backdrop-blur-sm p-4">
-        <div class="bg-white rounded-3xl shadow-2xl w-full max-w-md p-8 relative">
-            <button onclick="toggleModal('modal-merchant-reg')" class="absolute top-6 right-6 text-slate-400 hover:text-rose-500 text-xl transition"><i class="fa-solid fa-xmark"></i></button>
-            <h3 class="text-2xl font-bold text-slate-800 mb-6">ลงทะเบียนองค์กร/ร้านค้า</h3>
-            <form id="formMerchantReg">
-                <label class="block text-sm font-medium text-slate-700 mb-2">ชื่อร้านค้า / โรงอาหาร</label>
-                <input type="text" id="regShopName" required class="w-full border border-slate-300 rounded-xl px-4 py-3 mb-4 outline-none focus:ring-2 focus:ring-eco-green">
-                <label class="block text-sm font-medium text-slate-700 mb-2">ประเภทธุรกิจ</label>
-                <select id="regShopType" required class="w-full border border-slate-300 rounded-xl px-4 py-3 mb-6 outline-none focus:ring-2 focus:ring-eco-green text-slate-700">
-                    <option value="" disabled selected>เลือกประเภทธุรกิจ...</option>
-                    <option value="อาหารตามสั่ง">อาหารตามสั่ง / ข้าวแกง</option>
-                    <option value="เบเกอรี่">ขนม / เบเกอรี่</option>
-                    <option value="เครื่องดื่ม">เครื่องดื่ม</option>
-                </select>
-                <button type="submit" class="w-full bg-slate-800 hover:bg-slate-900 text-white py-3.5 rounded-xl font-bold shadow-md transition">ยืนยันการลงทะเบียน</button>
-            </form>
-        </div>
-    </div>
-
-    <!-- Modal: ลงทะเบียนเกษตรกร -->
-    <div id="modal-farmer-reg" class="modal fixed inset-0 bg-slate-900 bg-opacity-60 justify-center items-center z-50 backdrop-blur-sm p-4">
-        <div class="bg-white rounded-3xl shadow-2xl w-full max-w-md p-8 relative">
-            <button onclick="toggleModal('modal-farmer-reg')" class="absolute top-6 right-6 text-slate-400 hover:text-rose-500 text-xl transition"><i class="fa-solid fa-xmark"></i></button>
-            <h3 class="text-2xl font-bold text-slate-800 mb-6">ลงทะเบียนฟาร์ม/เกษตรกร</h3>
-            <form id="formFarmerReg">
-                <label class="block text-sm font-medium text-slate-700 mb-2">ชื่อแปลงเกษตร / ชื่อฟาร์ม</label>
-                <input type="text" id="regFarmName" required class="w-full border border-slate-300 rounded-xl px-4 py-3 mb-4 outline-none focus:ring-2 focus:ring-eco-green">
-                <label class="block text-sm font-medium text-slate-700 mb-2">ประเภทผลผลิตหลัก</label>
-                <input type="text" id="regFarmType" required placeholder="เช่น ผักออร์แกนิก, ผลไม้ตามฤดูกาล" class="w-full border border-slate-300 rounded-xl px-4 py-3 mb-6 outline-none focus:ring-2 focus:ring-eco-green">
-                <button type="submit" class="w-full bg-slate-800 hover:bg-slate-900 text-white py-3.5 rounded-xl font-bold shadow-md transition">ยืนยันการลงทะเบียน</button>
-            </form>
-        </div>
-    </div>
-
-    <!-- Modal: โพสต์/แก้ไข อาหารลดราคา -->
-    <div id="modal-post-food" class="modal fixed inset-0 bg-slate-900 bg-opacity-60 justify-center items-center z-50 backdrop-blur-sm p-4">
-        <div class="bg-white rounded-3xl shadow-2xl w-full max-w-md p-8 relative max-h-[90vh] overflow-y-auto custom-scrollbar">
-            <button onclick="toggleModal('modal-post-food')" class="absolute top-6 right-6 text-slate-400 hover:text-rose-500 text-xl transition"><i class="fa-solid fa-xmark"></i></button>
-            <h3 class="text-2xl font-bold text-eco-green mb-6" id="titlePostFood">ประกาศขายอาหารลดราคา</h3>
-            <form id="formPostFood">
-                <label class="block text-sm font-medium text-slate-700 mb-2">รูปภาพอาหาร</label>
-                <input type="file" id="postFoodImage" accept="image/*" class="w-full border border-slate-300 rounded-xl px-4 py-2 mb-4 outline-none focus:ring-2 focus:ring-eco-green bg-slate-50">
-                <label class="block text-sm font-medium text-slate-700 mb-2">ชื่อเมนูอาหาร</label>
-                <input type="text" id="postFoodName" required class="w-full border border-slate-300 rounded-xl px-4 py-3 mb-4 outline-none focus:ring-2 focus:ring-eco-green">
-                <label class="block text-sm font-medium text-slate-700 mb-2">รายละเอียดเพิ่มเติม</label>
-                <textarea id="postFoodDesc" rows="2" class="w-full border border-slate-300 rounded-xl px-4 py-3 mb-4 outline-none focus:ring-2 focus:ring-eco-green custom-scrollbar"></textarea>
-                <div class="flex gap-4 mb-4">
-                    <div class="w-1/2">
-                        <label class="block text-sm font-medium text-slate-700 mb-2">ราคาปกติ (฿)</label>
-                        <input type="number" id="postOriginalPrice" required class="w-full border border-slate-300 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-eco-green">
-                    </div>
-                    <div class="w-1/2">
-                        <label class="block text-sm font-medium text-slate-700 mb-2">ราคาลด (฿)</label>
-                        <input type="number" id="postDiscountPrice" required class="w-full border border-slate-300 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-eco-green text-eco-green font-bold bg-emerald-50">
-                    </div>
+                <h4 class="font-bold text-sm text-slate-500 mb-2 border-b pb-1">2. รายละเอียดที่อยู่</h4>
+                <textarea id="addrDetail" required rows="2" placeholder="บ้านเลขที่, ซอย, หมู่, ถนน" class="w-full border rounded-xl px-4 py-3 mb-3 bg-slate-50 custom-scrollbar"></textarea>
+                <div class="grid grid-cols-2 gap-3 mb-3">
+                    <input type="text" id="addrProvince" required placeholder="จังหวัด" class="w-full border rounded-xl px-4 py-3 bg-slate-50">
+                    <input type="text" id="addrDistrict" required placeholder="เขต/อำเภอ" class="w-full border rounded-xl px-4 py-3 bg-slate-50">
                 </div>
-                <div class="flex gap-4 mb-6">
-                    <div class="w-1/2">
-                        <label class="block text-sm font-medium text-slate-700 mb-2">จำนวนคงเหลือ</label>
-                        <input type="number" id="postQuantity" required class="w-full border border-slate-300 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-eco-green">
-                    </div>
-                    <div class="w-1/2">
-                        <label class="block text-sm font-medium text-slate-700 mb-2">เวลาหมดอายุโพสต์</label>
-                        <input type="datetime-local" id="postFoodExpiry" required class="w-full border border-slate-300 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-eco-green text-slate-700">
-                    </div>
-                </div>
-                <button type="submit" id="btnSubmitFood" class="w-full bg-eco-green hover:bg-emerald-800 text-white py-3.5 rounded-xl font-bold shadow-md transition text-lg tracking-wide">โพสต์จำหน่าย</button>
-            </form>
-        </div>
-    </div>
-
-    <!-- Modal: โพสต์/แก้ไข สินค้าเกษตร -->
-    <div id="modal-post-farm" class="modal fixed inset-0 bg-slate-900 bg-opacity-60 justify-center items-center z-50 backdrop-blur-sm p-4">
-        <div class="bg-white rounded-3xl shadow-2xl w-full max-w-md p-8 relative max-h-[90vh] overflow-y-auto custom-scrollbar">
-            <button onclick="toggleModal('modal-post-farm')" class="absolute top-6 right-6 text-slate-400 hover:text-rose-500 text-xl transition"><i class="fa-solid fa-xmark"></i></button>
-            <h3 class="text-2xl font-bold text-eco-green mb-6" id="titlePostFarm">ประกาศจำหน่ายสินค้าเกษตร</h3>
-            <form id="formPostFarm">
-                <label class="block text-sm font-medium text-slate-700 mb-2">รูปภาพผลผลิต</label>
-                <input type="file" id="postFarmImage" accept="image/*" class="w-full border border-slate-300 rounded-xl px-4 py-2 mb-4 outline-none focus:ring-2 focus:ring-eco-green bg-slate-50">
-                <label class="block text-sm font-medium text-slate-700 mb-2">ชื่อสินค้า (ผลผลิต)</label>
-                <input type="text" id="postFarmName" required class="w-full border border-slate-300 rounded-xl px-4 py-3 mb-4 outline-none focus:ring-2 focus:ring-eco-green">
-                <label class="block text-sm font-medium text-slate-700 mb-2">รายละเอียด / แหล่งปลูก</label>
-                <textarea id="postFarmDesc" rows="2" class="w-full border border-slate-300 rounded-xl px-4 py-3 mb-4 outline-none focus:ring-2 focus:ring-eco-green custom-scrollbar"></textarea>
-                <div class="flex gap-4 mb-4">
-                    <div class="w-1/2">
-                        <label class="block text-sm font-medium text-slate-700 mb-2">ราคา (฿)</label>
-                        <input type="number" id="postFarmPrice" required class="w-full border border-slate-300 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-eco-green">
-                    </div>
-                    <div class="w-1/2">
-                        <label class="block text-sm font-medium text-slate-700 mb-2">หน่วย (เช่น กก.)</label>
-                        <input type="text" id="postFarmUnit" required class="w-full border border-slate-300 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-eco-green">
-                    </div>
-                </div>
-                <label class="block text-sm font-medium text-slate-700 mb-2">จำนวนที่มีพร้อมขาย</label>
-                <input type="number" id="postFarmQuantity" required class="w-full border border-slate-300 rounded-xl px-4 py-3 mb-6 outline-none focus:ring-2 focus:ring-eco-green">
-                <button type="submit" id="btnSubmitFarm" class="w-full bg-eco-green hover:bg-emerald-800 text-white py-3.5 rounded-xl font-bold shadow-md transition text-lg tracking-wide">โพสต์จำหน่าย</button>
-            </form>
-        </div>
-    </div>
-
-    <!-- Modal: ซื้อสินค้า / เสนอราคา -->
-    <div id="modal-buy" class="modal fixed inset-0 bg-slate-900 bg-opacity-60 justify-center items-center z-50 backdrop-blur-sm p-4">
-        <div class="bg-white rounded-3xl shadow-2xl w-full max-w-md overflow-hidden flex flex-col max-h-[90vh]">
-            <div class="px-6 py-5 border-b border-slate-200 flex justify-between items-center bg-slate-50">
-                <h3 class="text-xl font-bold text-slate-800">ฟอร์มทำรายการสั่งซื้อ</h3>
-                <button onclick="toggleModal('modal-buy')" class="text-slate-400 hover:text-rose-500 text-xl transition"><i class="fa-solid fa-xmark"></i></button>
-            </div>
-            <div class="p-6 overflow-y-auto custom-scrollbar">
-                <div class="bg-eco-green-light rounded-2xl p-5 mb-6 border border-emerald-200 shadow-sm">
-                    <h4 id="buyFoodName" class="text-lg font-bold text-eco-green">ชื่อเมนู</h4>
-                    <p id="buyShopName" class="text-sm text-emerald-700 mb-2 font-medium"><i class="fa-solid fa-store"></i> ร้านค้า</p>
-                    <div class="text-3xl font-bold text-slate-800 mt-2 border-t border-emerald-100 pt-2">ยอดรวม: ฿<span id="buyPriceTotal">0</span> <span id="buyUnit" class="text-sm font-normal text-slate-500"></span></div>
-                </div>
-                
-                <div class="mb-6">
-                    <label class="block text-sm font-medium text-slate-700 mb-2">ระบุจำนวนที่ต้องการ (สต๊อกคงเหลือ: <span id="buyMaxQuantity" class="font-bold text-indigo-600"></span>)</label>
-                    <input type="number" id="buyQuantity" min="1" value="1" oninput="calculateTotalPrice()" class="w-full border border-slate-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-eco-green outline-none font-bold text-lg bg-slate-50">
-                </div>
-
-                <div id="buyPriceOptionsWrapper">
-                    <h5 class="font-bold text-slate-800 mb-3 text-sm">การตกลงราคา (เฉพาะอาหารเหลือทิ้ง)</h5>
-                    <div class="grid grid-cols-2 gap-3 mb-5" id="buyPriceOptionsArea">
-                        <label class="border-2 border-eco-green bg-eco-green-light rounded-xl p-3 cursor-pointer flex items-center gap-2 transition hover:shadow-sm">
-                            <input type="radio" name="priceOption" value="full" checked onchange="toggleBiddingUI(false)" class="accent-eco-green w-4 h-4">
-                            <span class="font-medium text-eco-green text-sm">ยอมรับราคาปกติ</span>
-                        </label>
-                        <label id="labelBid" class="border-2 border-slate-200 rounded-xl p-3 cursor-pointer flex items-center gap-2 hover:bg-slate-50 transition hover:shadow-sm">
-                            <input type="radio" name="priceOption" value="bid" onchange="toggleBiddingUI(true)" class="accent-eco-green w-4 h-4">
-                            <span class="font-medium text-slate-700 text-sm">เสนอราคาที่ต้องการ</span>
-                        </label>
-                    </div>
-                    <div id="biddingArea" class="mb-5 hidden-view">
-                        <input type="number" id="bidAmount" placeholder="ระบุราคารวมทั้งหมด (บาท)" class="w-full border border-slate-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-eco-green outline-none bg-amber-50">
-                    </div>
-                </div>
-                
-                <h5 class="font-bold text-slate-800 mb-3 text-sm border-t border-slate-200 pt-5">ข้อมูลสำหรับการจัดส่ง/รับสินค้า</h5>
-                <input type="tel" id="buyerPhone" required placeholder="เบอร์โทรศัพท์ติดต่อ" class="w-full border border-slate-300 rounded-xl px-4 py-3 mb-4 focus:ring-2 focus:ring-eco-green outline-none bg-slate-50">
                 <div class="grid grid-cols-2 gap-3 mb-4">
-                    <label class="border border-slate-300 rounded-xl p-3 cursor-pointer flex items-center gap-2 hover:bg-slate-50 transition">
-                        <input type="radio" name="deliveryOption" value="pickup" checked onchange="toggleDeliveryUI('pickup')" class="accent-eco-green w-4 h-4">
-                        <span class="font-medium text-slate-700 text-sm"><i class="fa-solid fa-store mr-1 text-slate-400"></i> รับที่จุดจำหน่าย</span>
-                    </label>
-                    <label class="border border-slate-300 rounded-xl p-3 cursor-pointer flex items-center gap-2 hover:bg-slate-50 transition">
-                        <input type="radio" name="deliveryOption" value="delivery" onchange="toggleDeliveryUI('delivery')" class="accent-eco-green w-4 h-4">
-                        <span class="font-medium text-slate-700 text-sm"><i class="fa-solid fa-motorcycle mr-1 text-slate-400"></i> จัดส่งปลายทาง</span>
-                    </label>
+                    <input type="text" id="addrSubDistrict" required placeholder="แขวง/ตำบล" class="w-full border rounded-xl px-4 py-3 bg-slate-50">
+                    <input type="text" id="addrZip" required placeholder="รหัสไปรษณีย์ 5 หลัก" class="w-full border rounded-xl px-4 py-3 bg-slate-50">
                 </div>
-                <div class="mb-4">
-                    <label id="timeLabel" class="block text-sm font-medium text-slate-700 mb-2">เวลานัดหมาย</label>
-                    <input type="time" id="orderTime" required class="w-full border border-slate-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-eco-green outline-none bg-slate-50">
+                
+                <h4 class="font-bold text-sm text-slate-500 mb-2 border-b pb-1">3. ข้อมูลเพิ่มเติมและการปักหมุด</h4>
+                <input type="text" id="addrLandmark" placeholder="อาคาร, ชั้น, จุดสังเกตใกล้เคียง" class="w-full border rounded-xl px-4 py-3 mb-3 bg-slate-50">
+                <input type="url" id="addrMapLink" placeholder="ลิงก์พิกัด Google Maps (ถ้ามี)" class="w-full border rounded-xl px-4 py-3 mb-4 bg-slate-50">
+                
+                <h4 class="font-bold text-sm text-slate-500 mb-2 border-b pb-1">4. ประเภทสถานที่</h4>
+                <div class="flex gap-4 mb-6">
+                    <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="addrType" value="home" checked class="accent-eco-green"> บ้าน</label>
+                    <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="addrType" value="work" class="accent-eco-green"> ที่ทำงาน</label>
                 </div>
-                <div id="addressArea" class="mb-4 hidden-view">
-                    <textarea id="orderAddress" rows="2" placeholder="ระบุสถานที่จัดส่งอย่างละเอียด" class="w-full border border-slate-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-eco-green outline-none custom-scrollbar bg-slate-50"></textarea>
+                <button type="button" onclick="alert('บันทึกที่อยู่เรียบร้อยแล้ว'); toggleModal('modal-address');" class="w-full bg-slate-800 text-white py-3.5 rounded-xl font-bold shadow-md">บันทึกข้อมูลที่อยู่</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal: ข้อมูลร้านค้า (Store Profile) -->
+    <div id="modal-store-profile" class="modal fixed inset-0 bg-slate-900 bg-opacity-60 justify-center items-center z-50 backdrop-blur-sm p-4">
+        <div class="bg-white rounded-3xl shadow-2xl w-full max-w-lg p-8 relative max-h-[90vh] overflow-y-auto custom-scrollbar">
+            <button onclick="toggleModal('modal-store-profile')" class="absolute top-6 right-6 text-slate-400 hover:text-rose-500 text-xl"><i class="fa-solid fa-xmark"></i></button>
+            <h3 class="text-2xl font-bold text-amber-600 mb-4">ข้อมูลร้านค้า (Store Profile)</h3>
+            <form id="formStoreProfile">
+                <h4 class="font-bold text-sm text-slate-500 mb-2 border-b pb-1">1. ข้อมูลพื้นฐาน</h4>
+                <input type="text" id="spName" placeholder="ชื่อร้านค้า" class="w-full border rounded-xl px-4 py-3 mb-3 bg-slate-50">
+                <input type="text" id="spCategory" placeholder="ประเภทกิจการ (เช่น เบเกอรี, คาเฟ่)" class="w-full border rounded-xl px-4 py-3 mb-3 bg-slate-50">
+                <textarea id="spBio" rows="2" placeholder="คำอธิบายร้านสั้นๆ (Bio)" class="w-full border rounded-xl px-4 py-3 mb-4 bg-slate-50"></textarea>
+                
+                <h4 class="font-bold text-sm text-slate-500 mb-2 border-b pb-1">2. การติดต่อและเวลาทำการ</h4>
+                <input type="text" id="spPhone" placeholder="เบอร์โทรศัพท์ร้าน" class="w-full border rounded-xl px-4 py-3 mb-3 bg-slate-50">
+                <input type="url" id="spSocial" placeholder="ลิงก์ Social Media (FB, IG, LINE)" class="w-full border rounded-xl px-4 py-3 mb-3 bg-slate-50">
+                <div class="grid grid-cols-2 gap-3 mb-4">
+                    <div><label class="text-xs text-slate-500">เวลาเปิด</label><input type="time" id="spOpen" class="w-full border rounded-xl px-4 py-3 bg-slate-50"></div>
+                    <div><label class="text-xs text-slate-500">เวลาปิด</label><input type="time" id="spClose" class="w-full border rounded-xl px-4 py-3 bg-slate-50"></div>
                 </div>
-            </div>
-            <div class="p-6 border-t border-slate-200 bg-white shadow-[0_-4px_10px_-1px_rgba(0,0,0,0.05)]">
-                <button onclick="confirmOrder()" class="w-full bg-slate-800 hover:bg-slate-900 text-white py-3.5 rounded-xl font-bold text-lg shadow-md transition tracking-wide">
-                    ยืนยันคำสั่งซื้อ
-                </button>
+                
+                <h4 class="font-bold text-sm text-slate-500 mb-2 border-b pb-1">3. การรับของและการชำระเงิน</h4>
+                <input type="text" id="spPickup" placeholder="ช่วงเวลารับสินค้า (เช่น 20:00 - 21:00)" class="w-full border rounded-xl px-4 py-3 mb-3 bg-slate-50">
+                <input type="text" id="spPayment" placeholder="ช่องทางชำระเงิน (เช่น เลขบัญชี, พร้อมเพย์)" class="w-full border rounded-xl px-4 py-3 mb-6 bg-slate-50">
+                
+                <button type="button" onclick="alert('อัปเดตข้อมูลร้านค้าเรียบร้อยแล้ว'); toggleModal('modal-store-profile');" class="w-full bg-amber-600 text-white py-3.5 rounded-xl font-bold shadow-md">บันทึกข้อมูลโปรไฟล์ร้านค้า</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal: ข้อมูลเกษตรกร (Farmer Profile) -->
+    <div id="modal-farmer-profile" class="modal fixed inset-0 bg-slate-900 bg-opacity-60 justify-center items-center z-50 backdrop-blur-sm p-4">
+        <div class="bg-white rounded-3xl shadow-2xl w-full max-w-lg p-8 relative max-h-[90vh] overflow-y-auto custom-scrollbar">
+            <button onclick="toggleModal('modal-farmer-profile')" class="absolute top-6 right-6 text-slate-400 hover:text-rose-500 text-xl"><i class="fa-solid fa-xmark"></i></button>
+            <h3 class="text-2xl font-bold text-eco-green mb-4">ข้อมูลฟาร์ม/เกษตรกร</h3>
+            <form id="formFarmerProfile">
+                <h4 class="font-bold text-sm text-slate-500 mb-2 border-b pb-1">1. ข้อมูลผู้ขายและแหล่งที่มา</h4>
+                <input type="text" id="fpName" placeholder="ชื่อสวน / วิสาหกิจชุมชน" class="w-full border rounded-xl px-4 py-3 mb-3 bg-slate-50">
+                <textarea id="fpStory" rows="2" placeholder="เรื่องราว (Story) และแนวคิดการปลูก" class="w-full border rounded-xl px-4 py-3 mb-4 bg-slate-50"></textarea>
+                
+                <h4 class="font-bold text-sm text-slate-500 mb-2 border-b pb-1">2. พิกัดและการจัดส่ง</h4>
+                <input type="text" id="fpLocation" placeholder="จังหวัด/อำเภอ ที่ตั้งสวน" class="w-full border rounded-xl px-4 py-3 mb-3 bg-slate-50">
+                <input type="text" id="fpTransport" placeholder="บริษัทขนส่ง / วิธีส่ง (เช่น รถห้องเย็น)" class="w-full border rounded-xl px-4 py-3 mb-3 bg-slate-50">
+                <input type="text" id="fpPackage" placeholder="วิธีการแพ็ก (เช่น กล่องเจาะรู, ห่อกันกระแทก)" class="w-full border rounded-xl px-4 py-3 mb-4 bg-slate-50">
+                
+                <h4 class="font-bold text-sm text-slate-500 mb-2 border-b pb-1">3. การติดต่อและชำระเงิน</h4>
+                <input type="tel" id="fpPhone" placeholder="เบอร์โทรศัพท์ติดต่อ" class="w-full border rounded-xl px-4 py-3 mb-3 bg-slate-50">
+                <input type="text" id="fpPayment" placeholder="ช่องทางชำระเงิน (ชื่อบัญชีสวน)" class="w-full border rounded-xl px-4 py-3 mb-6 bg-slate-50">
+                
+                <button type="button" onclick="alert('อัปเดตข้อมูลฟาร์มเรียบร้อยแล้ว'); toggleModal('modal-farmer-profile');" class="w-full bg-eco-green text-white py-3.5 rounded-xl font-bold shadow-md">บันทึกข้อมูลโปรไฟล์ฟาร์ม</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ================= OTHER MODALS ================= -->
+    
+    <!-- แก้ไขข้อมูลส่วนตัวหลัก -->
+    <div id="modal-edit-profile" class="modal fixed inset-0 bg-slate-900 bg-opacity-60 justify-center items-center z-50 backdrop-blur-sm p-4">
+        <div class="bg-white rounded-3xl shadow-2xl w-full max-w-sm p-8 relative">
+            <button onclick="toggleModal('modal-edit-profile')" class="absolute top-6 right-6 text-slate-400 hover:text-rose-500 text-xl"><i class="fa-solid fa-xmark"></i></button>
+            <h3 class="text-xl font-bold mb-4">ข้อมูลส่วนตัว (ผู้ใช้)</h3>
+            <form id="formEditProfile">
+                <input type="file" id="editProfilePic" accept="image/*" class="w-full border rounded-xl px-4 py-2 mb-4 bg-slate-50">
+                <input type="text" id="editProfileName" required class="w-full border rounded-xl px-4 py-3 mb-6 bg-slate-50">
+                <button type="submit" id="btnSubmitProfile" class="w-full bg-slate-900 text-white py-3 rounded-xl font-bold shadow-md">บันทึกรูปและชื่อ</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ลงทะเบียนร้านค้า / เกษตรกร -->
+    <div id="modal-merchant-reg" class="modal fixed inset-0 bg-slate-900 bg-opacity-60 justify-center items-center z-50 backdrop-blur-sm p-4">
+        <div class="bg-white rounded-3xl shadow-2xl w-full max-w-sm p-8 relative">
+            <button onclick="toggleModal('modal-merchant-reg')" class="absolute top-6 right-6 text-slate-400 hover:text-rose-500 text-xl"><i class="fa-solid fa-xmark"></i></button>
+            <h3 class="text-xl font-bold mb-4">เปิดร้านค้า</h3>
+            <form id="formMerchantReg">
+                <input type="text" id="regShopName" required placeholder="ชื่อร้าน" class="w-full border rounded-xl px-4 py-3 mb-4 bg-slate-50">
+                <select id="regShopType" required class="w-full border rounded-xl px-4 py-3 mb-6 bg-slate-50"><option value="" disabled selected>เลือกประเภท...</option><option value="อาหาร">อาหาร</option></select>
+                <button type="submit" class="w-full bg-slate-800 text-white py-3 rounded-xl font-bold">ยืนยันลงทะเบียนร้าน</button>
+            </form>
+        </div>
+    </div>
+    
+    <div id="modal-farmer-reg" class="modal fixed inset-0 bg-slate-900 bg-opacity-60 justify-center items-center z-50 backdrop-blur-sm p-4">
+        <div class="bg-white rounded-3xl shadow-2xl w-full max-w-sm p-8 relative">
+            <button onclick="toggleModal('modal-farmer-reg')" class="absolute top-6 right-6 text-slate-400 hover:text-rose-500 text-xl"><i class="fa-solid fa-xmark"></i></button>
+            <h3 class="text-xl font-bold mb-4">เปิดฟาร์ม</h3>
+            <form id="formFarmerReg">
+                <input type="text" id="regFarmName" required placeholder="ชื่อฟาร์ม" class="w-full border rounded-xl px-4 py-3 mb-4 bg-slate-50">
+                <input type="text" id="regFarmType" required placeholder="ผลผลิตหลัก" class="w-full border rounded-xl px-4 py-3 mb-6 bg-slate-50">
+                <button type="submit" class="w-full bg-slate-800 text-white py-3 rounded-xl font-bold">ยืนยันลงทะเบียนฟาร์ม</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- โพสต์อาหาร / ฟาร์ม / ขยะ -->
+    <div id="modal-post-food" class="modal fixed inset-0 bg-slate-900 bg-opacity-60 justify-center items-center z-50 backdrop-blur-sm p-4"><div class="bg-white rounded-3xl shadow-2xl w-full max-w-md p-8 relative max-h-[90vh] overflow-y-auto"><button onclick="toggleModal('modal-post-food')" class="absolute top-6 right-6 text-slate-400"><i class="fa-solid fa-xmark"></i></button><h3 id="titlePostFood" class="text-xl font-bold text-amber-600 mb-4">โพสต์อาหาร</h3><form id="formPostFood"><input type="file" id="postFoodImage" class="w-full mb-3"><input type="text" id="postFoodName" placeholder="ชื่อเมนู" class="w-full border px-4 py-3 mb-3 rounded-xl"><div class="flex gap-2 mb-3"><input type="number" id="postOriginalPrice" placeholder="ราคาปกติ" class="w-1/2 border px-4 py-3 rounded-xl"><input type="number" id="postDiscountPrice" placeholder="ราคาลด" class="w-1/2 border px-4 py-3 rounded-xl"></div><div class="flex gap-2 mb-4"><input type="number" id="postQuantity" placeholder="จำนวน" class="w-1/2 border px-4 py-3 rounded-xl"><input type="datetime-local" id="postFoodExpiry" class="w-1/2 border px-4 py-3 rounded-xl"></div><button type="submit" id="btnSubmitFood" class="w-full bg-amber-600 text-white py-3 rounded-xl font-bold">บันทึก</button></form></div></div>
+    
+    <div id="modal-post-farm" class="modal fixed inset-0 bg-slate-900 bg-opacity-60 justify-center items-center z-50 backdrop-blur-sm p-4"><div class="bg-white rounded-3xl shadow-2xl w-full max-w-md p-8 relative max-h-[90vh] overflow-y-auto"><button onclick="toggleModal('modal-post-farm')" class="absolute top-6 right-6 text-slate-400"><i class="fa-solid fa-xmark"></i></button><h3 id="titlePostFarm" class="text-xl font-bold text-eco-green mb-4">โพสต์สินค้าเกษตร</h3><form id="formPostFarm"><input type="file" id="postFarmImage" class="w-full mb-3"><input type="text" id="postFarmName" placeholder="ชื่อสินค้า" class="w-full border px-4 py-3 mb-3 rounded-xl"><div class="flex gap-2 mb-3"><input type="number" id="postFarmPrice" placeholder="ราคา" class="w-1/2 border px-4 py-3 rounded-xl"><input type="text" id="postFarmUnit" placeholder="หน่วย" class="w-1/2 border px-4 py-3 rounded-xl"></div><input type="number" id="postFarmQuantity" placeholder="จำนวน" class="w-full border px-4 py-3 mb-4 rounded-xl"><button type="submit" id="btnSubmitFarm" class="w-full bg-eco-green text-white py-3 rounded-xl font-bold">บันทึก</button></form></div></div>
+
+    <div id="modal-post-waste" class="modal fixed inset-0 bg-slate-900 bg-opacity-60 justify-center items-center z-50 backdrop-blur-sm p-4"><div class="bg-white rounded-3xl shadow-2xl w-full max-w-sm p-8 relative"><button onclick="toggleModal('modal-post-waste')" class="absolute top-6 right-6 text-slate-400"><i class="fa-solid fa-xmark"></i></button><h3 class="text-xl font-bold text-amber-600 mb-4">แจ้งเศษอาหาร</h3><form id="formPostWaste"><input type="number" id="wasteWeight" placeholder="น้ำหนัก (กก.)" class="w-full border px-4 py-3 mb-3 rounded-xl"><textarea id="wasteDesc" placeholder="รายละเอียด" class="w-full border px-4 py-3 mb-3 rounded-xl"></textarea><input type="time" id="wasteTime" class="w-full border px-4 py-3 mb-4 rounded-xl"><button type="submit" id="btnSubmitWaste" class="w-full bg-amber-600 text-white py-3 rounded-xl font-bold">ประกาศ</button></form></div></div>
+
+    <!-- Modals List (จัดการโพสต์, ออเดอร์, ประวัติ) -->
+    <div id="modal-manage-posts" class="modal fixed inset-0 bg-slate-900 bg-opacity-60 justify-center items-center z-50 p-4"><div class="bg-white rounded-3xl w-full max-w-4xl flex flex-col max-h-[90vh]"><div class="p-5 border-b flex justify-between"><h3 id="managePostsTitle" class="font-bold">จัดการโพสต์</h3><button onclick="toggleModal('modal-manage-posts')"><i class="fa-solid fa-xmark"></i></button></div><div id="managePostsContainer" class="p-6 overflow-y-auto"></div></div></div>
+    
+    <div id="modal-merchant-orders" class="modal fixed inset-0 bg-slate-900 bg-opacity-60 justify-center items-center z-50 p-4"><div class="bg-white rounded-3xl w-full max-w-4xl flex flex-col max-h-[90vh]"><div class="p-5 border-b flex justify-between"><h3 id="merchantOrdersTitle" class="font-bold">ออเดอร์หลังบ้าน</h3><button onclick="toggleModal('modal-merchant-orders')"><i class="fa-solid fa-xmark"></i></button></div><div id="merchantOrdersContainer" class="p-6 overflow-y-auto"></div></div></div>
+    
+    <div id="modal-buyer-orders" class="modal fixed inset-0 bg-slate-900 bg-opacity-60 justify-center items-center z-50 p-4"><div class="bg-white rounded-3xl w-full max-w-3xl flex flex-col max-h-[90vh]"><div class="p-5 border-b flex justify-between"><h3 class="font-bold">ประวัติสั่งซื้อ</h3><button onclick="toggleModal('modal-buyer-orders')"><i class="fa-solid fa-xmark"></i></button></div><div id="buyerOrdersContainer" class="p-6 overflow-y-auto"></div></div></div>
+
+    <!-- Modal Buy -->
+    <div id="modal-buy" class="modal fixed inset-0 bg-slate-900 bg-opacity-60 justify-center items-center z-50 p-4">
+        <div class="bg-white rounded-3xl w-full max-w-md flex flex-col max-h-[90vh]">
+            <div class="p-5 border-b flex justify-between"><h3 class="font-bold">สั่งซื้อ</h3><button onclick="toggleModal('modal-buy')"><i class="fa-solid fa-xmark"></i></button></div>
+            <div class="p-6 overflow-y-auto">
+                <h4 id="buyFoodName" class="font-bold text-lg"></h4><p id="buyShopName" class="text-sm text-slate-500 mb-2"></p><div class="text-2xl font-bold mb-4">฿<span id="buyPriceTotal">0</span> <span id="buyUnit" class="text-sm"></span></div>
+                <input type="number" id="buyQuantity" min="1" value="1" oninput="calculateTotalPrice()" class="w-full border px-4 py-2 mb-4 rounded-xl font-bold">
+                <div id="buyPriceOptionsWrapper">
+                    <div class="flex gap-2 mb-2"><label><input type="radio" name="priceOption" value="full" checked onchange="toggleBiddingUI(false)"> ปกติ</label><label><input type="radio" name="priceOption" value="bid" onchange="toggleBiddingUI(true)"> เสนอราคา</label></div>
+                    <input type="number" id="bidAmount" placeholder="เสนอราคา (บาท)" class="w-full border px-4 py-2 mb-4 rounded-xl hidden-view">
+                </div>
+                <input type="tel" id="buyerPhone" placeholder="เบอร์โทร" class="w-full border px-4 py-2 mb-2 rounded-xl">
+                <div class="flex gap-2 mb-2"><label><input type="radio" name="deliveryOption" value="pickup" checked onchange="toggleDeliveryUI('pickup')"> รับเอง</label><label><input type="radio" name="deliveryOption" value="delivery" onchange="toggleDeliveryUI('delivery')"> ส่งให้</label></div>
+                <input type="time" id="orderTime" class="w-full border px-4 py-2 mb-2 rounded-xl">
+                <textarea id="orderAddress" placeholder="ที่อยู่จัดส่ง" class="w-full border px-4 py-2 mb-4 rounded-xl hidden-view"></textarea>
+                <button onclick="confirmOrder()" class="w-full bg-slate-900 text-white py-3 rounded-xl font-bold">ยืนยันสั่งซื้อ</button>
             </div>
         </div>
     </div>
 
-
-    <!-- ================= FIREBASE LOGIC ================= -->
+    <!-- ================= FIREBASE SCRIPT ================= -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js";
         import { getFirestore, collection, addDoc, getDocs, query, orderBy, doc, setDoc, getDoc, updateDoc, deleteDoc, serverTimestamp, onSnapshot, where } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore.js";
         import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-storage.js";
         import { getAuth, setPersistence, browserLocalPersistence, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-auth.js";
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyBa8M4mrFqajSHCOpcA4gr8bBoy7__nBl8",
-            authDomain: "ecoloop-8b449.firebaseapp.com",
-            projectId: "ecoloop-8b449",
-            storageBucket: "ecoloop-8b449.firebasestorage.app",
-            messagingSenderId: "931335207188",
-            appId: "1:931335207188:web:315f55df419b3cf0b92a01"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-        const auth = getAuth(app);
-        const storage = getStorage(app); 
-        auth.useDeviceLanguage(); 
+        const firebaseConfig = { apiKey: "AIzaSyBa8M4mrFqajSHCOpcA4gr8bBoy7__nBl8", authDomain: "ecoloop-8b449.firebaseapp.com", projectId: "ecoloop-8b449", storageBucket: "ecoloop-8b449.firebasestorage.app" };
+        const app = initializeApp(firebaseConfig); const db = getFirestore(app); const auth = getAuth(app); const storage = getStorage(app); 
         setPersistence(auth, browserLocalPersistence);
 
-        let currentUser = null; 
-        let currentMerchantInfo = null;
-        let selectedFoodId = null;
-        let selectedItemName = '';
-        let selectedShopName = '';
-        let selectedSellerId = null;
-        let selectedItemType = 'surplus';
-        let currentItemPrice = 0;
-        let currentMaxQty = 0;
-        let activeCountdownIntervals = []; 
-        let unsubscribeOrders = null; 
-        let unsubscribeStats = null;
-        let editingPostId = null;
-        let editingPostOldImage = null;
+        let currentUser = null, currentMerchantInfo = null, selectedFoodId = null, selectedItemName = '', selectedShopName = '', selectedSellerId = null, selectedItemType = 'surplus', currentItemPrice = 0, currentMaxQty = 0, activeCountdownIntervals = [], unsubscribeOrders = null, unsubscribeStats = null, editingPostId = null, editingPostOldImage = null;
 
-        const THIRTY_DAYS_MS = 30 * 24 * 60 * 60 * 1000; 
+        // แก้ไขข้อผิดพลาด ReferenceError: Can't find variable: clearAllCountdowns
+        window.clearAllCountdowns = function() {
+            activeCountdownIntervals.forEach(clearInterval);
+            activeCountdownIntervals = [];
+        };
 
-        // ================= AUTHENTICATION =================
         onAuthStateChanged(auth, (user) => {
-            if (user) {
-                const loginTimeStr = localStorage.getItem('ecoLoopLoginTime');
-                const currentTime = Date.now();
-                if (loginTimeStr && (currentTime - parseInt(loginTimeStr) > THIRTY_DAYS_MS)) {
-                    alert("เซสชันหมดอายุ กรุณาเข้าสู่ระบบใหม่"); logoutUser(); return; 
-                } else if (!loginTimeStr) { localStorage.setItem('ecoLoopLoginTime', currentTime.toString()); }
-                doLoginSuccess(user.uid, user.displayName, user.email, user.photoURL);
-            } else {
-                currentUser = null;
-                if(unsubscribeOrders) unsubscribeOrders(); 
-                if(unsubscribeStats) unsubscribeStats();
-                document.getElementById('buyer-status-bar').classList.add('hidden-view');
-                document.body.style.paddingBottom = '0px';
-                document.getElementById('auth-view').classList.remove('hidden-view');
-                document.getElementById('main-nav').classList.add('hidden-view');
-                document.getElementById('home-view').classList.add('hidden-view');
-                document.getElementById('profile-view').classList.add('hidden-view');
-            }
+            if (user) doLoginSuccess(user.uid, user.displayName, user.email, user.photoURL);
+            else { currentUser = null; if(unsubscribeOrders) unsubscribeOrders(); if(unsubscribeStats) unsubscribeStats(); document.getElementById('auth-view').classList.remove('hidden-view'); document.getElementById('main-nav').classList.add('hidden-view'); document.getElementById('home-view').classList.add('hidden-view'); document.getElementById('profile-view').classList.add('hidden-view'); document.getElementById('buyer-status-bar').classList.add('hidden-view'); }
         });
 
         function doLoginSuccess(uid, name, email, pic) {
             currentUser = { uid: uid, name: name };
-            document.getElementById('auth-view').classList.add('hidden-view');
-            document.getElementById('main-nav').classList.remove('hidden-view');
-            document.getElementById('home-view').classList.remove('hidden-view');
-            
-            const fallbackPic = name ? `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=2d7a5b&color=fff` : 'https://ui-avatars.com/api/?name=User&background=2d7a5b&color=fff';
-            document.getElementById('profile-name').innerText = name || 'ผู้ใช้งานระบบ';
-            document.getElementById('profile-email').innerText = email || '';
-            document.getElementById('profile-pic').src = pic || fallbackPic;
-            document.getElementById('nav-user-pic').src = pic || fallbackPic;
-
-            fetchFoods(); fetchFarmProducts(); fetchWastes();
-            listenToBuyerOrders(); listenToPlatformStats();
+            document.getElementById('auth-view').classList.add('hidden-view'); document.getElementById('main-nav').classList.remove('hidden-view'); document.getElementById('home-view').classList.remove('hidden-view');
+            const fallback = name ? `https://ui-avatars.com/api/?name=${name}&background=000&color=fff` : 'https://ui-avatars.com/api/?name=User';
+            document.getElementById('profile-name').innerText = name || 'User'; document.getElementById('profile-email').innerText = email || ''; document.getElementById('profile-pic').src = pic || fallback; document.getElementById('nav-user-pic').src = pic || fallback;
+            fetchFoods(); fetchFarmProducts(); fetchWastes(); listenToBuyerOrders(); listenToPlatformStats();
         }
 
-        window.toggleAuthForm = (type) => {
-            document.getElementById('loginFormArea').classList.toggle('hidden-view', type === 'register');
-            document.getElementById('registerFormArea').classList.toggle('hidden-view', type === 'login');
-        };
-        window.registerWithEmail = () => {
-            const name = document.getElementById('regName').value; const email = document.getElementById('regEmail').value; const password = document.getElementById('regPassword').value;
-            if (!name || !email || !password) return alert('ข้อมูลไม่ครบถ้วน');
-            if (password.length < 6) return alert('รหัสผ่านสั้นเกินไป');
-            createUserWithEmailAndPassword(auth, email, password).then((userCred) => updateProfile(userCred.user, { displayName: name })).then(() => alert('ลงทะเบียนสำเร็จ')).catch((e) => alert("ข้อผิดพลาด: " + e.message));
-        };
-        window.loginWithEmail = () => {
-            const email = document.getElementById('loginEmail').value; const password = document.getElementById('loginPassword').value;
-            if (!email || !password) return alert('กรุณากรอกข้อมูล'); signInWithEmailAndPassword(auth, email, password).catch(() => alert('อีเมลหรือรหัสผ่านไม่ถูกต้อง'));
-        };
-        window.loginWithGoogle = () => { signInWithPopup(auth, new GoogleAuthProvider()).catch(e => alert("ข้อผิดพลาด: " + e.message)); };
-        window.logoutUser = () => { signOut(auth).then(() => localStorage.removeItem('ecoLoopLoginTime')); };
+        window.toggleAuthForm = (t) => { document.getElementById('loginFormArea').classList.toggle('hidden-view', t === 'register'); document.getElementById('registerFormArea').classList.toggle('hidden-view', t === 'login'); };
+        window.registerWithEmail = () => { const n = document.getElementById('regName').value, e = document.getElementById('regEmail').value, p = document.getElementById('regPassword').value; createUserWithEmailAndPassword(auth, e, p).then(u => updateProfile(u.user, { displayName: n })).then(() => alert('ลงทะเบียนสำเร็จ')).catch(e => alert(e.message)); };
+        window.loginWithEmail = () => { signInWithEmailAndPassword(auth, document.getElementById('loginEmail').value, document.getElementById('loginPassword').value).catch(() => alert('รหัสผ่านผิด')); };
+        window.loginWithGoogle = () => { signInWithPopup(auth, new GoogleAuthProvider()); };
+        window.logoutUser = () => { signOut(auth); };
 
-        // ================= UI NAVIGATION =================
-        window.switchView = (viewId) => {
-            document.getElementById('home-view').classList.add('hidden-view'); document.getElementById('profile-view').classList.add('hidden-view');
-            document.getElementById(viewId).classList.remove('hidden-view');
-            if(viewId === 'home-view') {
-                document.getElementById('nav-home').classList.add('text-eco-green', 'font-bold'); document.getElementById('nav-home').classList.remove('text-slate-600');
-                document.getElementById('nav-profile').classList.remove('bg-slate-200'); document.getElementById('nav-profile').classList.add('bg-slate-100');
-                fetchFoods(); fetchFarmProducts(); fetchWastes();
-            } else {
-                document.getElementById('nav-home').classList.remove('text-eco-green', 'font-bold'); document.getElementById('nav-home').classList.add('text-slate-600');
-                document.getElementById('nav-profile').classList.remove('bg-slate-100'); document.getElementById('nav-profile').classList.add('bg-slate-200');
-                checkUserRoles(); 
-            }
+        window.switchView = (v) => {
+            ['home-view', 'profile-view'].forEach(id => document.getElementById(id).classList.add('hidden-view')); document.getElementById(v).classList.remove('hidden-view');
+            if(v === 'home-view') { fetchFoods(); fetchFarmProducts(); fetchWastes(); document.getElementById('nav-home').classList.add('text-eco-green'); document.getElementById('nav-profile').classList.remove('bg-slate-200'); } 
+            else { checkUserRoles(); document.getElementById('nav-home').classList.remove('text-eco-green'); document.getElementById('nav-profile').classList.add('bg-slate-200'); }
+        };
+        window.switchTab = (btn, sec) => { document.querySelectorAll('button[onclick^="switchTab"]').forEach(b => { b.classList.remove('tab-active'); b.classList.add('text-slate-500'); }); btn.classList.add('tab-active'); btn.classList.remove('text-slate-500'); ['surplus', 'farm', 'waste'].forEach(id => document.getElementById('section-'+id).classList.add('hidden-view')); document.getElementById('section-'+sec).classList.remove('hidden-view'); };
+        
+        window.toggleModal = (m) => { 
+            const el = document.getElementById(m); 
+            el.classList.toggle('active'); 
+            if(!el.classList.contains('active')) window.clearAllCountdowns(); 
         };
 
-        window.switchTab = (btn, sectionId) => {
-            document.querySelectorAll('button[onclick^="switchTab"]').forEach(b => { b.classList.remove('tab-active'); b.classList.add('text-slate-500'); });
-            btn.classList.add('tab-active'); btn.classList.remove('text-slate-500');
-            document.getElementById('section-surplus').classList.add('hidden-view'); document.getElementById('section-farm').classList.add('hidden-view'); document.getElementById('section-waste').classList.add('hidden-view');
-            document.getElementById('section-' + sectionId).classList.remove('hidden-view');
-        };
+        window.toggleBiddingUI = (b) => { document.getElementById('bidAmount').classList.toggle('hidden-view', !b); };
+        window.toggleDeliveryUI = (t) => { document.getElementById('orderAddress').classList.toggle('hidden-view', t !== 'delivery'); };
 
-        window.toggleModal = (modalID) => { 
-            const modal = document.getElementById(modalID); modal.classList.toggle('active'); 
-            if (!modal.classList.contains('active')) clearAllCountdowns(); 
-        };
-        window.toggleBiddingUI = (isBid) => {
-            document.getElementById('biddingArea').classList.toggle('hidden-view', !isBid);
-            document.getElementById('labelBid').classList.toggle('border-eco-green', isBid); document.getElementById('labelBid').classList.toggle('bg-eco-green-light', isBid);
-        };
-        window.toggleDeliveryUI = (type) => {
-            document.getElementById('addressArea').classList.toggle('hidden-view', type !== 'delivery');
-            document.getElementById('timeLabel').innerText = type === 'delivery' ? "เวลาจัดส่งที่ต้องการ" : "เวลาเข้ารับสินค้า";
-        };
-
-        // ================= ROLES & PROFILE =================
+        // ปรับปรุงฟังก์ชันตรวจสอบบทบาทเพื่อใช้แสดง/ซ่อน ปุ่มข้อมูลร้านค้า และข้อมูลเกษตรกร
         async function checkUserRoles() {
             if(!currentUser) return;
-            try {
-                const merchantSnap = await getDoc(doc(db, "merchants", currentUser.uid));
-                if (merchantSnap.exists()) {
-                    currentMerchantInfo = merchantSnap.data();
-                    document.getElementById('merchantStatus').innerHTML = `
-                        <div class="bg-amber-50 p-4 rounded-xl border border-amber-200 mb-5 mt-4 text-center">
-                            <p class="font-bold text-amber-800 text-lg tracking-wide"><i class="fa-solid fa-store mr-2 opacity-70"></i>${currentMerchantInfo.shop_name}</p>
-                        </div>
-                        <div class="flex flex-col gap-3">
-                            <button onclick="preparePostFood()" class="w-full bg-amber-500 text-white py-3 rounded-xl font-bold hover:bg-amber-600 transition shadow-sm">เพิ่มรายการอาหารลดราคา</button>
-                            <button onclick="preparePostWaste()" class="w-full bg-white text-amber-700 border-2 border-amber-500 py-2.5 rounded-xl font-bold hover:bg-amber-50 transition shadow-sm">แจ้งเศษอาหารทำปุ๋ย</button>
-                            <div class="flex gap-3 mt-1">
-                                <button onclick="openManagePosts('surplus')" class="w-1/2 bg-slate-100 text-slate-700 py-2.5 rounded-xl font-bold border border-slate-300 hover:bg-slate-200 transition shadow-sm">จัดการโพสต์</button>
-                                <button onclick="openMerchantOrders('surplus')" class="w-1/2 bg-slate-800 text-white py-2.5 rounded-xl font-bold hover:bg-slate-900 transition shadow-sm">ตรวจสอบออเดอร์</button>
-                            </div>
-                        </div>
-                    `;
-                }
+            
+            const btnStoreProfile = document.getElementById('btn-store-profile');
+            const btnFarmerProfile = document.getElementById('btn-farmer-profile');
 
-                const farmerSnap = await getDoc(doc(db, "farmers", currentUser.uid));
-                if (farmerSnap.exists()) {
-                    const farmerInfo = farmerSnap.data();
-                    document.getElementById('farmerStatus').innerHTML = `
-                        <div class="bg-emerald-50 p-4 rounded-xl border border-emerald-200 mb-5 mt-4 text-center">
-                            <p class="font-bold text-emerald-800 text-lg tracking-wide"><i class="fa-solid fa-seedling mr-2 opacity-70"></i>${farmerInfo.farm_name}</p>
-                        </div>
-                        <div class="flex flex-col gap-3">
-                            <button onclick="preparePostFarm()" class="w-full bg-emerald-600 text-white py-3 rounded-xl font-bold hover:bg-emerald-700 transition shadow-sm">เพิ่มรายการสินค้าเกษตร</button>
-                            <div class="flex gap-3 mt-1">
-                                <button onclick="openManagePosts('farm')" class="w-1/2 bg-slate-100 text-slate-700 py-2.5 rounded-xl font-bold border border-slate-300 hover:bg-slate-200 transition shadow-sm">จัดการโพสต์</button>
-                                <button onclick="openMerchantOrders('farm')" class="w-1/2 bg-slate-800 text-white py-2.5 rounded-xl font-bold hover:bg-slate-900 transition shadow-sm">ตรวจสอบออเดอร์</button>
-                            </div>
-                        </div>
-                    `;
-                }
-            } catch (error) { console.error(error); }
+            const mSnap = await getDoc(doc(db, "merchants", currentUser.uid));
+            if (mSnap.exists()) {
+                currentMerchantInfo = mSnap.data();
+                btnStoreProfile.classList.remove('hidden-view'); // โชว์ปุ่มข้อมูลร้านค้าเมื่อเป็นร้านค้าแล้ว
+                
+                document.getElementById('merchantStatus').innerHTML = `<p class="font-bold text-center mb-4 bg-amber-50 p-2 rounded-lg text-amber-700">${currentMerchantInfo.shop_name}</p><div class="flex gap-2"><button onclick="preparePostFood()" class="w-1/2 bg-amber-500 text-white py-2 rounded-xl text-sm font-bold">โพสต์อาหาร</button><button onclick="preparePostWaste()" class="w-1/2 bg-white border border-amber-500 text-amber-700 py-2 rounded-xl text-sm font-bold">ทิ้งขยะอินทรีย์</button></div><div class="flex gap-2 mt-2"><button onclick="openManagePosts('surplus')" class="w-1/2 bg-slate-200 py-2 rounded-xl text-sm font-bold">จัดการโพสต์</button><button onclick="openMerchantOrders('surplus')" class="w-1/2 bg-slate-800 text-white py-2 rounded-xl text-sm font-bold">ออเดอร์ร้านค้า</button></div>`;
+            } else {
+                btnStoreProfile.classList.add('hidden-view');
+            }
+
+            const fSnap = await getDoc(doc(db, "farmers", currentUser.uid));
+            if (fSnap.exists()) {
+                btnFarmerProfile.classList.remove('hidden-view'); // โชว์ปุ่มข้อมูลเกษตรกรเมื่อเป็นเกษตรกรแล้ว
+                
+                document.getElementById('farmerStatus').innerHTML = `<p class="font-bold text-center mb-4 bg-emerald-50 p-2 rounded-lg text-emerald-700">${fSnap.data().farm_name}</p><button onclick="preparePostFarm()" class="w-full bg-emerald-600 text-white py-2 rounded-xl text-sm font-bold mb-2">โพสต์สินค้าเกษตร</button><div class="flex gap-2"><button onclick="openManagePosts('farm')" class="w-1/2 bg-slate-200 py-2 rounded-xl text-sm font-bold">จัดการโพสต์</button><button onclick="openMerchantOrders('farm')" class="w-1/2 bg-slate-800 text-white py-2 rounded-xl text-sm font-bold">ออเดอร์เกษตรกร</button></div>`;
+            } else {
+                btnFarmerProfile.classList.add('hidden-view');
+            }
         }
 
-        window.openEditProfile = () => {
-            const user = auth.currentUser; if(user) { document.getElementById('editProfileName').value = user.displayName || ''; toggleModal('modal-edit-profile'); }
-        };
         document.getElementById('formEditProfile').addEventListener('submit', async (e) => {
-            e.preventDefault(); const btn = document.getElementById('btnSubmitProfile'); btn.innerText = 'ระบบกำลังทำงาน...'; btn.disabled = true;
-            try {
-                const user = auth.currentUser; let newPicUrl = user.photoURL; const fileInput = document.getElementById('editProfilePic');
-                if (fileInput.files.length > 0) { const fileRef = storageRef(storage, `profiles/${user.uid}_${Date.now()}`); await uploadBytes(fileRef, fileInput.files[0]); newPicUrl = await getDownloadURL(fileRef); }
-                await updateProfile(user, { displayName: document.getElementById('editProfileName').value, photoURL: newPicUrl });
-                alert('อัปเดตข้อมูลสำเร็จ'); toggleModal('modal-edit-profile'); doLoginSuccess(user.uid, user.displayName, user.email, user.photoURL); 
-            } catch (error) { alert('ข้อผิดพลาด: ' + error.message); } finally { btn.innerText = 'บันทึกการเปลี่ยนแปลง'; btn.disabled = false; }
+            e.preventDefault(); const u = auth.currentUser; let url = u.photoURL; const f = document.getElementById('editProfilePic').files[0];
+            if(f) { const r = storageRef(storage, `p/${u.uid}`); await uploadBytes(r, f); url = await getDownloadURL(r); }
+            await updateProfile(u, { displayName: document.getElementById('editProfileName').value, photoURL: url });
+            toggleModal('modal-edit-profile'); doLoginSuccess(u.uid, u.displayName, u.email, u.photoURL);
         });
 
-        const handleReg = async (e, role, coll) => {
-            e.preventDefault(); const data = role === 'merchant' ? { shop_name: document.getElementById('regShopName').value, shop_type: document.getElementById('regShopType').value } : { farm_name: document.getElementById('regFarmName').value, farm_type: document.getElementById('regFarmType').value };
-            data.created_at = serverTimestamp(); await setDoc(doc(db, coll, currentUser.uid), data); alert(`ลงทะเบียนระบบ${role === 'merchant' ? 'ร้านค้า' : 'เกษตรกร'}เรียบร้อย`);
-            toggleModal(`modal-${role}-reg`); checkUserRoles();
-        };
-        document.getElementById('formMerchantReg').addEventListener('submit', (e) => handleReg(e, 'merchant', 'merchants'));
-        document.getElementById('formFarmerReg').addEventListener('submit', (e) => handleReg(e, 'farmer', 'farmers'));
+        const handleReg = async (e, role, coll) => { e.preventDefault(); const d = role === 'merchant' ? { shop_name: document.getElementById('regShopName').value, shop_type: document.getElementById('regShopType').value } : { farm_name: document.getElementById('regFarmName').value, farm_type: document.getElementById('regFarmType').value }; await setDoc(doc(db, coll, currentUser.uid), d); toggleModal(`modal-${role}-reg`); checkUserRoles(); };
+        document.getElementById('formMerchantReg').addEventListener('submit', e => handleReg(e, 'merchant', 'merchants')); document.getElementById('formFarmerReg').addEventListener('submit', e => handleReg(e, 'farmer', 'farmers'));
 
-        // ================= WASTE MANAGEMENT =================
         window.preparePostWaste = () => { document.getElementById('formPostWaste').reset(); toggleModal('modal-post-waste'); };
-        
-        document.getElementById('formPostWaste').addEventListener('submit', async (e) => {
-            e.preventDefault(); const btn = document.getElementById('btnSubmitWaste'); btn.innerText = 'กำลังบันทึก...'; btn.disabled = true;
-            try {
-                await addDoc(collection(db, "food_wastes"), {
-                    merchant_id: currentUser.uid, shop_name: currentMerchantInfo.shop_name,
-                    weight: parseFloat(document.getElementById('wasteWeight').value), description: document.getElementById('wasteDesc').value,
-                    pickup_time: document.getElementById('wasteTime').value, status: 'pending', created_at: serverTimestamp()
-                });
-                alert('ประกาศแจ้งข้อมูลเรียบร้อย เกษตรกรในพื้นที่จะมองเห็นข้อมูลนี้'); e.target.reset(); toggleModal('modal-post-waste'); fetchWastes();
-            } catch (error) { alert("ข้อผิดพลาด: " + error.message); } finally { btn.innerText = 'ประกาศแจ้งให้เกษตรกรทราบ'; btn.disabled = false; }
-        });
+        document.getElementById('formPostWaste').addEventListener('submit', async (e) => { e.preventDefault(); await addDoc(collection(db, "food_wastes"), { merchant_id: currentUser.uid, shop_name: currentMerchantInfo.shop_name, weight: parseFloat(document.getElementById('wasteWeight').value), description: document.getElementById('wasteDesc').value, pickup_time: document.getElementById('wasteTime').value, status: 'pending', created_at: serverTimestamp() }); toggleModal('modal-post-waste'); fetchWastes(); });
 
         async function fetchWastes() {
-            const container = document.getElementById('wasteContainer'); const loadingText = document.getElementById('loadingTextWaste');
-            loadingText.classList.remove('hidden-view'); container.classList.add('hidden-view'); container.innerHTML = '';
-            const querySnapshot = await getDocs(query(collection(db, "food_wastes"), orderBy("created_at", "desc")));
-            let html = '', hasActive = false;
-            
-            const farmerSnap = currentUser ? await getDoc(doc(db, "farmers", currentUser.uid)) : null;
-            const isFarmer = farmerSnap && farmerSnap.exists();
-
-            querySnapshot.forEach((docSnap) => {
-                const item = docSnap.data();
-                if (item.status === 'pending') {
-                    hasActive = true;
-                    html += `
-                        <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 flex flex-col group hover:border-amber-300 transition">
-                            <div class="flex justify-between items-start mb-3 border-b border-slate-100 pb-3">
-                                <div>
-                                    <h4 class="font-bold text-amber-800 text-lg">${item.weight} กิโลกรัม</h4>
-                                    <p class="text-sm text-slate-500 mt-1"><i class="fa-solid fa-store mr-1 text-slate-400"></i> ${item.shop_name}</p>
-                                </div>
-                                <span class="bg-amber-100 text-amber-700 text-xs font-bold px-2.5 py-1 rounded-lg">พร้อมรับ</span>
-                            </div>
-                            <p class="text-sm text-slate-600 mb-4 bg-slate-50 p-3 rounded-xl border border-slate-100">${item.description}</p>
-                            <div class="flex items-center gap-2 mb-5 mt-auto text-sm font-bold text-slate-700">
-                                <i class="fa-regular fa-clock text-amber-500"></i> เวลาเปิดให้เข้ารับ: ${item.pickup_time}
-                            </div>
-                            ${isFarmer 
-                                ? `<button onclick="claimWaste('${docSnap.id}')" class="w-full bg-amber-600 text-white py-3 rounded-xl font-bold hover:bg-amber-700 transition shadow-sm tracking-wide">รับเศษอาหารไปทำปุ๋ย</button>` 
-                                : `<button disabled class="w-full bg-slate-100 text-slate-400 py-3 rounded-xl font-bold border border-slate-200 cursor-not-allowed">เฉพาะเกษตรกรเท่านั้น</button>`}
-                        </div>`;
-                }
-            });
-            if (!hasActive) { loadingText.innerHTML = '<div class="py-10 text-slate-400 font-medium text-center w-full col-span-full"><i class="fa-solid fa-leaf text-3xl mb-3 block opacity-50"></i>ขณะนี้ไม่มีการแจ้งขยะอินทรีย์</div>'; } 
-            else { loadingText.classList.add('hidden-view'); container.classList.remove('hidden-view'); container.innerHTML = html; }
+            const c = document.getElementById('wasteContainer'); c.innerHTML = ''; let h = '';
+            const q = await getDocs(query(collection(db, "food_wastes"), orderBy("created_at", "desc")));
+            q.forEach(d => { const i = d.data(); if(i.status === 'pending') h += `<div class="bg-white p-4 rounded-xl border shadow-sm"><b>${i.weight} กก. - ${i.shop_name}</b><p class="text-sm mt-2">${i.description}</p><p class="text-xs text-slate-500 mt-2">นัดรับ: ${i.pickup_time}</p><button onclick="claimWaste('${d.id}')" class="w-full bg-amber-500 text-white mt-3 py-2 rounded-lg font-bold">รับไปทำปุ๋ย</button></div>`; });
+            c.innerHTML = h || '<p class="col-span-full text-center text-slate-400">ไม่มีการแจ้งขยะอินทรีย์</p>';
         }
+        window.claimWaste = async (id) => { if(confirm("ยืนยันรับเศษอาหาร?")) { await updateDoc(doc(db, "food_wastes", id), { status: "claimed" }); fetchWastes(); } };
 
-        window.claimWaste = async (id) => {
-            if(confirm("ยืนยันการรับเศษอาหารรายการนี้? เมื่อกดรับแล้วกรุณาไปรับตามเวลานัดหมาย")) {
-                const wasteRef = doc(db, "food_wastes", id);
-                await updateDoc(wasteRef, { status: "claimed", claimed_by: currentUser.uid, claimed_at: serverTimestamp() });
-                alert("บันทึกการทำรายการสำเร็จ"); fetchWastes();
-            }
-        };
-
-        // ================= ENVIRONMENTAL DASHBOARD STATS =================
         function listenToPlatformStats() {
-            if(unsubscribeStats) unsubscribeStats();
-            const orderQ = query(collection(db, "orders"), where("status", "==", "completed"));
-            const wasteQ = query(collection(db, "food_wastes"), where("status", "==", "claimed")); 
-            let totalMeals = 0; let totalCompost = 0;
-
-            const updateDashboard = () => {
-                const co2Saved = (totalMeals * 1.25) + (totalCompost * 2.5);
-                document.getElementById('stat-meals').innerText = totalMeals.toLocaleString();
-                document.getElementById('stat-compost').innerHTML = `${totalCompost.toFixed(1)} <span class="text-base font-normal">กก.</span>`;
-                document.getElementById('stat-co2').innerHTML = `${co2Saved.toFixed(1)} <span class="text-base font-normal">kgCO₂e</span>`;
-            };
-
-            onSnapshot(orderQ, (snap) => {
-                totalMeals = 0;
-                snap.forEach(d => { if(d.data().item_type === 'surplus') totalMeals += (d.data().quantity || 1); });
-                updateDashboard();
-            });
-
-            onSnapshot(wasteQ, (snap) => {
-                totalCompost = 0;
-                snap.forEach(d => { totalCompost += (d.data().weight || 0); });
-                updateDashboard();
-            });
+            onSnapshot(query(collection(db, "orders"), where("status", "==", "completed")), s => { let m = 0; s.forEach(d => { if(d.data().item_type === 'surplus') m += (d.data().quantity || 1); }); document.getElementById('stat-meals').innerText = m; document.getElementById('stat-co2').innerHTML = ((m*1.25)+parseFloat(document.getElementById('stat-compost').innerText)*2.5).toFixed(1) + ' <span class="text-base">kgCO₂e</span>'; });
+            onSnapshot(query(collection(db, "food_wastes"), where("status", "==", "claimed")), s => { let c = 0; s.forEach(d => { c += (d.data().weight || 0); }); document.getElementById('stat-compost').innerHTML = c.toFixed(1) + ' <span class="text-base">กก.</span>'; });
         }
 
+        window.preparePostFood = () => { editingPostId = null; document.getElementById('formPostFood').reset(); document.getElementById('titlePostFood').innerText = "โพสต์อาหาร"; toggleModal('modal-post-food'); };
+        window.preparePostFarm = () => { editingPostId = null; document.getElementById('formPostFarm').reset(); document.getElementById('titlePostFarm').innerText = "โพสต์สินค้าเกษตร"; toggleModal('modal-post-farm'); };
+        
+        document.getElementById('formPostFood').addEventListener('submit', async (e) => { e.preventDefault(); const d = { merchant_id: currentUser.uid, shop_name: currentMerchantInfo.shop_name, food_name: document.getElementById('postFoodName').value, original_price: parseFloat(document.getElementById('postOriginalPrice').value), discounted_price: parseFloat(document.getElementById('postDiscountPrice').value), quantity: parseInt(document.getElementById('postQuantity').value), expiry_time: document.getElementById('postFoodExpiry').value, created_at: serverTimestamp() }; await addDoc(collection(db, "surplus_foods"), d); toggleModal('modal-post-food'); fetchFoods(); });
+        document.getElementById('formPostFarm').addEventListener('submit', async (e) => { e.preventDefault(); const d = { farmer_id: currentUser.uid, farm_name: 'ฟาร์ม', name: document.getElementById('postFarmName').value, price: parseFloat(document.getElementById('postFarmPrice').value), unit: document.getElementById('postFarmUnit').value, quantity: parseInt(document.getElementById('postFarmQuantity').value), created_at: serverTimestamp() }; await addDoc(collection(db, "farm_products"), d); toggleModal('modal-post-farm'); fetchFarmProducts(); });
 
-        // ================= POSTS & FEED MANAGEMENT =================
-        window.preparePostFood = () => { editingPostId = null; editingPostOldImage = null; document.getElementById('formPostFood').reset(); document.getElementById('titlePostFood').innerText = "ประกาศขายอาหารลดราคา"; document.getElementById('btnSubmitFood').innerText = "โพสต์จำหน่าย"; toggleModal('modal-post-food'); };
-        window.preparePostFarm = () => { editingPostId = null; editingPostOldImage = null; document.getElementById('formPostFarm').reset(); document.getElementById('titlePostFarm').innerText = "ประกาศจำหน่ายสินค้าเกษตร"; document.getElementById('btnSubmitFarm').innerText = "โพสต์จำหน่าย"; toggleModal('modal-post-farm'); };
+        window.openManagePosts = async (type) => { toggleModal('modal-manage-posts'); const c = document.getElementById('managePostsContainer'); c.innerHTML = '...'; const q = await getDocs(query(collection(db, type==='surplus'?"surplus_foods":"farm_products"), orderBy("created_at", "desc"))); let h = ''; q.forEach(d => { const i = d.data(); if ((type==='surplus'&&i.merchant_id===currentUser.uid) || (type==='farm'&&i.farmer_id===currentUser.uid)) { h += `<div class="p-3 border rounded mb-2 flex justify-between items-center"><div><b>${i.food_name||i.name}</b> (เหลือ ${i.quantity})</div><button onclick="deletePost('${d.id}', '${type}')" class="text-red-500">ลบ</button></div>`; } }); c.innerHTML = h || 'ไม่มีข้อมูล'; };
+        window.deletePost = async (id, t) => { if(confirm("ลบ?")) { await deleteDoc(doc(db, t==='surplus'?"surplus_foods":"farm_products", id)); openManagePosts(t); } };
 
-        document.getElementById('formPostFood').addEventListener('submit', async (e) => {
-            e.preventDefault(); const btn = document.getElementById('btnSubmitFood'); btn.innerText = 'กำลังประมวลผล...'; btn.disabled = true;
-            try {
-                const fileInput = document.getElementById('postFoodImage'); let imageUrl = editingPostOldImage;
-                if (fileInput.files.length > 0) { const fileRef = storageRef(storage, `foods/${currentUser.uid}_${Date.now()}`); await uploadBytes(fileRef, fileInput.files[0]); imageUrl = await getDownloadURL(fileRef); }
-                const data = { merchant_id: currentUser.uid, shop_name: currentMerchantInfo.shop_name, food_name: document.getElementById('postFoodName').value, description: document.getElementById('postFoodDesc').value, original_price: parseFloat(document.getElementById('postOriginalPrice').value), discounted_price: parseFloat(document.getElementById('postDiscountPrice').value), quantity: parseInt(document.getElementById('postQuantity').value), expiry_time: document.getElementById('postFoodExpiry').value, image_url: imageUrl };
-                if (editingPostId) { await updateDoc(doc(db, "surplus_foods", editingPostId), data); alert('ปรับปรุงข้อมูลสำเร็จ'); openManagePosts('surplus'); } 
-                else { data.created_at = serverTimestamp(); await addDoc(collection(db, "surplus_foods"), data); alert('โพสต์ข้อมูลสำเร็จ'); }
-                e.target.reset(); toggleModal('modal-post-food'); fetchFoods();
-            } catch (error) { alert("ข้อผิดพลาด: " + error.message); } finally { btn.innerText = editingPostId ? 'บันทึกการเปลี่ยนแปลง' : 'โพสต์จำหน่าย'; btn.disabled = false; }
-        });
+        async function fetchFoods() { const c = document.getElementById('foodContainer'); c.innerHTML = ''; let h = ''; const q = await getDocs(query(collection(db, "surplus_foods"), orderBy("created_at", "desc"))); q.forEach(d => { const i = d.data(); if(i.quantity>0) h += `<div class="bg-white p-5 rounded-2xl shadow-sm border"><b>${i.food_name}</b><p class="text-sm text-emerald-600 mb-2">${i.shop_name}</p><div class="text-2xl font-bold text-eco-green mb-3">฿${i.discounted_price} <span class="line-through text-sm text-gray-400">฿${i.original_price}</span></div><button onclick="openBuyModal('${d.id}','${i.food_name}',${i.discounted_price},'${i.shop_name}','${i.merchant_id}','surplus','',${i.quantity})" class="w-full bg-slate-900 text-white py-2 rounded-xl">สั่งซื้อ</button></div>`; }); c.innerHTML = h || '<p class="col-span-full text-center">ไม่มีข้อมูล</p>'; document.getElementById('section-surplus').children[0].classList.add('hidden-view'); c.classList.remove('hidden-view'); }
+        async function fetchFarmProducts() { const c = document.getElementById('farmContainer'); c.innerHTML = ''; let h = ''; const q = await getDocs(query(collection(db, "farm_products"), orderBy("created_at", "desc"))); q.forEach(d => { const i = d.data(); if(i.quantity>0) h += `<div class="bg-white p-5 rounded-2xl shadow-sm border"><b>${i.name}</b><p class="text-sm text-emerald-600 mb-2">${i.farm_name}</p><div class="text-2xl font-bold text-eco-green mb-3">฿${i.price}/${i.unit}</div><button onclick="openBuyModal('${d.id}','${i.name}',${i.price},'${i.farm_name}','${i.farmer_id}','farm','${i.unit}',${i.quantity})" class="w-full bg-emerald-600 text-white py-2 rounded-xl">สั่งซื้อ</button></div>`; }); c.innerHTML = h || '<p class="col-span-full text-center">ไม่มีข้อมูล</p>'; document.getElementById('section-farm').children[0].classList.add('hidden-view'); c.classList.remove('hidden-view'); }
 
-        document.getElementById('formPostFarm').addEventListener('submit', async (e) => {
-            e.preventDefault(); const btn = document.getElementById('btnSubmitFarm'); btn.innerText = 'กำลังประมวลผล...'; btn.disabled = true;
-            try {
-                let imageUrl = editingPostOldImage; const fileInput = document.getElementById('postFarmImage');
-                if (fileInput.files.length > 0) { const fileRef = storageRef(storage, `farms/${currentUser.uid}_${Date.now()}`); await uploadBytes(fileRef, fileInput.files[0]); imageUrl = await getDownloadURL(fileRef); }
-                const farmerSnap = await getDoc(doc(db, "farmers", currentUser.uid)); const farm_name = farmerSnap.exists() ? farmerSnap.data().farm_name : 'ไม่ทราบชื่อฟาร์ม';
-                const data = { farmer_id: currentUser.uid, farm_name: farm_name, name: document.getElementById('postFarmName').value, description: document.getElementById('postFarmDesc').value, price: parseFloat(document.getElementById('postFarmPrice').value), unit: document.getElementById('postFarmUnit').value, quantity: parseInt(document.getElementById('postFarmQuantity').value), image_url: imageUrl };
-                if (editingPostId) { await updateDoc(doc(db, "farm_products", editingPostId), data); alert('ปรับปรุงข้อมูลสำเร็จ'); openManagePosts('farm'); } 
-                else { data.created_at = serverTimestamp(); await addDoc(collection(db, "farm_products"), data); alert('โพสต์ข้อมูลสำเร็จ'); document.querySelectorAll('button[onclick^="switchTab"]').forEach(b => { if(b.innerText.includes('สินค้าเกษตร')) b.click(); }); }
-                e.target.reset(); toggleModal('modal-post-farm'); fetchFarmProducts();
-            } catch (error) { alert("ข้อผิดพลาด: " + error.message); } finally { btn.innerText = editingPostId ? 'บันทึกการเปลี่ยนแปลง' : 'โพสต์จำหน่าย'; btn.disabled = false; }
-        });
+        window.openBuyModal = (id, n, p, sn, sid, type, u, max) => { selectedFoodId=id; selectedItemName=n; selectedShopName=sn; selectedSellerId=sid; selectedItemType=type; currentItemPrice=p; currentMaxQty=max; document.getElementById('buyFoodName').innerText=n; document.getElementById('buyShopName').innerText=sn; document.getElementById('buyUnit').innerText=u?`/${u}`:''; document.getElementById('buyQuantity').value=1; document.getElementById('buyQuantity').max=max; calculateTotalPrice(); document.getElementById('buyPriceOptionsWrapper').classList.toggle('hidden-view', type==='farm'); toggleBiddingUI(false); toggleDeliveryUI('pickup'); toggleModal('modal-buy'); };
+        window.calculateTotalPrice = () => { let q = parseInt(document.getElementById('buyQuantity').value)||1; if(q>currentMaxQty)q=currentMaxQty; document.getElementById('buyQuantity').value=q; document.getElementById('buyPriceTotal').innerText=(currentItemPrice*q); };
+        window.confirmOrder = async () => { const q = parseInt(document.getElementById('buyQuantity').value), b = document.querySelector('input[value="bid"]').checked && selectedItemType==='surplus', bp = document.getElementById('bidAmount').value, t = document.getElementById('orderTime').value, ph = document.getElementById('buyerPhone').value; if(!ph||!t) return alert("กรอกข้อมูลให้ครบ"); await addDoc(collection(db, "orders"), { item_id: selectedFoodId, item_name: selectedItemName, item_type: selectedItemType, shop_name: selectedShopName, seller_id: selectedSellerId, buyer_id: currentUser.uid, buyer_phone: ph, quantity: q, type: b?"bidding":"normal", total_price: b?parseFloat(bp):(currentItemPrice*q), delivery_method: document.querySelector('input[name="deliveryOption"]:checked').value, time: t, address: document.getElementById('orderAddress').value, status: "pending", created_at: serverTimestamp() }); alert("สั่งซื้อสำเร็จ"); toggleModal('modal-buy'); };
 
-        window.openManagePosts = async (type) => {
-            toggleModal('modal-manage-posts');
-            document.getElementById('managePostsTitle').innerHTML = type === 'surplus' ? '<i class="fa-solid fa-list mr-2"></i>รายการโพสต์ (ร้านค้า)' : '<i class="fa-solid fa-list mr-2"></i>รายการโพสต์ (เกษตรกร)';
-            const container = document.getElementById('managePostsContainer'); container.innerHTML = '<div class="text-center text-slate-400 py-10"><i class="fa-solid fa-circle-notch fa-spin text-3xl mb-3"></i><br>กำลังดึงข้อมูล...</div>';
-            try {
-                const colName = type === 'surplus' ? "surplus_foods" : "farm_products";
-                const q = query(collection(db, colName), orderBy("created_at", "desc")); const querySnapshot = await getDocs(q); let html = '';
-                querySnapshot.forEach((docSnap) => {
-                    const item = docSnap.data(); const isOwner = type === 'surplus' ? item.merchant_id === currentUser.uid : item.farmer_id === currentUser.uid;
-                    if (isOwner) {
-                        const name = type === 'surplus' ? item.food_name : item.name; const price = type === 'surplus' ? item.discounted_price : item.price; const unitTxt = type === 'farm' ? `/${item.unit}` : '';
-                        html += `
-                            <div class="bg-white border border-slate-200 rounded-2xl p-5 mb-4 shadow-sm flex items-center justify-between gap-4">
-                                <div class="flex items-center gap-4 flex-1">
-                                    ${item.image_url ? `<img src="${item.image_url}" class="w-16 h-16 object-cover rounded-xl border border-slate-200">` : `<div class="w-16 h-16 bg-slate-50 rounded-xl flex items-center justify-center text-slate-300"><i class="fa-solid fa-image"></i></div>`}
-                                    <div>
-                                        <h4 class="font-bold text-slate-800">${name}</h4>
-                                        <p class="text-sm text-slate-500 font-mono mt-1">คงเหลือ: <span class="font-bold text-slate-700">${item.quantity}</span> | ราคา: ฿${price}${unitTxt}</p>
-                                    </div>
-                                </div>
-                                <div class="flex flex-col gap-2 w-24 shrink-0">
-                                    <button onclick="editPost('${docSnap.id}', '${type}')" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-2 rounded-lg text-sm font-bold border border-slate-300 transition"><i class="fa-solid fa-pen mr-1"></i> แก้ไข</button>
-                                    <button onclick="deletePost('${docSnap.id}', '${type}')" class="bg-white hover:bg-rose-50 text-rose-600 px-3 py-2 rounded-lg text-sm font-bold border border-rose-200 transition"><i class="fa-solid fa-trash mr-1"></i> ลบ</button>
-                                </div>
-                            </div>`;
-                    }
-                });
-                
-                if(type === 'surplus') {
-                    const wq = query(collection(db, "food_wastes"), orderBy("created_at", "desc"));
-                    const wSnap = await getDocs(wq);
-                    wSnap.forEach((w) => {
-                        const wData = w.data();
-                        if(wData.merchant_id === currentUser.uid) {
-                            html += `
-                                <div class="bg-amber-50 border border-amber-200 rounded-2xl p-5 mb-4 shadow-sm flex items-center justify-between gap-4 opacity-80">
-                                    <div class="flex items-center gap-4 flex-1">
-                                        <div class="w-16 h-16 bg-amber-100 rounded-xl flex items-center justify-center text-amber-500 text-2xl"><i class="fa-solid fa-leaf"></i></div>
-                                        <div>
-                                            <h4 class="font-bold text-amber-900">เศษอาหาร (ขยะอินทรีย์)</h4>
-                                            <p class="text-sm text-amber-700 mt-1 font-medium">น้ำหนัก: ${wData.weight} กก. | สถานะ: ${wData.status === 'pending' ? 'รอผู้รับ' : 'มีผู้รับแล้ว'}</p>
-                                        </div>
-                                    </div>
-                                    <div class="flex flex-col gap-2 w-24 shrink-0">
-                                        <button onclick="deleteWaste('${w.id}')" class="bg-white hover:bg-rose-50 text-rose-600 px-3 py-2 rounded-lg text-sm font-bold border border-rose-200 transition"><i class="fa-solid fa-trash mr-1"></i> ยกเลิก</button>
-                                    </div>
-                                </div>`;
-                        }
-                    });
-                }
-                container.innerHTML = html === '' ? '<div class="text-center text-slate-400 py-10 font-medium">ไม่มีข้อมูลในระบบ</div>' : html;
-            } catch (error) { console.error(error); container.innerHTML = '<div class="text-center text-rose-500 py-10">ระบบขัดข้องชั่วคราว</div>'; }
-        };
-
-        window.editPost = async (id, type) => {
-            const colName = type === 'surplus' ? "surplus_foods" : "farm_products"; const docSnap = await getDoc(doc(db, colName, id));
-            if(docSnap.exists()){
-                const data = docSnap.data(); editingPostId = id; editingPostOldImage = data.image_url;
-                if(type === 'surplus'){
-                    document.getElementById('postFoodName').value = data.food_name; document.getElementById('postFoodDesc').value = data.description || '';
-                    document.getElementById('postOriginalPrice').value = data.original_price; document.getElementById('postDiscountPrice').value = data.discounted_price;
-                    document.getElementById('postQuantity').value = data.quantity; document.getElementById('postFoodExpiry').value = data.expiry_time || '';
-                    document.getElementById('titlePostFood').innerText = "แก้ไขข้อมูล"; document.getElementById('btnSubmitFood').innerText = "บันทึกการแก้ไข"; toggleModal('modal-manage-posts'); toggleModal('modal-post-food');
-                } else {
-                    document.getElementById('postFarmName').value = data.name; document.getElementById('postFarmDesc').value = data.description || '';
-                    document.getElementById('postFarmPrice').value = data.price; document.getElementById('postFarmUnit').value = data.unit; document.getElementById('postFarmQuantity').value = data.quantity;
-                    document.getElementById('titlePostFarm').innerText = "แก้ไขข้อมูล"; document.getElementById('btnSubmitFarm').innerText = "บันทึกการแก้ไข"; toggleModal('modal-manage-posts'); toggleModal('modal-post-farm');
-                }
-            }
-        };
-
-        window.deletePost = async (id, type) => { if(confirm("ยืนยันการลบข้อมูล?")) { await deleteDoc(doc(db, type === 'surplus' ? "surplus_foods" : "farm_products", id)); openManagePosts(type); type === 'surplus' ? fetchFoods() : fetchFarmProducts(); } };
-        window.deleteWaste = async (id) => { if(confirm("ยืนยันการยกเลิกรายการขยะอินทรีย์?")) { await deleteDoc(doc(db, "food_wastes", id)); openManagePosts('surplus'); fetchWastes(); } };
-
-        async function fetchFoods() {
-            const container = document.getElementById('foodContainer'); const loadingText = document.getElementById('loadingTextSurplus');
-            loadingText.classList.remove('hidden-view'); container.classList.add('hidden-view'); container.innerHTML = '';
-            const q = query(collection(db, "surplus_foods"), orderBy("created_at", "desc")); const querySnapshot = await getDocs(q); let html = '', hasActive = false;
-            querySnapshot.forEach((docSnap) => {
-                const item = docSnap.data(); if (item.quantity <= 0) return; if (item.expiry_time && new Date(item.expiry_time) < new Date()) return; hasActive = true;
-                const discount = Math.round(((item.original_price - item.discounted_price) / item.original_price) * 100);
-                const imgHTML = item.image_url ? `<img src="${item.image_url}" class="w-full h-48 object-cover rounded-xl mb-4 border border-slate-100">` : `<div class="w-full h-48 bg-slate-50 rounded-xl mb-4 border border-slate-200 flex items-center justify-center text-slate-300"><i class="fa-solid fa-utensils text-4xl"></i></div>`;
-                html += `
-                    <div class="bg-white rounded-3xl shadow-sm border border-slate-200 p-5 flex flex-col group hover:shadow-lg hover:-translate-y-1 transition duration-300">
-                        ${imgHTML}
-                        <div class="flex justify-between items-start mb-4">
-                            <span class="bg-rose-100 text-rose-700 text-xs font-bold px-3 py-1.5 rounded-lg border border-rose-200 tracking-wide">ส่วนลด ${discount}%</span>
-                            <span class="text-xs font-bold text-slate-600 bg-slate-100 border border-slate-200 px-3 py-1.5 rounded-lg tracking-wide">เหลือ ${item.quantity}</span>
-                        </div>
-                        <h3 class="text-xl font-bold text-slate-800 line-clamp-1">${item.food_name}</h3>
-                        <p class="text-sm text-emerald-600 mb-3 mt-1 font-medium"><i class="fa-solid fa-store mr-1 opacity-70"></i> ${item.shop_name}</p>
-                        ${item.description ? `<p class="text-sm text-slate-500 mb-4 line-clamp-2 leading-relaxed">${item.description}</p>` : ''}
-                        <div class="flex items-baseline gap-2 mb-6 mt-auto pt-3 border-t border-slate-100">
-                            <span class="text-3xl font-bold text-eco-green">฿${item.discounted_price}</span> <span class="text-sm text-slate-400 line-through font-medium">฿${item.original_price}</span>
-                        </div>
-                        <button onclick="openBuyModal('${docSnap.id}', '${item.food_name}', ${item.discounted_price}, '${item.shop_name}', '${item.merchant_id}', 'surplus', '', ${item.quantity})" class="w-full bg-slate-800 text-white py-3.5 rounded-xl font-bold hover:bg-slate-900 transition shadow-md tracking-wide">ทำรายการสั่งซื้อ</button>
-                    </div>`;
-            });
-            if (!hasActive) { loadingText.innerHTML = '<div class="py-12 text-slate-400 font-medium col-span-full"><i class="fa-solid fa-inbox text-4xl mb-4 block opacity-30"></i>ไม่มีรายการอาหารในขณะนี้</div>'; } 
-            else { loadingText.classList.add('hidden-view'); container.classList.remove('hidden-view'); container.innerHTML = html; }
-        }
-
-        async function fetchFarmProducts() {
-            const container = document.getElementById('farmContainer'); const loadingText = document.getElementById('loadingTextFarm');
-            loadingText.classList.remove('hidden-view'); container.classList.add('hidden-view'); container.innerHTML = '';
-            const querySnapshot = await getDocs(query(collection(db, "farm_products"), orderBy("created_at", "desc"))); let html = '', hasActive = false;
-            querySnapshot.forEach((docSnap) => {
-                const item = docSnap.data(); if (item.quantity <= 0) return; hasActive = true;
-                const imgHTML = item.image_url ? `<img src="${item.image_url}" class="w-full h-48 object-cover rounded-xl mb-4 border border-slate-100">` : `<div class="w-full h-48 bg-slate-50 rounded-xl mb-4 border border-slate-200 flex items-center justify-center text-slate-300"><i class="fa-solid fa-leaf text-4xl"></i></div>`;
-                html += `
-                    <div class="bg-white rounded-3xl shadow-sm border border-slate-200 p-5 flex flex-col group hover:shadow-lg hover:-translate-y-1 transition duration-300">
-                        ${imgHTML}
-                        <div class="flex justify-end items-start mb-3">
-                            <span class="text-xs font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-3 py-1.5 rounded-lg tracking-wide">สต๊อก ${item.quantity} ${item.unit}</span>
-                        </div>
-                        <h3 class="text-xl font-bold text-slate-800 line-clamp-1">${item.name}</h3>
-                        <p class="text-sm text-emerald-600 mb-3 mt-1 font-medium"><i class="fa-solid fa-seedling mr-1 opacity-70"></i> ${item.farm_name}</p>
-                        ${item.description ? `<p class="text-sm text-slate-500 mb-4 line-clamp-2 leading-relaxed">${item.description}</p>` : ''}
-                        <div class="flex items-baseline gap-2 mb-6 mt-auto pt-3 border-t border-slate-100">
-                            <span class="text-3xl font-bold text-eco-green">฿${item.price}</span> <span class="text-sm text-slate-500 font-medium">/ ${item.unit}</span>
-                        </div>
-                        <button onclick="openBuyModal('${docSnap.id}', '${item.name}', ${item.price}, '${item.farm_name}', '${item.farmer_id}', 'farm', '${item.unit}', ${item.quantity})" class="w-full bg-emerald-600 text-white py-3.5 rounded-xl font-bold hover:bg-emerald-700 transition shadow-md tracking-wide">ทำรายการสั่งซื้อ</button>
-                    </div>`;
-            });
-            if (!hasActive) { loadingText.innerHTML = '<div class="py-12 text-slate-400 font-medium col-span-full"><i class="fa-solid fa-basket-shopping text-4xl mb-4 block opacity-30"></i>ไม่มีสินค้าเกษตรในขณะนี้</div>'; }
-            else { loadingText.classList.add('hidden-view'); container.classList.remove('hidden-view'); container.innerHTML = html; }
-        }
-
-        // ================= ORDER PROCESSING (FIXED) =================
-        window.openBuyModal = (id, name, price, shopName, sellerId, type = 'surplus', unit = '', maxQty = 1) => {
-            selectedFoodId = id; selectedItemName = name; selectedShopName = shopName; selectedSellerId = sellerId; selectedItemType = type; currentItemPrice = price; currentMaxQty = maxQty;
-            document.getElementById('buyFoodName').innerText = name; document.getElementById('buyShopName').innerHTML = type === 'surplus' ? `<i class="fa-solid fa-store"></i> ${shopName}` : `<i class="fa-solid fa-seedling"></i> ${shopName}`;
-            document.getElementById('buyUnit').innerText = type === 'farm' ? `/ ${unit}` : '';
-            document.getElementById('buyQuantity').value = 1; document.getElementById('buyQuantity').max = maxQty; document.getElementById('buyMaxQuantity').innerText = `${maxQty} ${unit || 'รายการ'}`;
-            calculateTotalPrice();
-            
-            // แก้ไขปัญหา TypeError: ปรับการซ่อนพื้นที่เสนอราคาให้ใช้งานได้อย่างถูกต้อง
-            const priceOptionsWrapper = document.getElementById('buyPriceOptionsWrapper');
-            if (priceOptionsWrapper) {
-                priceOptionsWrapper.classList.toggle('hidden-view', type === 'farm');
-            }
-
-            document.querySelector('input[value="full"]').checked = true; document.querySelector('input[value="pickup"]').checked = true;
-            toggleBiddingUI(false); toggleDeliveryUI('pickup');
-            document.getElementById('bidAmount').value = ''; document.getElementById('orderTime').value = ''; document.getElementById('orderAddress').value = ''; document.getElementById('buyerPhone').value = '';
-            toggleModal('modal-buy');
-        };
-
-        window.calculateTotalPrice = () => {
-            let qty = parseInt(document.getElementById('buyQuantity').value) || 1; if(qty > currentMaxQty) qty = currentMaxQty; if(qty < 1) qty = 1;
-            document.getElementById('buyQuantity').value = qty; document.getElementById('buyPriceTotal').innerText = (currentItemPrice * qty).toLocaleString();
-        };
-
-        window.confirmOrder = async () => {
-            const qty = parseInt(document.getElementById('buyQuantity').value) || 1; const isBidding = document.querySelector('input[value="bid"]').checked && selectedItemType === 'surplus';
-            const bidPrice = document.getElementById('bidAmount').value; const deliveryMethod = document.querySelector('input[name="deliveryOption"]:checked').value;
-            const time = document.getElementById('orderTime').value; const phone = document.getElementById('buyerPhone').value;
-            if (!phone) return alert("กรุณาระบุข้อมูลการติดต่อ"); if (isBidding && !bidPrice) return alert("กรุณาระบุราคาประมูล"); if (!time) return alert("กรุณาระบุเวลานัดหมาย");
-            
-            const finalPrice = isBidding ? parseFloat(bidPrice) : (currentItemPrice * qty);
-            await addDoc(collection(db, "orders"), {
-                item_id: selectedFoodId, item_name: selectedItemName, item_type: selectedItemType, shop_name: selectedShopName, seller_id: selectedSellerId, 
-                buyer_id: currentUser.uid, buyer_name: currentUser.name || "ผู้ใช้งาน", buyer_phone: phone, quantity: qty, type: isBidding ? "bidding" : "normal", offer_price: isBidding ? finalPrice : null, total_price: finalPrice,
-                delivery_method: deliveryMethod, time: time, address: document.getElementById('orderAddress').value, status: "pending", reject_reason: "", created_at: serverTimestamp()
-            });
-            if(!isBidding) {
-                const itemRef = doc(db, selectedItemType === 'farm' ? "farm_products" : "surplus_foods", selectedFoodId);
-                const itemSnap = await getDoc(itemRef); if(itemSnap.exists()) await updateDoc(itemRef, { quantity: itemSnap.data().quantity - qty });
-            }
-            alert("บันทึกคำสั่งซื้อเรียบร้อย"); toggleModal('modal-buy'); selectedItemType === 'farm' ? fetchFarmProducts() : fetchFoods(); 
-        };
-
-        // ================= ORDER TIMELINE & MANAGEMENT =================
-        const getStatusLabel = (status, method) => {
-            if (status === 'pending') return "รอยืนยัน"; if (status === 'rejected') return "ถูกปฏิเสธ"; if (status === 'approved') return "อนุมัติแล้ว";
-            if (status === 'completed') return "เสร็จสมบูรณ์"; if (method === 'delivery') { return status === 'preparing' ? "เตรียมจัดส่ง" : "กำลังจัดส่ง"; } 
-            return status === 'ready' ? "พร้อมส่งมอบ" : status;
-        };
-
-        function listenToBuyerOrders() {
-            if (!currentUser) return; if (unsubscribeOrders) unsubscribeOrders();
-            unsubscribeOrders = onSnapshot(query(collection(db, "orders"), where("buyer_id", "==", currentUser.uid)), (snapshot) => {
-                let activeCount = 0; let latestStatus = 'รอยืนยัน'; let latestTime = 0;
-                snapshot.forEach((docSnap) => {
-                    const order = docSnap.data();
-                    if (order.status !== 'completed' && order.status !== 'rejected') {
-                        activeCount++; let oTime = order.created_at ? order.created_at.toMillis() : 0;
-                        if (oTime >= latestTime) { latestTime = oTime; latestStatus = getStatusLabel(order.status, order.delivery_method); }
-                    }
-                });
-                const bar = document.getElementById('buyer-status-bar');
-                if (activeCount > 0) {
-                    document.getElementById('active-order-count').innerText = activeCount; document.getElementById('active-order-status-text').innerText = latestStatus;
-                    bar.classList.remove('hidden-view'); document.body.style.paddingBottom = '76px'; 
-                } else { bar.classList.add('hidden-view'); document.body.style.paddingBottom = '0px'; }
-            });
-        }
-
-        const renderTimeline = (status, method, time) => {
-            const steps = method === 'delivery' 
-                ? [ { id: 'pending', label: 'รอยืนยัน' }, { id: 'approved', label: 'อนุมัติคำสั่งซื้อ' }, { id: 'preparing', label: 'กำลังเตรียมการ' }, { id: 'delivering', label: 'อยู่ระหว่างจัดส่ง' }, { id: 'completed', label: 'สำเร็จ' } ]
-                : [ { id: 'pending', label: 'รอยืนยัน' }, { id: 'approved', label: 'อนุมัติคำสั่งซื้อ' }, { id: 'ready', label: `พร้อมส่งมอบ (${time})` }, { id: 'completed', label: 'สำเร็จ' } ];
-            if (status === 'rejected') return `<div class="text-rose-600 font-bold p-4 bg-rose-50 rounded-xl border border-rose-200 text-center"><i class="fa-solid fa-ban text-2xl mb-2"></i><br>รายการถูกปฏิเสธ</div>`;
-            let cIdx = steps.findIndex(s => s.id === status); if (cIdx === -1) cIdx = 0; 
-            let html = `<div class="flex flex-col space-y-4 mt-4 px-2">`;
-            steps.forEach((step, idx) => {
-                const act = idx <= cIdx; const cls = act ? "step-active" : "step-pending";
-                html += `<div class="flex items-start ${cls} relative">
-                            ${idx !== steps.length - 1 ? `<div class="absolute left-4 top-8 bottom-[-16px] w-[2px] step-line"></div>` : ''}
-                            <div class="w-8 h-8 rounded-full border-2 flex items-center justify-center step-icon z-10">${act ? '<i class="fa-solid fa-check text-sm"></i>' : '<i class="fa-solid fa-circle text-[8px]"></i>'}</div>
-                            <div class="ml-4 mt-1.5 step-text text-[15px]">${step.label}</div>
-                        </div>`;
-            }); return html + `</div>`;
-        };
-
-        window.openBuyerOrders = async () => {
-            toggleModal('modal-buyer-orders'); clearAllCountdowns();
-            const container = document.getElementById('buyerOrdersContainer'); container.innerHTML = '<div class="text-center text-slate-400 py-10"><i class="fa-solid fa-circle-notch fa-spin text-3xl mb-3"></i><br>กำลังดึงข้อมูล...</div>';
-            try {
-                const q = query(collection(db, "orders"), orderBy("created_at", "desc")); const querySnapshot = await getDocs(q); let html = '';
-                querySnapshot.forEach((docSnap) => {
-                    const order = docSnap.data();
-                    if (order.buyer_id === currentUser.uid) {
-                        const dateStr = order.created_at ? order.created_at.toDate().toLocaleString('th-TH') : ''; const pTxt = order.type === 'bidding' ? `เสนอราคา (฿${order.total_price})` : `฿${order.total_price}`;
-                        html += `
-                            <div class="bg-white border border-slate-200 rounded-3xl p-6 mb-6 shadow-sm">
-                                <div class="flex justify-between items-start mb-4 border-b border-slate-100 pb-4">
-                                    <div>
-                                        <h4 class="font-bold text-lg text-slate-800">${order.item_name} <span class="text-eco-green bg-emerald-50 px-2 py-0.5 rounded-lg text-sm border border-emerald-100 ml-2">x ${order.quantity}</span></h4>
-                                        <p class="text-sm text-slate-500 mt-1"><i class="fa-solid ${order.item_type === 'surplus' ? 'fa-store' : 'fa-seedling'} mr-1 opacity-70"></i> ${order.shop_name}</p>
-                                    </div>
-                                    <div class="text-right">
-                                        <span class="text-xs text-slate-400 font-mono">${dateStr}</span>
-                                        <div class="text-[10px] bg-slate-100 text-slate-500 px-2 py-1 rounded-md mt-1 font-mono tracking-wider border border-slate-200">ID: ${docSnap.id.substring(0, 8).toUpperCase()}</div>
-                                    </div>
-                                </div>
-                                <div class="grid grid-cols-2 gap-4 text-sm text-slate-700 bg-slate-50 p-4 rounded-xl mb-5 border border-slate-100">
-                                    <div><strong class="text-slate-500 text-xs uppercase block mb-1">ยอดชำระ</strong> <span class="font-bold text-base text-slate-800">${pTxt}</span></div>
-                                    <div><strong class="text-slate-500 text-xs uppercase block mb-1">รูปแบบรับสินค้า</strong> <span class="font-medium">${order.delivery_method === 'delivery' ? 'จัดส่งปลายทาง' : 'รับที่จุดจำหน่าย'}</span></div>
-                                    ${order.address ? `<div class="col-span-2"><strong class="text-slate-500 text-xs uppercase block mb-1">สถานที่จัดส่ง</strong> ${order.address}</div>` : ''}
-                                </div>
-                                <div class="bg-white border border-slate-100 p-5 rounded-2xl shadow-[inset_0_2px_4px_rgba(0,0,0,0.02)]">
-                                    <div class="flex justify-between items-center border-b border-slate-100 pb-3 mb-2">
-                                        <h5 class="font-bold text-slate-700 text-sm">การติดตามสถานะ</h5>
-                                        <div class="font-bold text-indigo-700 text-sm" id="countdown-${docSnap.id}">นัดหมาย: ${order.time} น.</div>
-                                    </div>
-                                    ${renderTimeline(order.status, order.delivery_method, order.time)}
-                                </div>
-                            </div>`;
-                        if(order.status !== 'completed' && order.status !== 'rejected') startCountdownTimer(`countdown-${docSnap.id}`, order.time, order.status);
-                    }
-                });
-                container.innerHTML = html === '' ? '<div class="text-center text-slate-400 py-10">ไม่มีข้อมูลคำสั่งซื้อ</div>' : html;
-            } catch (error) { console.error(error); container.innerHTML = '<div class="text-center text-rose-500 py-10">ระบบขัดข้อง</div>'; }
-        };
-
-        function startCountdownTimer(elementId, targetTime, status) {
-            const interval = setInterval(() => {
-                const el = document.getElementById(elementId); if(!el) { clearInterval(interval); return; }
-                const now = new Date(); const [th, tm] = targetTime.split(':'); const target = new Date(); target.setHours(parseInt(th), parseInt(tm), 0, 0);
-                const diff = target - now;
-                if (diff > 0) {
-                    const h = Math.floor(diff / (1000 * 60 * 60)); const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-                    el.innerHTML = `นัดหมาย: ${targetTime} น. <span class="ml-2 text-rose-600 bg-rose-50 px-2 py-0.5 rounded-md text-[10px] border border-rose-200 tracking-wide uppercase"><i class="fa-regular fa-clock"></i> เหลือ ${h > 0 ? h+' ชม. '+m : m} นาที</span>`;
-                } else {
-                    el.innerHTML = `นัดหมาย: ${targetTime} น. <span class="ml-2 text-eco-green bg-emerald-50 px-2 py-0.5 rounded-md text-[10px] border border-emerald-200 tracking-wide uppercase">ถึงเวลานัดหมาย</span>`; clearInterval(interval);
-                }
-            }, 60000); activeCountdownIntervals.push(interval); setTimeout(() => { clearInterval(interval); startCountdownTimer(elementId, targetTime, status); }, 10); 
-        }
-        function clearAllCountdowns() { activeCountdownIntervals.forEach(clearInterval); activeCountdownIntervals = []; }
-
-        window.openMerchantOrders = async (type) => {
-            toggleModal('modal-merchant-orders');
-            document.getElementById('merchantOrdersTitle').innerHTML = type === 'surplus' ? '<i class="fa-solid fa-store mr-2 text-amber-600"></i>ออเดอร์ร้านค้า (หลังบ้าน)' : '<i class="fa-solid fa-seedling mr-2 text-eco-green"></i>ออเดอร์เกษตรกร (หลังบ้าน)';
-            const container = document.getElementById('merchantOrdersContainer'); container.innerHTML = '<div class="text-center text-slate-400 py-10"><i class="fa-solid fa-circle-notch fa-spin text-3xl mb-3"></i><br>ดึงข้อมูลออเดอร์...</div>';
-            try {
-                const q = query(collection(db, "orders"), orderBy("created_at", "desc")); const querySnapshot = await getDocs(q); let html = '';
-                querySnapshot.forEach((docSnap) => {
-                    const order = docSnap.data();
-                    if (order.seller_id === currentUser.uid && order.item_type === type) {
-                        const dateStr = order.created_at ? order.created_at.toDate().toLocaleString('th-TH') : '';
-                        
-                        let actBtn = '';
-                        if (order.status === 'pending') { actBtn = `<button onclick="handleMerchantAction('${docSnap.id}', 'approve', '${type}')" class="flex-1 bg-eco-green hover:bg-emerald-800 text-white py-2.5 rounded-xl font-bold shadow-md transition">ยืนยันรับออเดอร์</button><button onclick="handleMerchantAction('${docSnap.id}', 'reject', '${type}')" class="flex-1 bg-white border border-rose-300 text-rose-600 hover:bg-rose-50 py-2.5 rounded-xl font-bold transition">ปฏิเสธ</button>`; } 
-                        else if (order.status === 'approved') { actBtn = order.delivery_method === 'delivery' ? `<button onclick="updateOrderStatus('${docSnap.id}', 'preparing', '${type}')" class="w-full bg-slate-800 hover:bg-slate-900 text-white py-2.5 rounded-xl font-bold shadow-md transition">อัปเดต: เริ่มเตรียมสินค้า</button>` : `<button onclick="updateOrderStatus('${docSnap.id}', 'ready', '${type}')" class="w-full bg-slate-800 hover:bg-slate-900 text-white py-2.5 rounded-xl font-bold shadow-md transition">อัปเดต: พร้อมส่งมอบแล้ว</button>`; } 
-                        else if (order.status === 'preparing') { actBtn = `<button onclick="updateOrderStatus('${docSnap.id}', 'delivering', '${type}')" class="w-full bg-amber-600 hover:bg-amber-700 text-white py-2.5 rounded-xl font-bold shadow-md transition">อัปเดต: กำลังจัดส่ง</button>`; } 
-                        else if (order.status === 'delivering' || order.status === 'ready') { actBtn = `<button onclick="updateOrderStatus('${docSnap.id}', 'completed', '${type}')" class="w-full bg-eco-green hover:bg-emerald-800 text-white py-2.5 rounded-xl font-bold shadow-md transition">อัปเดต: ทำรายการเสร็จสมบูรณ์</button>`; } 
-                        else if (order.status === 'completed') { actBtn = `<div class="w-full text-center py-2.5 bg-emerald-50 text-eco-green font-bold rounded-xl border border-emerald-100">เสร็จสมบูรณ์เรียบร้อย</div>`; } 
-                        else if (order.status === 'rejected') { actBtn = `<div class="w-full text-center py-2.5 bg-rose-50 text-rose-600 font-bold rounded-xl border border-rose-100">รายการถูกปฏิเสธ</div>`; }
-
-                        html += `
-                            <div class="bg-white border border-slate-200 rounded-3xl p-6 mb-5 shadow-sm">
-                                <div class="flex justify-between items-center mb-4 border-b border-slate-100 pb-4">
-                                    <div class="flex items-center gap-3">
-                                        <div class="bg-slate-100 text-slate-600 px-2 py-1 rounded-md text-[10px] font-bold font-mono border border-slate-200 uppercase tracking-wider">ID: ${docSnap.id.substring(0, 8)}</div>
-                                        <span class="text-xs font-bold text-slate-800 bg-slate-50 px-3 py-1 rounded-lg border border-slate-200 shadow-[inset_0_1px_2px_rgba(0,0,0,0.05)]">${getStatusLabel(order.status, order.delivery_method)}</span>
-                                    </div>
-                                    <span class="text-xs text-slate-400 font-mono">${dateStr}</span>
-                                </div>
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-5">
-                                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-100">
-                                        <h5 class="text-[10px] text-slate-500 font-bold mb-1 uppercase tracking-wider">รายละเอียดสินค้า</h5>
-                                        <p class="font-bold text-base text-slate-800">${order.item_name} <span class="text-eco-green text-sm ml-1">x ${order.quantity}</span></p>
-                                        <p class="text-sm text-slate-700 mt-1 font-medium">ยอดชำระ: ฿${order.total_price}</p>
-                                    </div>
-                                    <div class="bg-amber-50 p-4 rounded-xl border border-amber-100">
-                                        <h5 class="text-[10px] text-amber-700 font-bold mb-1 uppercase tracking-wider">ข้อมูลผู้ติดต่อ</h5>
-                                        <p class="font-bold text-sm text-slate-800"><i class="fa-solid fa-user mr-1 text-amber-500 w-4"></i> ${order.buyer_name}</p>
-                                        <p class="font-bold text-sm text-slate-800 mt-1"><i class="fa-solid fa-phone mr-1 text-amber-500 w-4"></i> ${order.buyer_phone}</p>
-                                    </div>
-                                </div>
-                                <div class="text-sm text-slate-700 bg-emerald-50/50 p-4 rounded-xl border border-emerald-100 mb-5">
-                                    <div class="flex justify-between items-center">
-                                        <div class="flex gap-2 text-sm font-medium">
-                                            <span class="text-slate-500">วิธีรับ:</span> <span>${order.delivery_method === 'delivery' ? '<i class="fa-solid fa-motorcycle text-slate-700 mr-1"></i> ปลายทาง' : '<i class="fa-solid fa-store text-slate-700 mr-1"></i> หน้าร้าน'}</span>
-                                        </div>
-                                        <div class="text-base font-bold text-eco-green bg-white px-3 py-1 rounded-lg border border-emerald-100 shadow-sm"><i class="fa-regular fa-clock"></i> นัดเวลา: ${order.time}</div>
-                                    </div>
-                                    ${order.address ? `<div class="mt-3 bg-white p-3 rounded-lg border border-slate-200 text-xs leading-relaxed text-slate-600"><strong class="block mb-1 text-slate-400 uppercase">ที่อยู่จัดส่ง</strong> ${order.address}</div>` : ''}
-                                </div>
-                                <div class="flex gap-3 mt-2">${actBtn}</div>
-                            </div>`;
-                    }
-                });
-                container.innerHTML = html === '' ? '<div class="text-center text-slate-400 py-10 font-medium">ไม่มีออเดอร์ในหมวดหมู่นี้</div>' : html;
-            } catch (error) { console.error(error); container.innerHTML = '<div class="text-center text-rose-500 py-10">ระบบขัดข้อง</div>'; }
-        };
-
-        window.handleMerchantAction = async (orderId, action, type) => {
-            const orderRef = doc(db, "orders", orderId);
-            if (action === 'approve') {
-                if(confirm("ยืนยันรับออเดอร์นี้?")) { await updateDoc(orderRef, { status: "approved" }); openMerchantOrders(type); }
-            } else if (action === 'reject') {
-                const reason = window.prompt("โปรดระบุเหตุผลในการยกเลิกรายการ:");
-                if (reason !== null) {
-                    const orderSnap = await getDoc(orderRef);
-                    if(orderSnap.exists()){
-                        const oD = orderSnap.data();
-                        if(oD.type !== 'bidding') {
-                            const iRef = doc(db, oD.item_type === 'farm' ? "farm_products" : "surplus_foods", oD.item_id);
-                            const iSnap = await getDoc(iRef); if(iSnap.exists()) await updateDoc(iRef, { quantity: iSnap.data().quantity + oD.quantity }); 
-                        }
-                    }
-                    await updateDoc(orderRef, { status: "rejected", reject_reason: reason || "สินค้าหมด" }); openMerchantOrders(type);
-                }
-            }
-        };
-
-        window.updateOrderStatus = async (orderId, nextStatus, type) => {
-            if(confirm("ดำเนินการอัปเดตสถานะ?")) { await updateDoc(doc(db, "orders", orderId), { status: nextStatus }); openMerchantOrders(type); }
-        };
-
+        function listenToBuyerOrders() { if(!currentUser)return; onSnapshot(query(collection(db, "orders"), where("buyer_id", "==", currentUser.uid)), s => { let a=0; s.forEach(d => { if(d.data().status!=='completed'&&d.data().status!=='rejected') a++; }); const b=document.getElementById('buyer-status-bar'); if(a>0) { document.getElementById('active-order-count').innerText=a; b.classList.remove('hidden-view'); document.body.style.paddingBottom='76px'; } else { b.classList.add('hidden-view'); document.body.style.paddingBottom='0px'; } }); }
+        
+        window.openBuyerOrders = async () => { toggleModal('modal-buyer-orders'); const c = document.getElementById('buyerOrdersContainer'); c.innerHTML = ''; const q = await getDocs(query(collection(db, "orders"), orderBy("created_at", "desc"))); let h = ''; q.forEach(d => { const o = d.data(); if(o.buyer_id===currentUser.uid) h += `<div class="p-4 border rounded-xl mb-3"><b>${o.item_name} x ${o.quantity}</b><p class="text-sm">สถานะ: ${o.status}</p></div>`; }); c.innerHTML = h || 'ไม่มีประวัติ'; };
+        window.openMerchantOrders = async (t) => { toggleModal('modal-merchant-orders'); const c = document.getElementById('merchantOrdersContainer'); c.innerHTML = ''; const q = await getDocs(query(collection(db, "orders"), orderBy("created_at", "desc"))); let h = ''; q.forEach(d => { const o = d.data(); if(o.seller_id===currentUser.uid && o.item_type===t) h += `<div class="p-4 border rounded-xl mb-3 flex justify-between items-center"><div><b>${o.item_name} x ${o.quantity}</b><p>ยอด: ${o.total_price} | สถานะ: ${o.status}</p></div>${o.status==='pending'?`<button onclick="updateOrderStatus('${d.id}','approved','${t}')" class="bg-green-500 text-white px-3 py-1 rounded">อนุมัติ</button>`:''}</div>`; }); c.innerHTML = h || 'ไม่มีออเดอร์'; };
+        window.updateOrderStatus = async (id, s, t) => { await updateDoc(doc(db, "orders", id), { status: s }); openMerchantOrders(t); };
     </script>
 </body>
 </html>
