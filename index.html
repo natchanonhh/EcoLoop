@@ -634,7 +634,7 @@
         document.getElementById('formMerchantReg').addEventListener('submit', (e) => handleReg(e, 'merchant', 'merchants'));
         document.getElementById('formFarmerReg').addEventListener('submit', (e) => handleReg(e, 'farmer', 'farmers'));
 
-        // ================= WASTE MANAGEMENT (NEW) =================
+        // ================= WASTE MANAGEMENT =================
         window.preparePostWaste = () => { document.getElementById('formPostWaste').reset(); toggleModal('modal-post-waste'); };
         
         document.getElementById('formPostWaste').addEventListener('submit', async (e) => {
@@ -655,7 +655,6 @@
             const querySnapshot = await getDocs(query(collection(db, "food_wastes"), orderBy("created_at", "desc")));
             let html = '', hasActive = false;
             
-            // ตรวจสอบสถานะเกษตรกร
             const farmerSnap = currentUser ? await getDoc(doc(db, "farmers", currentUser.uid)) : null;
             const isFarmer = farmerSnap && farmerSnap.exists();
 
@@ -696,34 +695,24 @@
 
         // ================= ENVIRONMENTAL DASHBOARD STATS =================
         function listenToPlatformStats() {
-            // Aggregate orders (meals) and food_wastes (compost)
-            // Meals = orders where item_type == 'surplus' and status == 'completed'
-            // Compost = food_wastes where status == 'claimed' or 'completed'
             if(unsubscribeStats) unsubscribeStats();
-            
-            // To keep simple and real-time without heavy reads for a demo, we approximate by watching recent docs or full collections.
             const orderQ = query(collection(db, "orders"), where("status", "==", "completed"));
-            const wasteQ = query(collection(db, "food_wastes"), where("status", "==", "claimed")); // Assuming claimed means rescued for waste
-            
-            // A simple combined listener approach (pseudo-aggregation for frontend)
+            const wasteQ = query(collection(db, "food_wastes"), where("status", "==", "claimed")); 
             let totalMeals = 0; let totalCompost = 0;
 
             const updateDashboard = () => {
-                // Formula: 1 meal surplus = ~0.5kg -> 1.25 kgCO2e. 1 kg compost = 2.5 kgCO2e.
                 const co2Saved = (totalMeals * 1.25) + (totalCompost * 2.5);
                 document.getElementById('stat-meals').innerText = totalMeals.toLocaleString();
                 document.getElementById('stat-compost').innerHTML = `${totalCompost.toFixed(1)} <span class="text-base font-normal">กก.</span>`;
                 document.getElementById('stat-co2').innerHTML = `${co2Saved.toFixed(1)} <span class="text-base font-normal">kgCO₂e</span>`;
             };
 
-            // Order listener
             onSnapshot(orderQ, (snap) => {
                 totalMeals = 0;
                 snap.forEach(d => { if(d.data().item_type === 'surplus') totalMeals += (d.data().quantity || 1); });
                 updateDashboard();
             });
 
-            // Waste listener
             onSnapshot(wasteQ, (snap) => {
                 totalCompost = 0;
                 snap.forEach(d => { totalCompost += (d.data().weight || 0); });
@@ -788,7 +777,7 @@
                             </div>`;
                     }
                 });
-                // เพิ่มส่วนโชว์รายการขยะอินทรีย์ที่โพสต์ไว้ในหมวดร้านค้าด้วย
+                
                 if(type === 'surplus') {
                     const wq = query(collection(db, "food_wastes"), orderBy("created_at", "desc"));
                     const wSnap = await getDocs(wq);
@@ -889,23 +878,31 @@
             else { loadingText.classList.add('hidden-view'); container.classList.remove('hidden-view'); container.innerHTML = html; }
         }
 
-        // ================= ORDER PROCESSING =================
+        // ================= ORDER PROCESSING (FIXED) =================
         window.openBuyModal = (id, name, price, shopName, sellerId, type = 'surplus', unit = '', maxQty = 1) => {
             selectedFoodId = id; selectedItemName = name; selectedShopName = shopName; selectedSellerId = sellerId; selectedItemType = type; currentItemPrice = price; currentMaxQty = maxQty;
             document.getElementById('buyFoodName').innerText = name; document.getElementById('buyShopName').innerHTML = type === 'surplus' ? `<i class="fa-solid fa-store"></i> ${shopName}` : `<i class="fa-solid fa-seedling"></i> ${shopName}`;
             document.getElementById('buyUnit').innerText = type === 'farm' ? `/ ${unit}` : '';
             document.getElementById('buyQuantity').value = 1; document.getElementById('buyQuantity').max = maxQty; document.getElementById('buyMaxQuantity').innerText = `${maxQty} ${unit || 'รายการ'}`;
             calculateTotalPrice();
-            document.getElementById('buyPriceOptionsTitle').parentElement.classList.toggle('hidden-view', type === 'farm');
+            
+            // แก้ไขปัญหา TypeError: ปรับการซ่อนพื้นที่เสนอราคาให้ใช้งานได้อย่างถูกต้อง
+            const priceOptionsWrapper = document.getElementById('buyPriceOptionsWrapper');
+            if (priceOptionsWrapper) {
+                priceOptionsWrapper.classList.toggle('hidden-view', type === 'farm');
+            }
+
             document.querySelector('input[value="full"]').checked = true; document.querySelector('input[value="pickup"]').checked = true;
             toggleBiddingUI(false); toggleDeliveryUI('pickup');
             document.getElementById('bidAmount').value = ''; document.getElementById('orderTime').value = ''; document.getElementById('orderAddress').value = ''; document.getElementById('buyerPhone').value = '';
             toggleModal('modal-buy');
         };
+
         window.calculateTotalPrice = () => {
             let qty = parseInt(document.getElementById('buyQuantity').value) || 1; if(qty > currentMaxQty) qty = currentMaxQty; if(qty < 1) qty = 1;
             document.getElementById('buyQuantity').value = qty; document.getElementById('buyPriceTotal').innerText = (currentItemPrice * qty).toLocaleString();
         };
+
         window.confirmOrder = async () => {
             const qty = parseInt(document.getElementById('buyQuantity').value) || 1; const isBidding = document.querySelector('input[value="bid"]').checked && selectedItemType === 'surplus';
             const bidPrice = document.getElementById('bidAmount').value; const deliveryMethod = document.querySelector('input[name="deliveryOption"]:checked').value;
@@ -931,6 +928,7 @@
             if (status === 'completed') return "เสร็จสมบูรณ์"; if (method === 'delivery') { return status === 'preparing' ? "เตรียมจัดส่ง" : "กำลังจัดส่ง"; } 
             return status === 'ready' ? "พร้อมส่งมอบ" : status;
         };
+
         function listenToBuyerOrders() {
             if (!currentUser) return; if (unsubscribeOrders) unsubscribeOrders();
             unsubscribeOrders = onSnapshot(query(collection(db, "orders"), where("buyer_id", "==", currentUser.uid)), (snapshot) => {
